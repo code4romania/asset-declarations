@@ -1,4 +1,4 @@
-# Catalog politic [![GitHub contributors](https://github.com/code4romania/catpol-declaratii/graphs/contributors)]() [![GitHub last commit](https://img.shields.io/github/last-commit/code4romania/standard-readmes.svg)]() [![License: MPL 2.0](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
+# Catalog politic [![GitHub contributors](https://img.shields.io/github/contributors/code4romania/standard-readmes.svg)](https://github.com/code4romania/catpol-declaratii/graphs/contributors) [![GitHub last commit](https://img.shields.io/github/last-commit/code4romania/standard-readmes.svg)](https://github.com/code4romania/catpol-declaratii/commits/master) [![License: MPL 2.0](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 
 Find more shields here: 
 * http://shields.io/ - https://github.com/badges/shields
