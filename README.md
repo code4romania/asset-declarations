@@ -1,8 +1,4 @@
-# Catalog politic [![GitHub contributors](https://img.shields.io/github/contributors/code4romania/standard-readmes.svg)](https://github.com/code4romania/catpol-declaratii/graphs/contributors) [![GitHub last commit](https://img.shields.io/github/last-commit/code4romania/standard-readmes.svg)](https://github.com/code4romania/catpol-declaratii/commits/master) [![License: MPL 2.0](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
-
-Find more shields here: 
-* http://shields.io/ - https://github.com/badges/shields
-* license badges: https://gist.github.com/lukas-h/2a5d00690736b4c3a7ba
+# Catalog politic  - Declaratii de avere [![GitHub contributors](https://img.shields.io/github/contributors/code4romania/catpol-declaratii.svg)](https://github.com/code4romania/catpol-declaratii/graphs/contributors) [![GitHub last commit](https://img.shields.io/github/last-commit/code4romania/catpol-declaratii.svg)](https://github.com/code4romania/catpol-declaratii/commits/master) [![License: MPL 2.0](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 
 * MAKING PUBLIC INFORMATION TRULLY PUBLIC 
 * aggregate data on the higher echalons of elected officials
@@ -28,6 +24,8 @@ access to in-depth information in a friendly and easy to digest format.
 The platform will help journalists, watchdogs and researchers identify and verify information on elected officials. The data provided will offer an
 unprecedented starting point for in-depth analysis.
 
+Catalog Politic - Declaratii de avere - aims to automate the process of parsing and extracting information from asset declarations of Romanian politicians and public figures, by provinding a user friendly platform for volunteers to extract and map information to a fixed datamodel. The implementation is based on Moonsheep framework (http://moonsheep.org/).
+
 [Built with](#built-with) | [Repos and projects](#repos-and-projects) | [Deployment](#deployment) | [Contributing](#contributing) | [Feedback](#feedback) | [License](#license) | [About Code4Ro](#about-code4ro)
 
 ## Built With 
@@ -38,6 +36,10 @@ Python
 
 ### Platforms
 
+Moonsheep
+Django
+PyBossa
+
 ### Frontend framework
 
 ### Package managers
@@ -46,31 +48,34 @@ Python
 
 ## Repos and projects
 
-Mention all related repos and projects.
+https://github.com/themoonsheep
+https://github.com/Scifabric/pybossa
 
 ## Deployment 
 
 Guide users through getting your code up and running on their own system. In this section you can talk about:
 1. Installation process
+  *. Clone this repo
+  *. Cd to the folder where you have cloned this repo
+  *. pip/pip3 install -r requirements-dev.txt
+  *. export DJANGO_SETTINGS_MODULE=project_template.settings.dev
+  *. python/python3 manage.py migrate
+  *. python/python3 manage.py runserver
 2. Software dependencies
 3. Latest releases
 4. API references
-
-Describe and show how to build your code and run the tests. 
 
 ## Contributing 
 
 If you would like to contribute to one of our repositories, first identify the scale of what you would like to contribute. If it is small (grammar/spelling or a bug fix) feel free to start working on a fix. If you are submitting a feature or substantial code contribution, please discuss it with the team and ensure it follows the product roadmap. 
 
-* Fork it (https://github.com/yourname/yourproject/fork)
+* Fork it (https://github.com/code4romania/catpol-declaratii/fork)
 * Create your feature branch (git checkout -b feature/fooBar)
 * Commit your changes (git commit -am 'Add some fooBar')
 * Push to the branch (git push origin feature/fooBar)
 * Create a new Pull Request
 
 Coding guidelines example: https://github.com/Microsoft/vscode/wiki/Coding-Guidelines
-
-List any pending features and planned improvements for the project.
 
 ## Feedback 
 
