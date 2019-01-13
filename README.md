@@ -59,11 +59,17 @@ https://github.com/Scifabric/pybossa
 Guide users through getting your code up and running on their own system. In this section you can talk about:
 1. Installation process
   *. Clone this repo
+  
   *. Cd to the folder where you have cloned this repo
+  
   *. pip/pip3 install -r requirements-dev.txt
+  
   *. export DJANGO_SETTINGS_MODULE=project_template.settings.dev
+  
   *. python/python3 manage.py migrate
+  
   *. python/python3 manage.py runserver
+  
 2. Software dependencies
 3. Latest releases
 4. API references
