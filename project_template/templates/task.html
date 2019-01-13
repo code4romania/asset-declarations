@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load moonsheep %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div id="presenter">
+      {% block task-presenter %}
+      {% include presenter.template %}
+      {% endblock %}
+    </div>
+    <div id="task">
+      {% block task-form %}
+      <form id="taskForm" method="post">
+        {% moonsheep_token task %}
+        {% csrf_token %}
+
+        {% if task.task_form_template %}
+
+        {% include task.task_form_template %}
+
+        {% else %}
+
+        {# Default layout to render form #}
+        <div class="row-fluid">
+          <div class="col">
+            {% for field in form %}
+            <div class="form-group">
+              <div class="col">
+                {{ field.label }}
+              </div>
+              <div class="col">
+                {{ field }}
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        <div class="row-fluid">
+          <div class="col">
+            <button class="btn .bg btn-lg" type="submit">Send the data</button>
+          </div>
+        </div>
+      </form>
+      {% endblock %}
+    </div>
+  </div>
+</div>
+{% endblock %}

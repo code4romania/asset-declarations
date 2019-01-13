@@ -1,0 +1,21 @@
+body {
+  padding-top: 60px;
+  background: #efefef;
+}
+
+.bg {
+  background: #2177ab;
+  color: #ffffff;
+}
+
+#presenter {
+  width: 50%;
+  position: fixed;
+  height: 100%;
+}
+
+#task {
+  position: absolute;
+  width: 50%;
+  left: 50%;
+}
