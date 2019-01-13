@@ -36,9 +36,11 @@ Python
 
 ### Platforms
 
-Moonsheep
+Moonsheep - http://moonsheep.org/
+
 Django
-PyBossa
+
+PyBossa - https://pybossa.com/
 
 ### Frontend framework
 
@@ -49,6 +51,7 @@ PyBossa
 ## Repos and projects
 
 https://github.com/themoonsheep
+
 https://github.com/Scifabric/pybossa
 
 ## Deployment 
