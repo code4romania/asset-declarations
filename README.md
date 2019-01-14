@@ -24,9 +24,19 @@ access to in-depth information in a friendly and easy to digest format.
 The platform will help journalists, watchdogs and researchers identify and verify information on elected officials. The data provided will offer an
 unprecedented starting point for in-depth analysis.
 
-Catalog Politic - Declaratii de avere - aims to automate the process of parsing and extracting information from asset declarations of Romanian politicians and public figures, by provinding a user friendly platform for volunteers to extract and map information to a fixed datamodel. The implementation is based on Moonsheep framework (http://moonsheep.org/).
+Catalog Politic - Declaratii de avere - aims to automate the process of parsing and extracting information from asset declarations of Romanian politicians and public figures, by providing a user friendly platform for volunteers to extract and map information to a fixed datamodel. The implementation is based on Moonsheep framework (http://moonsheep.org/).
 
-[Built with](#built-with) | [Repos and projects](#repos-and-projects) | [Deployment](#deployment) | [Contributing](#contributing) | [Feedback](#feedback) | [License](#license) | [About Code4Ro](#about-code4ro)
+[Contributing](#contributing) | [Built with](#built-with) | [Repos and projects](#repos-and-projects) | [Deployment](#deployment) | [Feedback](#feedback) | [License](#license) | [About Code4Ro](#about-code4ro)
+
+## Contributing 
+
+If you would like to contribute to one of our repositories, first identify the scale of what you would like to contribute. If it is small (grammar/spelling or a bug fix) feel free to start working on a fix. If you are submitting a feature or substantial code contribution, please discuss it with the team and ensure it follows the product roadmap. 
+
+* Fork it (https://github.com/code4romania/catpol-declaratii/fork)
+* Create your feature branch (git checkout -b feature/fooBar)
+* Commit your changes (git commit -am 'Add some fooBar')
+* Push to the branch (git push origin feature/fooBar)
+* Create a new Pull Request
 
 ## Built With 
 
@@ -42,51 +52,28 @@ Django
 
 PyBossa - https://pybossa.com/
 
-### Frontend framework
-
-### Package managers
-
-### Database technology & provider
-
 ## Repos and projects
 
-https://github.com/themoonsheep
-
-https://github.com/Scifabric/pybossa
+This project is based on:  
+- https://github.com/themoonsheep  
+- https://github.com/Scifabric/pybossa
 
 ## Deployment 
 
-Guide users through getting your code up and running on their own system. In this section you can talk about:
-1. Installation process
+Follow these steps to get the project up and running on your machine:
   
-  *. Clone this repo
+  - Clone this repo
   
-  *. Cd to the folder where you have cloned this repo
+  - Cd to the folder where you have cloned this repo
   
-  *. pip/pip3 install -r requirements-dev.txt
+  - `pip/pip3 install -r requirements-dev.txt`
   
-  *. export DJANGO_SETTINGS_MODULE=project_template.settings.dev
+  - `export DJANGO_SETTINGS_MODULE=project_template.settings.dev`
   
-  *. python/python3 manage.py migrate
+  - `python/python3 manage.py migrate`
   
-  *. python/python3 manage.py runserver
+  - `python/python3 manage.py runserver`
   
-2. Software dependencies
-3. Latest releases
-4. API references
-
-## Contributing 
-
-If you would like to contribute to one of our repositories, first identify the scale of what you would like to contribute. If it is small (grammar/spelling or a bug fix) feel free to start working on a fix. If you are submitting a feature or substantial code contribution, please discuss it with the team and ensure it follows the product roadmap. 
-
-* Fork it (https://github.com/code4romania/catpol-declaratii/fork)
-* Create your feature branch (git checkout -b feature/fooBar)
-* Commit your changes (git commit -am 'Add some fooBar')
-* Push to the branch (git push origin feature/fooBar)
-* Create a new Pull Request
-
-Coding guidelines example: https://github.com/Microsoft/vscode/wiki/Coding-Guidelines
-
 ## Feedback 
 
 * Request a new feature on GitHub.
