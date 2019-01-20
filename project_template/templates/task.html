@@ -3,14 +3,19 @@
 {% load static %}
 {% load moonsheep %}
 
+{% block header %}{% endblock %}
+
 {% block content %}
 <div class="container-fluid">
   <div class="row">
+    <!--Presenter view-->
     <div id="presenter">
       {% block task-presenter %}
       {% include presenter.template %}
       {% endblock %}
     </div>
+
+    <!--Task view-->
     <div id="task">
       {% block task-form %}
       <form id="taskForm" method="post">
@@ -26,6 +31,12 @@
         {# Default layout to render form #}
         <div class="row-fluid">
           <div class="col">
+            <div class="col">
+              <p>In stanga este afisata o declaratie de avere.<p>
+            </div>
+            <div class="col">
+              <p>{{ task.explanation }}{{ task.task_data.page }}<p>
+            </div>
             {% for field in form %}
             <div class="form-group">
               <div class="col">
@@ -42,7 +53,7 @@
 
         <div class="row-fluid">
           <div class="col">
-            <button class="btn .bg btn-lg" type="submit">Send the data</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-success" type="submit">Send the data</button>
           </div>
         </div>
       </form>
