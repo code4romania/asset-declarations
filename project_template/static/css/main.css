@@ -1,41 +1,21 @@
 body {
-  font-family: "Titillium Web", sans-serif;
-  background-color: #fff;
-  visibility: visible !important;
+  padding-top: 60px;
+  background: #efefef;
 }
 
-nav.navbar {
-  color: #3A54A4;
-  background: #ffffff;
-  border-bottom: 3px solid #3A54A4;
-  display: flex;
-  align-items: center;
+.bg {
+  background: #2177ab;
+  color: #ffffff;
 }
 
-.datblue {
-  color: #3A54A4;
-  display: inline-block;
-  margin-left: 30px;
-}
-
-nav.navbar span {
-  display: inline-block;
-  height: 30px;
-}
-
-span.logo img {
-  height: 100%;
-}
-
-[id="presenter"] {
+#presenter {
   width: 50%;
   position: fixed;
   height: 100%;
 }
 
-[id="task"] {
+#task {
   position: absolute;
   width: 50%;
   left: 50%;
-  padding: 30px;
 }
