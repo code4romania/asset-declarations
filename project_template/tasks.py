@@ -28,33 +28,21 @@ class TaskGetInitialInformation(AbstractTask):
         return super(TaskGetInitialInformation, self).get_presenter()
 
     def save_verified_data(self, verified_data):
-        print('[!] VERIFIED DATA: {}'.format(verified_data))
         politician, created = models.Politician.objects.get_or_create(
             name=verified_data['name'],
-            surname=verified_data['surname']
+            surname=verified_data['surname'],
+            position=verified_data['position']
         )
-        print("[!] FULL NAME: {}".format(politician.full_name))
+
+        politician.add_position(verified_data['position'])
+
+        income_declaration, created = models.IncomeDeclaration.objects.get_or_create(
+            url=self.url,
+            politician=politician,
+            date=datetime.datetime.strptime(verified_data['date'], "%Y-%m-%d")
+        )
 
     def after_save(self, verified_data):
-        print("[!] YOU'RE DONE")
-        # self.create_new_task(TaskWithTemplate, {'page': 11})
-
-
-# @register()
-class TaskToGetNumberOfTableRows(AbstractTask):
-    task_form = forms.TranscribeNumberOfRowsPerTableForm
-    template_name = 'num_of_rows_task.html'
-
-    def create_mocked_task(self, task_data):
-
-        task_data['info'].update({
-            'url': 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf',
-            'page': 10
-        })
-
-        return task_data
-
-    def save_verified_data(self, verified_data):
-        print(verified_data)
-        # self.create_new_task(TaskToGetNumberOfTableRows, {})
+        # Create a new task for each table, asking the user to transcribe the number of rows
+        pass
 
