@@ -1,7 +1,7 @@
 # Catalog politic  - Declaratii de avere [![GitHub contributors](https://img.shields.io/github/contributors/code4romania/catpol-declaratii.svg)](https://github.com/code4romania/catpol-declaratii/graphs/contributors) [![GitHub last commit](https://img.shields.io/github/last-commit/code4romania/catpol-declaratii.svg)](https://github.com/code4romania/catpol-declaratii/commits/master) [![License: MPL 2.0](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 
-* MAKING PUBLIC INFORMATION TRULLY PUBLIC 
-* aggregate data on the higher echalons of elected officials
+* MAKING PUBLIC INFORMATION TRULY PUBLIC 
+* aggregate data on the higher echelons of elected officials
 * data on activity while serving in each of the elected positions held
 * details about criminal legal proceeding or past convictions
 * data from asset declarations, including a net worth estimation
@@ -24,68 +24,80 @@ access to in-depth information in a friendly and easy to digest format.
 The platform will help journalists, watchdogs and researchers identify and verify information on elected officials. The data provided will offer an
 unprecedented starting point for in-depth analysis.
 
-Catalog Politic - Declaratii de avere - aims to automate the process of parsing and extracting information from asset declarations of Romanian politicians and public figures, by provinding a user friendly platform for volunteers to extract and map information to a fixed datamodel. The implementation is based on Moonsheep framework (http://moonsheep.org/).
+Catalog Politic - Declaratii de avere - aims to automate the process of parsing and extracting information from asset declarations of Romanian politicians and public figures, by providing a user friendly platform for volunteers to extract and map information to a fixed datamodel. The implementation is based on [Moonsheep](http://moonsheep.org/) framework.
 
 [Built with](#built-with) | [Repos and projects](#repos-and-projects) | [Deployment](#deployment) | [Contributing](#contributing) | [Feedback](#feedback) | [License](#license) | [About Code4Ro](#about-code4ro)
 
 ## Built With 
 
+[Django](https://www.djangoproject.com)   
+[Moonsheep](http://moonsheep.org/)    
+[PyBossa](https://pybossa.com/)    
+[Bootstrap](https://bootstrap.build)
+
 ### Programming languages
 
-Python
+Python 3.5+    
+Please follow [the Python style guide](python_style_guide.md).
 
 ### Platforms
 
-Moonsheep - http://moonsheep.org/
-
-Django
-
-PyBossa - https://pybossa.com/
+Political Catalogue - Asset Declaration is a web application.
 
 ### Frontend framework
 
+[Django](https://www.djangoproject.com)
+
 ### Package managers
+
+[Pip](https://pypi.org/project/pip/)
 
 ### Database technology & provider
 
+This remains currently undecided.   
+
 ## Repos and projects
 
-https://github.com/themoonsheep
-
-https://github.com/Scifabric/pybossa
+[Moonsheep on GitHub](https://github.com/themoonsheep)    
+[PyBossa on GitHub](https://github.com/Scifabric/pybossa)
 
 ## Deployment 
 
-Guide users through getting your code up and running on their own system. In this section you can talk about:
-1. Installation process
-  
-  *. Clone this repo
-  
-  *. Cd to the folder where you have cloned this repo
-  
-  *. pip/pip3 install -r requirements-dev.txt
-  
-  *. export DJANGO_SETTINGS_MODULE=project_template.settings.dev
-  
-  *. python/python3 manage.py migrate
-  
-  *. python/python3 manage.py runserver
-  
-2. Software dependencies
-3. Latest releases
-4. API references
+Installation process
+* Clone this repo: `git clone git@github.com:code4romania/catpol-declaratii.git`
+* Open the directory where you have cloned the repo (`cd catpol-declaratii`)
+* `pip install -r requirements-dev.txt` 
+* `export DJANGO_SETTINGS_MODULE=project_template.settings.dev`
+* `python manage.py migrate`
+* `python manage.py runserver`
 
 ## Contributing 
 
 If you would like to contribute to one of our repositories, first identify the scale of what you would like to contribute. If it is small (grammar/spelling or a bug fix) feel free to start working on a fix. If you are submitting a feature or substantial code contribution, please discuss it with the team and ensure it follows the product roadmap. 
 
-* Fork it (https://github.com/code4romania/catpol-declaratii/fork)
-* Create your feature branch (git checkout -b feature/fooBar)
-* Commit your changes (git commit -am 'Add some fooBar')
-* Push to the branch (git push origin feature/fooBar)
+* Fork it: `https://github.com/code4romania/catpol-declaratii/fork`
+* Create your feature branch `git checkout -b feature/fooBar`
+* Commit your changes `git commit -am 'Add some fooBar'`
+* Push to the branch `git push origin feature/fooBar`
 * Create a new Pull Request
 
-Coding guidelines example: https://github.com/Microsoft/vscode/wiki/Coding-Guidelines
+We'd appreciate it if you performed a `pull --rebase` before issuing a Pull Request.
+
+[Get familiar with some basic coding guidelines](https://github.com/Microsoft/vscode/wiki/Coding-Guidelines).
+
+
+## Debugging
+
+As you develop this app, you will surely add / remove / change database models (Django Models).   
+In order for your local server to acknowledge these changes, you will need to migrate your new structure.   
+During the development stage, while you're still testing things out and you don't care about the data in your local `sqlite` database, the following quick hack will update your models and clean the test database data:
+
+```
+rm  project_template/migrations/*
+rm db.sqlite3
+python manage.py makemigrations
+python manage.py migrate
+```
 
 ## Feedback 
 
