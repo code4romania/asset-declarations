@@ -2,18 +2,22 @@
 
 {% load static %}
 
-{% block header %}{% endblock %}
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css" />
+{% endblock %}
 
 {% block content %}
-<div class="container-fluid justify-content-center mt-5 p-5">
-    <section class="row justify-content-center">
-        <div class="col-aut mb-5">
+<div class="container-fluid justify-content-center mt-5">
+    <section class="row justify-content-center mt-5 pt-5">
+        <div class="col-aut home-title">
             <h1>Digitizare declarații</h1>
         </div>
     </section>
-
+    <section class="row justify-content-center p-5">
+        <img src="{% static 'images/icons8-documents-80.png' %}" alt="Icon digitizare" class="img-fluid d-block-xs" />
+    </section>
     <section class="row justify-content-center">
-        <a class="btn btn-danger" href="{% url 'task' %}">Dă-mi un task!</a>
+        <a class="btn btn-lg btn-outline-warning" href="{% url 'task' %}">Dă-mi un task!</a>
     </section>
 </div>
 {% endblock %}

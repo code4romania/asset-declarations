@@ -1,6 +1,11 @@
 from django.shortcuts import render
 from django.urls import reverse
 from moonsheep.views import TaskView
+from django.views.generic import TemplateView
+
+
+class HomeView(TemplateView):
+    template_name = 'home.html'
 
 
 class TranscriptionView(TaskView):
@@ -12,3 +17,4 @@ class TranscriptionView(TaskView):
 
         # Serve next task!
         return reverse('task')
+
