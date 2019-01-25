@@ -10,13 +10,14 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Titillium+Web:400,600,700&subset=latin-ext">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Merriweather|Titillium+Web:400,600,700&subset=latin-ext"> 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
     <link link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/apple-touch-icon.png' %}" />
     <link link rel="icon" sizes="32x32" href="{% static 'images/favicon-32x32.png' %}" type="image/png" />
     <link link rel="icon" sizes="16x16" href="{% static 'images/favicon-16x16.png' %}" type="image/png" />
+    {% block header %}{% endblock %}
   </head>
   <body class="invisible">
     <header>
@@ -29,7 +30,7 @@
                 </span>
               </div>
               <div>
-                <span><h1 class="datblue">Catalog Politic</h1></span>
+                <span><h2 class="datblue">Catalog Politic</h2></span>
               </div>
           </div>
         </a>

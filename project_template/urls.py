@@ -24,9 +24,8 @@ urlpatterns = [
     path('moonsheep/', include('moonsheep.urls')),
 
     # Create new home view here if you want a welcome page
-    path('', HomeView.as_view(), name='home'),
-               
     path('task', TranscriptionView.as_view(), name='task'),
+    path('', HomeView.as_view(), name='home'),
 ]
 
 # DEV-DEBUG

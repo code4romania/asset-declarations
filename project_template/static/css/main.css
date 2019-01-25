@@ -1,11 +1,12 @@
-body {
+h1, h2, h3, h4, h4, h6, .btn {
   font-family: "Titillium Web", sans-serif;
-  background-color: #fff;
-  visibility: visible !important;
+}
+
+body {
+  font-family: "Merriweather", serif;
 }
 
 nav.navbar {
-  color: #3A54A4;
   background: #ffffff;
   border-bottom: 3px solid #3A54A4;
   display: flex;
