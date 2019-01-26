@@ -30,6 +30,14 @@ class TranscribeOwnedJewelry(forms.Form):
 class TranscribeOwnedAutomobile(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['automobiles']))
 
+
+class TranscribeOwnedIncomeFromGamblingTable(forms.Form):
+    count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['gambling']))
+
+    
+class TranscribeOwnedIncomeFromAgriculturalActivitiesTable(forms.Form):
+    count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['agriculture']))
+    
     
 class TranscribeIndependentActivities(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {} ?".format(constants.DECLARATION_TABLES['independent_activities']))
@@ -37,4 +45,3 @@ class TranscribeIndependentActivities(forms.Form):
     
 class TranscribeOwnedIncomeFromDeferredUseOfGoods(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {} ?".format(constants.DECLARATION_TABLES['deferred_use']))
-
