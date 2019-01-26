@@ -71,7 +71,7 @@ class OwnedJewelryTable(models.Model):
 
 class OwnedExtraValuableTable(models.Model):
     __full_name = DECLARATION_TABLES['extra_valuable']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
+    # declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
     count = models.IntegerField("The number of rows")
 
 

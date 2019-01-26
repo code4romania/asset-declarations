@@ -11,3 +11,6 @@ class TranscribeInitialInformation(forms.Form):
 
 class TranscribeDebtsTableRowsCount(forms.Form):
     rows_count = forms.CharField(label="How many rows are there in the Debts table?")
+
+class TranscribeOwnedExtraValuableRowsCount(forms.Form):
+    rows_count = forms.CharField(label="How many rows are there in the Extra Valuable Goods table?")
