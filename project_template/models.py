@@ -83,7 +83,7 @@ class OwnedBankAccountsTable(models.Model):
 
 class OwnedInvestmentsTable(models.Model):
     __full_name = DECLARATION_TABLES['investments']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
+    # declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
     count = models.IntegerField("The number of rows")
 
 
