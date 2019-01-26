@@ -64,7 +64,7 @@ class TaskOwnedGoodsOrServicesPerSpouse(AbstractTask):
         return super(TaskOwnedGoodsOrServicesPerSpouse, self).get_presenter()
 
     def save_verified_data(self, verified_data):
-        owned_goods_or_services_per_spouse = models.OwnedGoodsOrServicesPerSpouseTable.objects.get_or_create(
+        owned_goods_or_services_per_spouse, created = models.OwnedGoodsOrServicesPerSpouseTable.objects.get_or_create(
             count = verified_data['count']
             )
 
