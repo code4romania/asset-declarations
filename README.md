@@ -95,8 +95,8 @@ During the development stage, while you're still testing things out and you don'
 ```
 rm  project_template/migrations/*
 rm db.sqlite3
-python manage.py makemigrations
-python manage.py migrate
+python3 manage.py makemigrations
+python3 manage.py migrate --run-syncdb
 ```
 
 ## Feedback 
