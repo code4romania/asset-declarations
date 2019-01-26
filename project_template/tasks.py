@@ -50,7 +50,7 @@ class TaskGetInitialInformation(AbstractTask):
 @register()
 class TaskOwnedGoodsOrServicesPerSpouse(AbstractTask):
     task_form = forms.TranscribeOwnedGoodsOrServicesPerSpouse
-    template_name = 'tasks/general_information_task.html'
+    template_name = 'tasks/row_count_template.html'
 
     def create_mocked_task(self, task_data):
         task_data['info'].update({
