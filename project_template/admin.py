@@ -19,5 +19,5 @@ from moonsheep.register import base_task
 # On Linux run following command to generate register lines
 # cat models.py | grep class | cut -d \  -f 2 | cut -d \( -f 1 | awk '{print "site.register(" $0 ")"}'
 
-base_task.register(TaskWithForm)
-base_task.register(TaskWithTemplate)
+# base_task.register(TaskWithForm)
+# base_task.register(TaskWithTemplate)
