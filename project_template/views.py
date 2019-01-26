@@ -23,4 +23,3 @@ class TranscriptionView(TaskView):
 
         # Serve next task!
         return reverse('task')
-
