@@ -10,23 +10,46 @@ class TranscribeInitialInformation(forms.Form):
     position = forms.CharField(label="What is the position of the current politician?")
     date = forms.CharField(label="Date", widget=forms.SelectDateWidget(years=YEAR_CHOICES))
 
+class TranscribeDebtsTableRowsCount(forms.Form):
+    rows_count = forms.CharField(label="How many rows are there in the Debts table?")
 
 class TranscribeOwnedGoodsOrServicesPerSpouse(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['gifts_spouse']))
 
+    
 class TranscribeOwnedIncomeFromOtherSourcesTable(forms.Form):
-    count = forms.IntegerField(label="How many filled rows are there in the table {} ?".format(constants.DECLARATION_TABLES['other_sources']))
+    count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['other_sources']))
 
+    
 class TranscribeOwnedInvestmentsTable(forms.Form):
-    count = forms.IntegerField(label="How many filled rows are there in the table {} ?".format(constants.DECLARATION_TABLES['bank_accounts']))
-
+    count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['bank_accounts']))
+    
+    
 class TranscribeOwnedJewelry(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['jewelry']))
 
+    
 class TranscribeOwnedAutomobile(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['automobiles']))
 
+
 class TranscribeOwnedIncomeFromSalaries(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['salaries']))
+
+
+class TranscribeOwnedIncomeFromGamblingTable(forms.Form):
+    count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['gambling']))
+
+    
+class TranscribeOwnedIncomeFromAgriculturalActivitiesTable(forms.Form):
+    count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['agriculture']))
+    
+    
+class TranscribeIndependentActivities(forms.Form):
+    count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['independent_activities']))
+
+    
+class TranscribeOwnedIncomeFromDeferredUseOfGoods(forms.Form):
+    count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['deferred_use']))
 
 
