@@ -11,3 +11,6 @@ class TranscribeInitialInformation(forms.Form):
 
 class TranscribeOwnedIncomeFromOtherSourcesTable(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table?")
+
+class TranscribeOwnedInvestmentsTable(forms.Form):
+    count = forms.IntegerField(label="How many filled rows are there in the table?")
