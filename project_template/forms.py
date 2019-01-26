@@ -8,3 +8,10 @@ class TranscribeInitialInformation(forms.Form):
     surname = forms.CharField(label="What is the surname of the current politician?")
     position = forms.CharField(label="What is the position of the current politician?")
     date = forms.CharField(label="Date", widget=forms.SelectDateWidget(years=YEAR_CHOICES))
+
+
+class TranscribeOwnedGoodsOrServicesPerSpouse(forms.Form):
+    count = forms.IntegerField(label="How many lines are in the spreadsheet 'Cadouri/Servicii - Sot/Sotie'?")
+
+
+
