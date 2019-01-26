@@ -26,6 +26,7 @@ urlpatterns = [
     # Create new home view here if you want a welcome page
     path('task', TranscriptionView.as_view(), name='task'),
     path('', HomeView.as_view(), name='home'),
+    path('i18n/', include('django.conf.urls.i18n')),
 ]
 
 # DEV-DEBUG

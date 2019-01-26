@@ -1,9 +1,10 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
 
-    <title>Digitizare declarații</title>
+    <title>{% trans 'HomePageTitle' %}</title>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,14 +27,26 @@
           <div style="display: flex; flex-direction: row; justify-content: flex-start; align-items: center;">
               <div>
                 <span class="logo">
-                    <img src="{% static 'images/code4romania-full.png' %}" alt="Logo" class="img-fluid" />
+                    <img src="{% static 'images/code4romania-full.png' %}" alt="Logo" class="img-fluid mr-3" />
                 </span>
               </div>
               <div>
-                <span><h2 class="datblue">Catalog Politic</h2></span>
+                <span><h2 class="datblue">{% trans 'PoliticalCatalogue' %}</h2></span>
               </div>
           </div>
         </a>
+        <span>
+          <!-- Generate forms for changing UI's language -->
+          {% get_available_languages as LANGUAGES %}
+          {% for language in LANGUAGES %}
+          <form class="d-inline" action="{% url 'set_language' %}" method="post">
+            {% csrf_token %}
+            <input name="next" type="hidden" value="{{ redirect_to }}"/>
+            <input type="hidden" name="language" value="{{ language.0 }}"/>
+            <input class="btn btn-sm btn-link text-uppercase" type="submit" value="{{ language.0 }}"/>
+          </form>
+          {% endfor %}
+        </span>
         </nav>
     </header>
     {% block content %}{% endblock %}
