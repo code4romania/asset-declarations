@@ -18,11 +18,11 @@ class TranscribeOwnedGoodsOrServicesPerSpouse(forms.Form):
 
     
 class TranscribeOwnedIncomeFromOtherSourcesTable(forms.Form):
-    count = forms.IntegerField(label="How many filled rows are there in the table {} ?".format(constants.DECLARATION_TABLES['other_sources']))
+    count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['other_sources']))
 
     
 class TranscribeOwnedInvestmentsTable(forms.Form):
-    count = forms.IntegerField(label="How many filled rows are there in the table {} ?".format(constants.DECLARATION_TABLES['bank_accounts']))
+    count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['bank_accounts']))
     
     
 class TranscribeOwnedJewelry(forms.Form):
@@ -31,6 +31,10 @@ class TranscribeOwnedJewelry(forms.Form):
     
 class TranscribeOwnedAutomobile(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['automobiles']))
+
+
+class TranscribeOwnedIncomeFromSalaries(forms.Form):
+    count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['salaries']))
 
 
 class TranscribeOwnedIncomeFromGamblingTable(forms.Form):
@@ -42,9 +46,10 @@ class TranscribeOwnedIncomeFromAgriculturalActivitiesTable(forms.Form):
     
     
 class TranscribeIndependentActivities(forms.Form):
-    count = forms.IntegerField(label="How many filled rows are there in the table {} ?".format(constants.DECLARATION_TABLES['independent_activities']))
+    count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['independent_activities']))
 
     
 class TranscribeOwnedIncomeFromDeferredUseOfGoods(forms.Form):
-    count = forms.IntegerField(label="How many filled rows are there in the table {} ?".format(constants.DECLARATION_TABLES['deferred_use']))
+    count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['deferred_use']))
+
 
