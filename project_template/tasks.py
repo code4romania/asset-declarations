@@ -277,7 +277,7 @@ class TaskOwnedIncomeFromAgriculturalActivitiesTable(AbstractTask):
 # @register()
 class TaskGetDebtsTableRowsCount(AbstractTask):
     task_form = forms.TranscribeDebtsTableRowsCount
-    template_name = 'tasks/debts_table_rows_count_task.html'
+    template_name = 'tasks/row_count_template.html'
 
     def create_mocked_task(self, task_data):
         task_data['info'].update({
