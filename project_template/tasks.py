@@ -172,3 +172,28 @@ class TaskOwnedAutomobile(AbstractTask):
     def after_save(self, verified_data):
         # Create a new task for each table, asking the user to transcribe the number of rows
         pass
+
+@register()
+class TaskOwnedIncomeFromGamblingTable(AbstractTask):
+    task_form = forms.TranscribeOwnedIncomeFromGamblingTable
+    template_name = 'tasks/row_count_template.html'
+
+    def create_mocked_task(self, task_data):
+        task_data['info'].update({
+            'url': 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf',
+            'page': 10
+        })
+
+        return task_data
+
+    def get_presenter(self):
+        return super(TaskOwnedIncomeFromGamblingTable, self).get_presenter()
+
+    def save_verified_data(self, verified_data):
+        owned_jewelry, created = models.OwnedIncomeFromGamblingTable.objects.get_or_create(
+            count=verified_data['count'],
+        )
+
+    def after_save(self, verified_data):
+        # Create a new task for each table, asking the user to transcribe the number of rows
+        pass
