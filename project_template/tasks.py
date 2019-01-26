@@ -12,7 +12,6 @@ import project_template.views
 import project_template.forms as forms
 
 
-# @register()
 class TaskGetInitialInformation(AbstractTask):
     task_form = forms.TranscribeInitialInformation
     template_name = 'tasks/general_information_task.html'
@@ -47,7 +46,7 @@ class TaskGetInitialInformation(AbstractTask):
         # Create a new task for each table, asking the user to transcribe the number of rows
         pass
 
-# @register()
+
 class TaskOwnedGoodsOrServicesPerSpouse(AbstractTask):
     task_form = forms.TranscribeOwnedGoodsOrServicesPerSpouse
     template_name = 'tasks/row_count_template.html'
@@ -65,14 +64,14 @@ class TaskOwnedGoodsOrServicesPerSpouse(AbstractTask):
 
     def save_verified_data(self, verified_data):
         owned_goods_or_services_per_spouse, created = models.OwnedGoodsOrServicesPerSpouseTable.objects.get_or_create(
-            count = verified_data['count']
+            count=verified_data['count']
             )
 
     def after_save(self, verified_data):
         # Create a new task for each table, asking the user to transcribe the number of rows
         pass
 
-# @register()
+
 class TaskTranscribeOwnedInvestmentsTable(AbstractTask):
     task_form = forms.TranscribeOwnedInvestmentsTable
     template_name = 'tasks/row_count_template.html'
@@ -97,7 +96,7 @@ class TaskTranscribeOwnedInvestmentsTable(AbstractTask):
         # Create a new task for each table, asking the user to transcribe the number of rows
         pass
 
-# @register()
+
 class TaskTranscribeOwnedIncomeFromOtherSourcesTable(AbstractTask):
     task_form = forms.TranscribeOwnedIncomeFromOtherSourcesTable
     template_name = 'tasks/row_count_template.html'
@@ -122,7 +121,7 @@ class TaskTranscribeOwnedIncomeFromOtherSourcesTable(AbstractTask):
         # Create a new task for each table, asking the user to transcribe the number of rows
         pass
 
-# @register()
+
 class TaskOwnedJewelry(AbstractTask):
     task_form = forms.TranscribeOwnedJewelry
     template_name = 'tasks/row_count_template.html'
@@ -147,8 +146,7 @@ class TaskOwnedJewelry(AbstractTask):
         # Create a new task for each table, asking the user to transcribe the number of rows
         pass
 
-      
-# @register()
+
 class TaskOwnedAutomobile(AbstractTask):
     task_form = forms.TranscribeOwnedAutomobile
     template_name = 'tasks/row_count_template.html'
@@ -174,7 +172,6 @@ class TaskOwnedAutomobile(AbstractTask):
         pass
 
 
-# @register()
 class TaskTranscribeOwnedIncomeFromDeferredUseOfGoods(AbstractTask):
     task_form = forms.TranscribeOwnedIncomeFromDeferredUseOfGoods
     template_name = 'tasks/row_count_template.html'
@@ -197,9 +194,8 @@ class TaskTranscribeOwnedIncomeFromDeferredUseOfGoods(AbstractTask):
 
     def after_save(self, verified_data):
         pass
-      
-      
-# @register()
+
+
 class TaskTranscribeIndependentActivities(AbstractTask):
     task_form = forms.TranscribeIndependentActivities
     template_name = 'tasks/row_count_template.html'
@@ -222,8 +218,8 @@ class TaskTranscribeIndependentActivities(AbstractTask):
 
     def after_save(self, verified_data):
         pass
-      
-# @register()
+
+
 class TaskOwnedIncomeFromGamblingTable(AbstractTask):
     task_form = forms.TranscribeOwnedIncomeFromGamblingTable
     template_name = 'tasks/row_count_template.html'
@@ -248,7 +244,8 @@ class TaskOwnedIncomeFromGamblingTable(AbstractTask):
         # Create a new task for each table, asking the user to transcribe the number of rows
         pass
 
-# @register()
+
+
 class TaskOwnedIncomeFromAgriculturalActivitiesTable(AbstractTask):
     task_form = forms.TranscribeOwnedIncomeFromAgriculturalActivitiesTable
     template_name = 'tasks/row_count_template.html'
@@ -274,7 +271,6 @@ class TaskOwnedIncomeFromAgriculturalActivitiesTable(AbstractTask):
         pass
 
 
-# @register()
 class TaskGetDebtsTableRowsCount(AbstractTask):
     task_form = forms.TranscribeDebtsTableRowsCount
     template_name = 'tasks/debts_table_rows_count_task.html'
@@ -297,13 +293,11 @@ class TaskGetDebtsTableRowsCount(AbstractTask):
         except Exception as error:
             print("Exception: ", error)
 
-
     def after_save(self, verified_data):
         # Create a new task for each table, asking the user to transcribe the number of rows
         pass
 
 
-# @register()
 class TaskOwnedIncomeFromSalariesCount(AbstractTask):
     task_form = forms.TranscribeOwnedIncomeFromSalaries
     template_name = 'tasks/row_count_template.html'
@@ -326,9 +320,8 @@ class TaskOwnedIncomeFromSalariesCount(AbstractTask):
 
     def after_save(self, verified_data):
         pass
-      
-      
-# @register()
+
+
 class TaskOwnedIncomeFromPensionsTable(AbstractTask):
     task_form = forms.TranscribeOwnedIncomeFromPensionsTable
     template_name = 'tasks/row_count_template.html'
@@ -354,7 +347,6 @@ class TaskOwnedIncomeFromPensionsTable(AbstractTask):
         pass
 
 
-# @register()
 class TaskOwnedIncomeFromInvestmentsTable(AbstractTask):
     task_form = forms.TranscribeOwnedIncomeFromInvestmentsTable
     template_name = 'tasks/row_count_template.html'
@@ -373,6 +365,37 @@ class TaskOwnedIncomeFromInvestmentsTable(AbstractTask):
     def save_verified_data(self, verified_data):
         owned_jewelry, created = models.OwnedIncomeFromInvestmentsTable.objects.get_or_create(
             count=verified_data['count'],
+        )
+
+    def after_save(self, verified_data):
+        # Create a new task for each table, asking the user to transcribe the number of rows
+        pass
+
+
+class TaskOwnedBuildingsTable(AbstractTask):
+    task_form = forms.OwnedBuildings
+    template_name = 'tasks/owned_buildings_template.html'
+
+    def create_mocked_task(self, task_data):
+        task_data['info'].update({
+            'url': 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf',
+            'page': 10
+        })
+
+        return task_data
+
+    def get_presenter(self):
+        return super(TaskOwnedBuildingsTable, self).get_presenter()
+
+    def save_verified_data(self, verified_data):
+        owned_building, created = models.OwnedBuildingsTable.objects.get_or_create(
+            address=verified_data['adress'],
+            category=verified_data['category'],
+            attainment_year=verified_data['attainment_year'],
+            surface=verified_data['surface'],
+            share=verified_data['share'],
+            attainment_type=verified_data['attainment_type'],
+            holder=verified_data['holder']
         )
 
     def after_save(self, verified_data):

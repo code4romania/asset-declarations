@@ -10,10 +10,12 @@ class TranscribeInitialInformation(forms.Form):
     position = forms.CharField(label="What is the position of the current politician?")
     date = forms.CharField(label="Date", widget=forms.SelectDateWidget(years=YEAR_CHOICES))
 
+
 class TranscribeDebtsTableRowsCount(forms.Form):
     rows_count = forms.CharField(label="How many rows are there in the Debts table?")
 
-class TranscribeOwnedGoodsOrServicesPerSpouse(forms.Form):
+
+class TranscribebGoodsOrServicesPerSpouse(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['gifts_spouse']))
 
 
@@ -24,7 +26,7 @@ class TranscribeOwnedIncomeFromOtherSourcesTable(forms.Form):
 class TranscribeOwnedInvestmentsTable(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['bank_accounts']))
 
-    
+
 class TranscribeOwnedJewelry(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['jewelry']))
 
@@ -59,3 +61,27 @@ class TranscribeOwnedIncomeFromPensionsTable(forms.Form):
 
 class TranscribeOwnedIncomeFromInvestmentsTable(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['income_investments']))
+
+
+class OwnedBuildings(forms.Form):
+    address = forms.CharField(
+        label="What is the address of the building?"
+    )
+    category = forms.CharField(
+        label="What is the category of the building?"
+    )
+    attainment_year = forms.CharField(
+        label="What is the attainment year of the building?"
+    )
+    surface = forms.CharField(
+        label="What is the surface of the building?"
+    )
+    share = forms.CharField(
+        label="What is the share in the building?"
+    )
+    attainment_type = forms.CharField(
+        label="What is the way the building was attained?"
+    )
+    holder = forms.CharField(
+        label="Who is the holder of the building?"
+    )
