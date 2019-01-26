@@ -20,3 +20,6 @@ class TranscribeOwnedInvestmentsTable(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {} ?".format(constants.DECLARATION_TABLES['bank_accounts']))
 
 
+class TranscribeOwnedJewelry(forms.Form):
+    count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['jewelry']))
+
