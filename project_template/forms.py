@@ -67,3 +67,6 @@ class TranscribeOwnedGoodsOrServicesPerChildTable(forms.Form):
 
 class TranscribeOwnedGoodsOrServicesPerOwnerTable(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['goods']))
+
+class TranscribeOwnedLandTable(forms.Form):
+    count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['land']))
