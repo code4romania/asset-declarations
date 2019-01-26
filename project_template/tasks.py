@@ -46,7 +46,7 @@ class TaskGetInitialInformation(AbstractTask):
         # Create a new task for each table, asking the user to transcribe the number of rows
         pass
 
-# @register()
+@register()
 class TaskTranscribeOwnedIncomeFromOtherSourcesTable(AbstractTask):
     task_form = forms.TranscribeOwnedIncomeFromOtherSourcesTable
     template_name = 'tasks/row_count_template.html'
@@ -73,7 +73,7 @@ class TaskTranscribeOwnedIncomeFromOtherSourcesTable(AbstractTask):
 
 @register()
 class TaskTranscribeOwnedInvestmentsTable(AbstractTask):
-    task_form = forms.TranscribeOwnedIncomeFromOtherSourcesTable
+    task_form = forms.TranscribeOwnedInvestmentsTable
     template_name = 'tasks/row_count_template.html'
 
     def create_mocked_task(self, task_data):
