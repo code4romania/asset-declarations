@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load static %}
+{% load i18n %}
 {% load moonsheep %}
 
 {% block content %}
@@ -11,42 +12,37 @@
       {% include presenter.template %}
       {% endblock %}
     </div>
-    <div id="task">
-      {% block task-form %}
-      <form id="taskForm" method="post">
-        {% moonsheep_token task %}
-        {% csrf_token %}
-
-        {% if task.task_form_template %}
-
-        {% include task.task_form_template %}
-
-        {% else %}
-
-        {# Default layout to render form #}
-        <div class="row-fluid">
-          <div class="col">
-            {% for field in form %}
-            <div class="form-group">
-              <div class="col">
-                {{ field.label }}
-              </div>
-              <div class="col">
-                {{ field }}
-              </div>
+    <div id="task" class="p-3">
+        {% block task-form %}
+        <form id="taskForm" method="post">
+            {% moonsheep_token task %}
+            {% csrf_token %}
+            <div class="row-fluid">
+                {# Provide additional context for non-native speakers #}
+                {% if "en" in request.LANGUAGE_CODE %}
+                    {% block explanation %}{% endblock %}
+                {% endif %}
+                {# Forms incoming! #}
+                <div class="col">
+                    {% for field in form %}
+                    <div class="form-group">
+                        <div class="col">
+                            {{ field.label }}
+                        </div>
+                        <div class="col">
+                            {{ field }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
-            {% endfor %}
-          </div>
-        </div>
-        {% endif %}
-
-        <div class="row-fluid">
-          <div class="col">
-            <button class="btn .bg btn-lg" type="submit">Send the data</button>
-          </div>
-        </div>
-      </form>
-      {% endblock %}
+            <div class="row-fluid">
+                <div class="col">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-success" type="submit">{% trans 'SendTheData' %}</button>
+                </div>
+            </div>
+        </form>
+        {% endblock %}
     </div>
   </div>
 </div>

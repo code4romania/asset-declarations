@@ -4,6 +4,7 @@ h1, h2, h3, h4, h4, h6, .btn {
 
 body {
   font-family: "Merriweather", serif;
+  font-size: .9rem;
 }
 
 nav.navbar {
@@ -11,7 +12,15 @@ nav.navbar {
   border-bottom: 3px solid #3A54A4;
   display: flex;
   align-items: center;
+}
 
+nav.navbar span {
+  display: inline-block;
+  height: 30px;
+}
+
+span.logo img {
+  height: 30px;
 }
 
 #presenter {

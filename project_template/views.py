@@ -9,11 +9,6 @@ from django.views.generic import TemplateView
 class HomeView(TemplateView):
     template_name = 'home.html'
 
-
-class HomeView(TemplateView):
-    template_name = 'home.html'
-
-
 class TranscriptionView(TaskView):
     def get_success_url(self):
         """
