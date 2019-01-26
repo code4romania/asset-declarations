@@ -53,21 +53,21 @@ class IncomeDeclaration(models.Model):
 
 class OwnedBuildingsTable(models.Model):
     __full_name = DECLARATION_TABLES['buildings']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
+    # declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
     count = models.IntegerField("The number of rows")
-    
+
 
 class OwnedAutomobileTable(models.Model):
     __full_name = DECLARATION_TABLES['automobiles']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
+    # declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
     count = models.IntegerField("The number of rows")
 
 
 class OwnedJewelryTable(models.Model):
     __full_name = DECLARATION_TABLES['jewelry']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
+    # declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
     count = models.IntegerField("The number of rows")
-    
+
 
 class OwnedExtraValuableTable(models.Model):
     __full_name = DECLARATION_TABLES['extra_valuable']
@@ -77,19 +77,19 @@ class OwnedExtraValuableTable(models.Model):
 
 class OwnedBankAccountsTable(models.Model):
     __full_name = DECLARATION_TABLES['bank_accounts']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
+    # declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
     count = models.IntegerField("The number of rows")
-    
+
 
 class OwnedInvestmentsTable(models.Model):
     __full_name = DECLARATION_TABLES['investments']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
+    # declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
     count = models.IntegerField("The number of rows")
 
 
 class OwnedLandTable(models.Model):
     __full_name = DECLARATION_TABLES['land']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
+    # declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
     count = models.IntegerField("The number of rows")
 
 
@@ -97,69 +97,69 @@ class OwnedDebtsTable(models.Model):
     __full_name = DECLARATION_TABLES['debts']
     # declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
     count = models.IntegerField("The number of rows")
-    
+
 
 class OwnedGoodsOrServicesPerOwnerTable(models.Model):
     __full_name = DECLARATION_TABLES['goods']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
+    # declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
     count = models.IntegerField("The number of rows")
-    
+
 
 class OwnedGoodsOrServicesPerSpouseTable(models.Model):
     __full_name = DECLARATION_TABLES['gifts_spouse']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
+    # declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
     count = models.IntegerField("The number of rows")
-    
+
 
 class OwnedGoodsOrServicesPerChildTable(models.Model):
     __full_name = DECLARATION_TABLES['gifts_kids']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
+    # declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
     count = models.IntegerField("The number of rows")
-    
+
 
 class OwnedIncomeFromSalariesTable(models.Model):
     __full_name = DECLARATION_TABLES['salaries']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
+    # declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
     count = models.IntegerField("The number of rows")
 
 
 class OwnedIncomeFromIndependentActivities(models.Model):
     __full_name = DECLARATION_TABLES['independent_activities']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
+    # declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
     count = models.IntegerField("The number of rows")
 
 
 class OwnedIncomeFromDeferredUseOfGoodsTable(models.Model):
     __full_name = DECLARATION_TABLES['deferred_use']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
+    # declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
     count = models.IntegerField("The number of rows")
 
 
 class OwnedIncomeFromInvestmentsTable(models.Model):
     __full_name = DECLARATION_TABLES['income_investments']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
+    # declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
     count = models.IntegerField("The number of rows")
 
 
 class OwnedIncomeFromPensionsTable(models.Model):
     __full_name = DECLARATION_TABLES['pensions']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
+    # declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
     count = models.IntegerField("The number of rows")
 
 
 class OwnedIncomeFromAgriculturalActivitiesTable(models.Model):
     __full_name = DECLARATION_TABLES['agriculture']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
+    # declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
     count = models.IntegerField("The number of rows")
 
 
 class OwnedIncomeFromGamblingTable(models.Model):
     __full_name = DECLARATION_TABLES['gambling']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
+    # declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
     count = models.IntegerField("The number of rows")
-    
+
 
 class OwnedIncomeFromOtherSourcesTable(models.Model):
     __full_name = DECLARATION_TABLES['other_sources']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
+    # declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
     count = models.IntegerField("The number of rows")
