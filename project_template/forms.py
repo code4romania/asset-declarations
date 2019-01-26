@@ -12,7 +12,7 @@ class TranscribeInitialInformation(forms.Form):
 
 
 class TranscribeDebtsTableRowsCount(forms.Form):
-    rows_count = forms.CharField(label="How many rows are there in the Debts table?")
+    count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['debts']))
 
 
 class TranscribebGoodsOrServicesPerSpouse(forms.Form):
@@ -61,6 +61,14 @@ class TranscribeOwnedIncomeFromPensionsTable(forms.Form):
 
 class TranscribeOwnedIncomeFromInvestmentsTable(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['income_investments']))
+
+
+class TranscribeOwnedGoodsOrServicesPerChildTable(forms.Form):
+    count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['gifts_kids']))
+
+
+class TranscribeOwnedGoodsOrServicesPerOwnerTable(forms.Form):
+    count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['goods']))
 
 
 class OwnedBuildings(forms.Form):

@@ -12,6 +12,7 @@ import project_template.views
 import project_template.forms as forms
 
 
+# @register()
 class TaskGetInitialInformation(AbstractTask):
     task_form = forms.TranscribeInitialInformation
     template_name = 'tasks/general_information_task.html'
@@ -47,6 +48,7 @@ class TaskGetInitialInformation(AbstractTask):
         pass
 
 
+# @register()
 class TaskOwnedGoodsOrServicesPerSpouse(AbstractTask):
     task_form = forms.TranscribeOwnedGoodsOrServicesPerSpouse
     template_name = 'tasks/row_count_template.html'
@@ -72,6 +74,7 @@ class TaskOwnedGoodsOrServicesPerSpouse(AbstractTask):
         pass
 
 
+# @register()
 class TaskTranscribeOwnedInvestmentsTable(AbstractTask):
     task_form = forms.TranscribeOwnedInvestmentsTable
     template_name = 'tasks/row_count_template.html'
@@ -88,7 +91,7 @@ class TaskTranscribeOwnedInvestmentsTable(AbstractTask):
         return super(TaskTranscribeOwnedInvestmentsTable, self).get_presenter()
 
     def save_verified_data(self, verified_data):
-        owned_income_from_other_sources_table, created = models.OwnedInvestmentsTable.objects.get_or_create(
+        owned_investments_table, created = models.OwnedInvestmentsTable.objects.get_or_create(
             count=verified_data['count'],
         )
 
@@ -97,6 +100,7 @@ class TaskTranscribeOwnedInvestmentsTable(AbstractTask):
         pass
 
 
+# @register()
 class TaskTranscribeOwnedIncomeFromOtherSourcesTable(AbstractTask):
     task_form = forms.TranscribeOwnedIncomeFromOtherSourcesTable
     template_name = 'tasks/row_count_template.html'
@@ -122,6 +126,7 @@ class TaskTranscribeOwnedIncomeFromOtherSourcesTable(AbstractTask):
         pass
 
 
+# @register()
 class TaskOwnedJewelry(AbstractTask):
     task_form = forms.TranscribeOwnedJewelry
     template_name = 'tasks/row_count_template.html'
@@ -138,7 +143,7 @@ class TaskOwnedJewelry(AbstractTask):
         return super(TaskOwnedJewelry, self).get_presenter()
 
     def save_verified_data(self, verified_data):
-        owned_jewelry, created = models.OwnedJewelryTable.objects.get_or_create(
+        owned_jewelry_table, created = models.OwnedJewelryTable.objects.get_or_create(
             count=verified_data['count'],
         )
 
@@ -147,6 +152,7 @@ class TaskOwnedJewelry(AbstractTask):
         pass
 
 
+# @register()
 class TaskOwnedAutomobile(AbstractTask):
     task_form = forms.TranscribeOwnedAutomobile
     template_name = 'tasks/row_count_template.html'
@@ -163,7 +169,7 @@ class TaskOwnedAutomobile(AbstractTask):
         return super(TaskOwnedAutomobile, self).get_presenter()
 
     def save_verified_data(self, verified_data):
-        owned_jewelry, created = models.OwnedAutomobileTable.objects.get_or_create(
+        owned_automobile_table, created = models.OwnedAutomobileTable.objects.get_or_create(
             count=verified_data['count'],
         )
 
@@ -172,6 +178,7 @@ class TaskOwnedAutomobile(AbstractTask):
         pass
 
 
+# @register()
 class TaskTranscribeOwnedIncomeFromDeferredUseOfGoods(AbstractTask):
     task_form = forms.TranscribeOwnedIncomeFromDeferredUseOfGoods
     template_name = 'tasks/row_count_template.html'
@@ -196,6 +203,7 @@ class TaskTranscribeOwnedIncomeFromDeferredUseOfGoods(AbstractTask):
         pass
 
 
+# @register()
 class TaskTranscribeIndependentActivities(AbstractTask):
     task_form = forms.TranscribeIndependentActivities
     template_name = 'tasks/row_count_template.html'
@@ -212,7 +220,7 @@ class TaskTranscribeIndependentActivities(AbstractTask):
         return super(TaskTranscribeIndependentActivities, self).get_presenter()
 
     def save_verified_data(self, verified_data):
-        count, created = models.OwnedIncomeFromIndependentActivities.objects.get_or_create(
+        owned_income_from_independent_activities, created = models.OwnedIncomeFromIndependentActivities.objects.get_or_create(
             count=verified_data['count'],
         )
 
@@ -220,6 +228,7 @@ class TaskTranscribeIndependentActivities(AbstractTask):
         pass
 
 
+# @register()
 class TaskOwnedIncomeFromGamblingTable(AbstractTask):
     task_form = forms.TranscribeOwnedIncomeFromGamblingTable
     template_name = 'tasks/row_count_template.html'
@@ -236,7 +245,7 @@ class TaskOwnedIncomeFromGamblingTable(AbstractTask):
         return super(TaskOwnedIncomeFromGamblingTable, self).get_presenter()
 
     def save_verified_data(self, verified_data):
-        owned_jewelry, created = models.OwnedIncomeFromGamblingTable.objects.get_or_create(
+        owned_income_from_gambling_table, created = models.OwnedIncomeFromGamblingTable.objects.get_or_create(
             count=verified_data['count'],
         )
 
@@ -245,7 +254,7 @@ class TaskOwnedIncomeFromGamblingTable(AbstractTask):
         pass
 
 
-
+# @register()
 class TaskOwnedIncomeFromAgriculturalActivitiesTable(AbstractTask):
     task_form = forms.TranscribeOwnedIncomeFromAgriculturalActivitiesTable
     template_name = 'tasks/row_count_template.html'
@@ -262,7 +271,7 @@ class TaskOwnedIncomeFromAgriculturalActivitiesTable(AbstractTask):
         return super(TaskOwnedIncomeFromAgriculturalActivitiesTable, self).get_presenter()
 
     def save_verified_data(self, verified_data):
-        owned_jewelry, created = models.OwnedIncomeFromAgriculturalActivitiesTable.objects.get_or_create(
+        owned_income_from_agricultural_activities_table, created = models.OwnedIncomeFromAgriculturalActivitiesTable.objects.get_or_create(
             count=verified_data['count'],
         )
 
@@ -271,6 +280,7 @@ class TaskOwnedIncomeFromAgriculturalActivitiesTable(AbstractTask):
         pass
 
 
+# @register()
 class TaskGetDebtsTableRowsCount(AbstractTask):
     task_form = forms.TranscribeDebtsTableRowsCount
     template_name = 'tasks/debts_table_rows_count_task.html'
@@ -287,17 +297,16 @@ class TaskGetDebtsTableRowsCount(AbstractTask):
         return super(TaskGetDebtsTableRowsCount, self).get_presenter()
 
     def save_verified_data(self, verified_data):
-        try:
-            rows_count = verified_data['rows_count']
-            models.OwnedDebtsTable.objects.get_or_create(count=rows_count)
-        except Exception as error:
-            print("Exception: ", error)
+        owned_debts_table, created = models.OwnedDebtsTable.objects.get_or_create(
+            count=verified_data['count'],
+        )
 
     def after_save(self, verified_data):
         # Create a new task for each table, asking the user to transcribe the number of rows
         pass
 
 
+# @register()
 class TaskOwnedIncomeFromSalariesCount(AbstractTask):
     task_form = forms.TranscribeOwnedIncomeFromSalaries
     template_name = 'tasks/row_count_template.html'
@@ -314,7 +323,7 @@ class TaskOwnedIncomeFromSalariesCount(AbstractTask):
         return super(TaskOwnedIncomeFromSalariesCount, self).get_presenter()
 
     def save_verified_data(self, verified_data):
-        count, created = models.OwnedIncomeFromSalariesTable.objects.get_or_create(
+        owned_income_from_salaries_table, created = models.OwnedIncomeFromSalariesTable.objects.get_or_create(
             count=verified_data['count']
         )
 
@@ -322,6 +331,7 @@ class TaskOwnedIncomeFromSalariesCount(AbstractTask):
         pass
 
 
+# @register()
 class TaskOwnedIncomeFromPensionsTable(AbstractTask):
     task_form = forms.TranscribeOwnedIncomeFromPensionsTable
     template_name = 'tasks/row_count_template.html'
@@ -338,7 +348,7 @@ class TaskOwnedIncomeFromPensionsTable(AbstractTask):
         return super(TaskOwnedIncomeFromPensionsTable, self).get_presenter()
 
     def save_verified_data(self, verified_data):
-        owned_jewelry, created = models.OwnedIncomeFromPensionsTable.objects.get_or_create(
+        owned_income_from_pensions_table, created = models.OwnedIncomeFromPensionsTable.objects.get_or_create(
             count=verified_data['count'],
         )
 
@@ -347,8 +357,9 @@ class TaskOwnedIncomeFromPensionsTable(AbstractTask):
         pass
 
 
-class TaskOwnedIncomeFromInvestmentsTable(AbstractTask):
-    task_form = forms.TranscribeOwnedIncomeFromInvestmentsTable
+# @register()
+class TaskOwnedGoodsOrServicesPerChildTable(AbstractTask):
+    task_form = forms.TranscribeOwnedGoodsOrServicesPerChildTable
     template_name = 'tasks/row_count_template.html'
 
     def create_mocked_task(self, task_data):
@@ -360,10 +371,10 @@ class TaskOwnedIncomeFromInvestmentsTable(AbstractTask):
         return task_data
 
     def get_presenter(self):
-        return super(TaskOwnedIncomeFromInvestmentsTable, self).get_presenter()
+        return super(TaskOwnedGoodsOrServicesPerChildTable, self).get_presenter()
 
     def save_verified_data(self, verified_data):
-        owned_jewelry, created = models.OwnedIncomeFromInvestmentsTable.objects.get_or_create(
+        owned_goods_or_services_per_child_table, created = models.OwnedGoodsOrServicesPerChildTable.objects.get_or_create(
             count=verified_data['count'],
         )
 
@@ -372,9 +383,9 @@ class TaskOwnedIncomeFromInvestmentsTable(AbstractTask):
         pass
 
 
-class TaskOwnedBuildingsTable(AbstractTask):
-    task_form = forms.OwnedBuildings
-    template_name = 'tasks/owned_buildings_template.html'
+class TaskOwnedGoodsOrServicesPerOwnerTable(AbstractTask):
+    task_form = forms.TranscribeOwnedGoodsOrServicesPerOwnerTable
+    template_name = 'tasks/row_count_template.html'
 
     def create_mocked_task(self, task_data):
         task_data['info'].update({
@@ -383,6 +394,24 @@ class TaskOwnedBuildingsTable(AbstractTask):
         })
 
         return task_data
+
+    def get_presenter(self):
+        return super(TaskOwnedGoodsOrServicesPerOwnerTable, self).get_presenter()
+
+    def save_verified_data(self, verified_data):
+        owned_goods_or_services_per_owner_table, created = models.OwnedGoodsOrServicesPerOwnerTable.objects.get_or_create(
+            count=verified_data['count'],
+        )
+
+    def after_save(self, verified_data):
+        # Create a new task for each table, asking the user to transcribe the number of rows
+        pass
+
+
+# @register()
+class TaskOwnedBuildingsTable(AbstractTask):
+    task_form = forms.OwnedBuildings
+    template_name = 'tasks/owned_buildings_template.html'
 
     def get_presenter(self):
         return super(TaskOwnedBuildingsTable, self).get_presenter()
