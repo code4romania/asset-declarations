@@ -26,3 +26,7 @@ class TranscribeOwnedJewelry(forms.Form):
 class TranscribeOwnedAutomobile(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['automobiles']))
 
+class TranscribeOwnedIncomeFromSalaries(forms.Form):
+    count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['salaries']))
+
+
