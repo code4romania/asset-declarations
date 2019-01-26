@@ -14,18 +14,27 @@ class TranscribeInitialInformation(forms.Form):
 class TranscribeOwnedGoodsOrServicesPerSpouse(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['gifts_spouse']))
 
+    
 class TranscribeOwnedIncomeFromOtherSourcesTable(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {} ?".format(constants.DECLARATION_TABLES['other_sources']))
 
+    
 class TranscribeOwnedInvestmentsTable(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {} ?".format(constants.DECLARATION_TABLES['bank_accounts']))
 
+    
 class TranscribeOwnedJewelry(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['jewelry']))
 
+    
 class TranscribeOwnedAutomobile(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['automobiles']))
 
+    
+class TranscribeIndependentActivities(forms.Form):
+    count = forms.IntegerField(label="How many filled rows are there in the table {} ?".format(constants.DECLARATION_TABLES['independent_activities']))
+
+    
 class TranscribeOwnedIncomeFromDeferredUseOfGoods(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {} ?".format(constants.DECLARATION_TABLES['deferred_use']))
 
