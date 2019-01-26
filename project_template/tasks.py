@@ -47,13 +47,10 @@ class TaskGetInitialInformation(AbstractTask):
         # Create a new task for each table, asking the user to transcribe the number of rows
         pass
 
-
-
 @register()
 class TaskOwnedGoodsOrServicesPerSpouse(AbstractTask):
     task_form = forms.TranscribeOwnedGoodsOrServicesPerSpouse
     template_name = 'tasks/general_information_task.html'
-
 
     def create_mocked_task(self, task_data):
         task_data['info'].update({

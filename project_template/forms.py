@@ -10,10 +10,9 @@ class TranscribeInitialInformation(forms.Form):
     position = forms.CharField(label="What is the position of the current politician?")
     date = forms.CharField(label="Date", widget=forms.SelectDateWidget(years=YEAR_CHOICES))
 
-
-
 class TranscribeOwnedGoodsOrServicesPerSpouse(forms.Form):
     count = forms.IntegerField(label="How many lines are in the table {}?".format(constants.DECLARATION_TABLES['gifts_spouse']))
+
 
 
 
