@@ -107,7 +107,7 @@ class OwnedGoodsOrServicesPerOwnerTable(models.Model):
 
 class OwnedGoodsOrServicesPerSpouseTable(models.Model):
     __full_name = DECLARATION_TABLES['gifts_spouse']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
+    # declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE)
     count = models.IntegerField("The number of rows")
 
 

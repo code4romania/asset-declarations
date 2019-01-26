@@ -1,4 +1,5 @@
 from django import forms
+from constants import DECLARATION_TABLES
 
 YEAR_CHOICES = ('2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019')
 
@@ -9,5 +10,10 @@ class TranscribeInitialInformation(forms.Form):
     position = forms.CharField(label="What is the position of the current politician?")
     date = forms.CharField(label="Date", widget=forms.SelectDateWidget(years=YEAR_CHOICES))
 
-class TranscribeOwnedIncomeFromOtherSourcesTable(forms.Form):
-    count = forms.IntegerField(label="How many filled rows are there in the table?")
+
+
+class TranscribeOwnedGoodsOrServicesPerSpouse(forms.Form):
+    count = forms.IntegerField(label="How many lines are in the table {}".format(DECLARATION_TABLES['gifts_spouse']))
+
+
+
