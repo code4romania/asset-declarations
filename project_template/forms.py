@@ -16,11 +16,11 @@ class TranscribeOwnedGoodsOrServicesPerSpouse(forms.Form):
 
 
 class TranscribeOwnedIncomeFromOtherSourcesTable(forms.Form):
-    count = forms.IntegerField(label="How many filled rows are there in the table {} ?".format(constants.DECLARATION_TABLES['other_sources']))
+    count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['other_sources']))
 
 
 class TranscribeOwnedInvestmentsTable(forms.Form):
-    count = forms.IntegerField(label="How many filled rows are there in the table {} ?".format(constants.DECLARATION_TABLES['bank_accounts']))
+    count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['bank_accounts']))
 
 
 class TranscribeOwnedJewelry(forms.Form):
@@ -40,11 +40,16 @@ class TranscribeOwnedIncomeFromAgriculturalActivitiesTable(forms.Form):
 
 
 class TranscribeIndependentActivities(forms.Form):
-    count = forms.IntegerField(label="How many filled rows are there in the table {} ?".format(constants.DECLARATION_TABLES['independent_activities']))
+    count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['independent_activities']))
 
 
 class TranscribeOwnedIncomeFromDeferredUseOfGoods(forms.Form):
-    count = forms.IntegerField(label="How many filled rows are there in the table {} ?".format(constants.DECLARATION_TABLES['deferred_use']))
+    count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['deferred_use']))
+
 
 class TranscribeOwnedIncomeFromPensionsTable(forms.Form):
-    count = forms.IntegerField(label="How many filled rows are there in the table {} ?".format(constants.DECLARATION_TABLES['pensions']))
+    count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['pensions']))
+
+
+class TranscribeOwnedIncomeFromInvestmentsTable(forms.Form):
+    count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['income_investments']))
