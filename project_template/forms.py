@@ -1,5 +1,5 @@
 from django import forms
-from constants import DECLARATION_TABLES
+from . import constants
 
 YEAR_CHOICES = ('2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019')
 
@@ -13,7 +13,7 @@ class TranscribeInitialInformation(forms.Form):
 
 
 class TranscribeOwnedGoodsOrServicesPerSpouse(forms.Form):
-    count = forms.IntegerField(label="How many lines are in the table {}".format(DECLARATION_TABLES['gifts_spouse']))
+    count = forms.IntegerField(label="How many lines are in the table {}?".format(constants.DECLARATION_TABLES['gifts_spouse']))
 
 
 
