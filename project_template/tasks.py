@@ -306,6 +306,32 @@ class TaskGetDebtsTableRowsCount(AbstractTask):
 class TaskGetExtraValuableRowsCount(AbstractTask):
     task_form = forms.TranscribeOwnedExtraValuableRowsCount
     template_name = 'tasks/extra_valuable_goods_table_count.html'
+    
+    def create_mocked_task(self, task_data):
+        task_data['info'].update({
+            'url': 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf',
+            'page': 10
+        })
+
+        return task_data
+      
+    def get_presenter(self):
+        return super(TaskGetExtraValuableRowsCount, self).get_presenter()
+
+    def save_verified_data(self, verified_data):
+        try:
+            rows_count = verified_data['rows_count']
+            models.OwnedExtraValuableTable.objects.get_or_create(count=rows_count)
+        except Exception as error:
+            print("Exception: ", error)
+
+    def after_save(self, verified_data):
+        pass
+
+# @register()
+class TaskOwnedIncomeFromSalariesCount(AbstractTask):
+    task_form = forms.TranscribeOwnedIncomeFromSalaries
+    template_name = 'tasks/row_count_template.html'
 
     def create_mocked_task(self, task_data):
         task_data['info'].update({
@@ -316,14 +342,62 @@ class TaskGetExtraValuableRowsCount(AbstractTask):
         return task_data
 
     def get_presenter(self):
-        return super(TaskGetExtraValuableRowsCount, self).get_presenter()
+        return super(TaskOwnedIncomeFromSalariesCount, self).get_presenter()
 
     def save_verified_data(self, verified_data):
-        try:
-            rows_count = verified_data['rows_count']
-            models.OwnedExtraValuableTable.objects.get_or_create(count=rows_count)
-        except Exception as error:
-            print("Exception: ", error)
+        count, created = models.OwnedIncomeFromSalariesTable.objects.get_or_create(
+            count=verified_data['count']
+        )
+
+    def after_save(self, verified_data):
+        pass
+      
+      
+# @register()
+class TaskOwnedIncomeFromPensionsTable(AbstractTask):
+    task_form = forms.TranscribeOwnedIncomeFromPensionsTable
+    template_name = 'tasks/row_count_template.html'
+
+    def create_mocked_task(self, task_data):
+        task_data['info'].update({
+            'url': 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf',
+            'page': 10
+        })
+
+        return task_data
+
+    def get_presenter(self):
+        return super(TaskOwnedIncomeFromPensionsTable, self).get_presenter()
+
+    def save_verified_data(self, verified_data):
+        owned_jewelry, created = models.OwnedIncomeFromPensionsTable.objects.get_or_create(
+            count=verified_data['count'],
+        )
+
+    def after_save(self, verified_data):
+        # Create a new task for each table, asking the user to transcribe the number of rows
+        pass
+
+# @register()
+class TaskOwnedIncomeFromInvestmentsTable(AbstractTask):
+    task_form = forms.TranscribeOwnedIncomeFromInvestmentsTable
+    template_name = 'tasks/row_count_template.html'
+
+    def create_mocked_task(self, task_data):
+        task_data['info'].update({
+            'url': 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf',
+            'page': 10
+        })
+
+        return task_data
+
+    def get_presenter(self):
+        return super(TaskOwnedIncomeFromInvestmentsTable, self).get_presenter()
+
+    def save_verified_data(self, verified_data):
+        owned_jewelry, created = models.OwnedIncomeFromInvestmentsTable.objects.get_or_create(
+            count=verified_data['count'],
+        )
 
     def after_save(self, verified_data):
         # Create a new task for each table, asking the user to transcribe the number of rows
