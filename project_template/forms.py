@@ -10,6 +10,7 @@ class TranscribeInitialInformation(forms.Form):
     position = forms.CharField(label="What is the position of the current politician?")
     date = forms.CharField(label="Date", widget=forms.SelectDateWidget(years=YEAR_CHOICES))
 
+
 class TranscribeOwnedGoodsOrServicesPerSpouse(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['gifts_spouse']))
 
@@ -19,7 +20,9 @@ class TranscribeOwnedIncomeFromOtherSourcesTable(forms.Form):
 class TranscribeOwnedInvestmentsTable(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {} ?".format(constants.DECLARATION_TABLES['bank_accounts']))
 
-
 class TranscribeOwnedJewelry(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['jewelry']))
+
+class TranscribeOwnedAutomobile(forms.Form):
+    count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['automobiles']))
 
