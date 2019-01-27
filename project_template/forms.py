@@ -11,8 +11,10 @@ class TranscribeInitialInformation(forms.Form):
     position = forms.CharField(label=_("What is the position of the current politician?"))
     date = forms.CharField(label=_("Date"), widget=forms.SelectDateWidget(years=YEAR_CHOICES))
 
+
 class TranscribeDebtsTableRowsCount(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['debts']))
+
 
 class TranscribeOwnedGoodsOrServicesPerSpouse(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['gifts_spouse']))
@@ -69,5 +71,30 @@ class TranscribeOwnedGoodsOrServicesPerChildTable(forms.Form):
 class TranscribeOwnedGoodsOrServicesPerOwnerTable(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['goods']))
 
+
 class TranscribeOwnedLandTable(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['land']))
+
+
+class TranscribeOwnedBuildingsTable(forms.Form):
+    address = forms.CharField(
+        label="What is the address of the building?"
+    )
+    category = forms.CharField(
+        label="What is the category of the building?"
+    )
+    attainment_year = forms.CharField(
+        label="What is the attainment year of the building?"
+    )
+    surface = forms.CharField(
+        label="What is the surface of the building?"
+    )
+    share = forms.CharField(
+        label="What is the share in the building?"
+    )
+    attainment_type = forms.CharField(
+        label="What is the way the building was attained?"
+    )
+    holder = forms.CharField(
+        label="Who is the holder of the building?"
+    )

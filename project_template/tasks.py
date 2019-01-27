@@ -47,6 +47,7 @@ class TaskGetInitialInformation(AbstractTask):
         # Create a new task for each table, asking the user to transcribe the number of rows
         pass
 
+
 # @register()
 class TaskOwnedGoodsOrServicesPerSpouse(AbstractTask):
     task_form = forms.TranscribeOwnedGoodsOrServicesPerSpouse
@@ -71,6 +72,7 @@ class TaskOwnedGoodsOrServicesPerSpouse(AbstractTask):
     def after_save(self, verified_data):
         # Create a new task for each table, asking the user to transcribe the number of rows
         pass
+
 
 # @register()
 class TaskTranscribeOwnedInvestmentsTable(AbstractTask):
@@ -97,6 +99,7 @@ class TaskTranscribeOwnedInvestmentsTable(AbstractTask):
         # Create a new task for each table, asking the user to transcribe the number of rows
         pass
 
+
 # @register()
 class TaskTranscribeOwnedIncomeFromOtherSourcesTable(AbstractTask):
     task_form = forms.TranscribeOwnedIncomeFromOtherSourcesTable
@@ -121,6 +124,7 @@ class TaskTranscribeOwnedIncomeFromOtherSourcesTable(AbstractTask):
     def after_save(self, verified_data):
         # Create a new task for each table, asking the user to transcribe the number of rows
         pass
+
 
 # @register()
 class TaskOwnedJewelry(AbstractTask):
@@ -223,6 +227,7 @@ class TaskTranscribeIndependentActivities(AbstractTask):
     def after_save(self, verified_data):
         pass
 
+
 # @register()
 class TaskOwnedIncomeFromGamblingTable(AbstractTask):
     task_form = forms.TranscribeOwnedIncomeFromGamblingTable
@@ -247,6 +252,7 @@ class TaskOwnedIncomeFromGamblingTable(AbstractTask):
     def after_save(self, verified_data):
         # Create a new task for each table, asking the user to transcribe the number of rows
         pass
+
 
 # @register()
 class TaskOwnedIncomeFromAgriculturalActivitiesTable(AbstractTask):
@@ -402,7 +408,8 @@ class TaskOwnedGoodsOrServicesPerOwnerTable(AbstractTask):
         # Create a new task for each table, asking the user to transcribe the number of rows
         pass
 
-#@register()
+
+# @register()
 class TaskOwnedLandTable(AbstractTask):
     task_form = forms.TranscribeOwnedLandTable
     template_name = 'tasks/row_count_template.html'
@@ -421,6 +428,30 @@ class TaskOwnedLandTable(AbstractTask):
     def save_verified_data(self, verified_data):
         owned_land_table, created = models.OwnedLandTable.objects.get_or_create(
             count=verified_data['count'],
+        )
+
+    def after_save(self, verified_data):
+        # Create a new task for each table, asking the user to transcribe the number of rows
+        pass
+
+
+# @register()
+class TaskOwnedBuildingsTable(AbstractTask):
+    task_form = forms.OwnedBuildings
+    template_name = 'tasks/owned_buildings_task.html'
+
+    def get_presenter(self):
+        return super(TaskOwnedBuildingsTable, self).get_presenter()
+
+    def save_verified_data(self, verified_data):
+        owned_building, created = models.OwnedBuildingsTable.objects.get_or_create(
+            address=verified_data['adress'],
+            category=verified_data['category'],
+            attainment_year=verified_data['attainment_year'],
+            surface=verified_data['surface'],
+            share=verified_data['share'],
+            attainment_type=verified_data['attainment_type'],
+            holder=verified_data['holder']
         )
 
     def after_save(self, verified_data):
