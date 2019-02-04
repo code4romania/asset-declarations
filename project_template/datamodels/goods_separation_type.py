@@ -3,7 +3,7 @@ from enum import Enum
 from datamodels import common_utils
 
 
-class MobileSeparationType(Enum):
+class GoodsSeparationType(Enum):
     SELL = "Vanzare"
     SEPARATION = "Partaj"
     DONATION = "Donatie"
@@ -12,4 +12,4 @@ class MobileSeparationType(Enum):
 
     @staticmethod
     def return_as_iterable():
-        return common_utils.return_enum_as_iterable(MobileSeparationType)
+        return common_utils.return_enum_as_iterable(GoodsSeparationType)

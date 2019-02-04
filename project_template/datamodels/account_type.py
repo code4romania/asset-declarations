@@ -1,10 +1,11 @@
 from enum import Enum
+from datamodels import common_utils
 
 
 class AccountType(Enum):
     CURRENT_ACCOUNT = (1, "Cont curent sau echivalente (inclusiv card)")
     BANK_DEPOSIT = (2, "Depozit bancar sau echivalente")
-    INVESTEMENT_FUNDS = (3, "Fonduri de investitii sau echivalente, inclusiv fonduri private de pensii sau alte sisteme "
+    INVESTMENT_FUNDS = (3, "Fonduri de investitii sau echivalente, inclusiv fonduri private de pensii sau alte sisteme "
                             "cu acumulare (se vor declara cele aferente anului fiscal anterior)")
 
     @staticmethod

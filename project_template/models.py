@@ -11,7 +11,7 @@ from datamodels.real_estate_type import RealEstateType
 from datamodels.mobile_goods_type import MobileGoodsType
 from datamodels.income_provider_type import IncomeProviderType
 from datamodels.estranged_goods_type import EstrangedGoodsType
-
+from datamodels.goods_separation_type import GoodsSeparationType
 
 FIRST_2_TYPES = 2
 
@@ -75,10 +75,12 @@ class OwnedBuildingsTableEntry(models.Model):
     address = models.CharField("Adresa", max_length=128)
     category = models.IntegerField("Categorie", choices=BuildingType.return_as_iterable())
     acquisition_year = models.DateField("Anul dobandirii")
-    surface = models.IntegerField("Suprafata")
-    share_ratio = models.DecimalField("Cota-parte", max_digits=3, decimal_places=2)
-    attainment_type = models.CharField("Modul de dobandire", max_length=32, choices=AttainmentType.return_as_iterable())
-    owner_name = models.CharField("Titular", max_length=128)
+    surface = models.IntegerField("Suprafata", blank=True)
+    share_ratio = models.DecimalField("Cota-parte", max_digits=3, decimal_places=2, blank=True)
+    attainment_type = models.CharField("Modul de dobandire", max_length=32,
+                                       choices=AttainmentType.return_as_iterable(), blank=True)
+    owner_name = models.CharField("Titular", max_length=128, blank=True)
+    observations = models.CharField("Observatii", max_length=256, blank=True)
 
 
 class OwnedAutomobileTable(models.Model):
@@ -128,10 +130,10 @@ class OwnedExtraValuableTableEntry(models.Model):
                                                max_length=128,
                                                choices=EstrangedGoodsType.return_as_iterable())
     estrangement_date = models.DateField("Data instrainarii")
-    estrangementee = models.CharField("Persoana catre care s-a instrainat", max_length=128)
+    receiver_of_goods = models.CharField("Persoana catre care s-a instrainat", max_length=128)
     goods_separation_type = models.CharField("Forma instrainarii",
                                              max_length=64,
-                                             choices=MobileGoodsType)
+                                             choices=GoodsSeparationType.return_as_iterable())
     value = models.IntegerField("Valoare")
     currency = models.CharField("Valuta",
                                 max_length=16,
@@ -201,6 +203,7 @@ class OwnedLandTableEntry(models.Model):
                                        choices=AttainmentType.return_as_iterable(),
                                        blank=True)
     owner = models.CharField("Titular", max_length=128, blank=True)
+    observations = models.CharField("Observatii", max_length=256, blank=True)
 
 
 class OwnedDebtsTable(models.Model):
@@ -215,6 +218,9 @@ class OwnedDebtsTableEntry(models.Model):
     acquirement_year = models.DateField("Contractat in anul")
     due_date = models.DateField("Scadent la")
     value = models.IntegerField("Valoare")
+    currency = models.CharField("Valuta",
+                                max_length=16,
+                                choices=Currency.return_as_iterable())
 
 
 class OwnedGoodsOrServicesPerOwnerTable(models.Model):
@@ -358,7 +364,7 @@ class OwnedIncomeFromPensionsTable(models.Model):
 
 
 class OwnedIncomeFromPensionsTableEntry(models.Model):
-    table = models.ForeignKey(OwnedIncomeFromInvestmentsTable, on_delete=models.CASCADE)
+    table = models.ForeignKey(OwnedIncomeFromPensionsTable, on_delete=models.CASCADE)
     income_provider_type = models.CharField("Cine a realizat venitul",
                                             max_length=128,
                                             choices=IncomeProviderType.return_as_iterable()[0:FIRST_2_TYPES])
