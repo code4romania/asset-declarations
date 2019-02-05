@@ -1,7 +1,4 @@
-import random
 import datetime
-from unittest.mock import MagicMock
-
 from moonsheep.tasks import AbstractTask
 from moonsheep import verifiers
 from moonsheep.decorators import register
@@ -12,7 +9,7 @@ import project_template.views
 import project_template.forms as forms
 
 
-# @register()
+@register()
 class TaskGetInitialInformation(AbstractTask):
     task_form = forms.TranscribeInitialInformation
     template_name = 'tasks/general_information_task.html'
@@ -48,7 +45,7 @@ class TaskGetInitialInformation(AbstractTask):
         pass
 
 
-# @register()
+@register()
 class TaskOwnedGoodsOrServicesPerSpouse(AbstractTask):
     task_form = forms.TranscribeOwnedGoodsOrServicesPerSpouse
     template_name = 'tasks/row_count_template.html'
@@ -74,7 +71,7 @@ class TaskOwnedGoodsOrServicesPerSpouse(AbstractTask):
         pass
 
 
-# @register()
+@register()
 class TaskTranscribeOwnedInvestmentsTable(AbstractTask):
     task_form = forms.TranscribeOwnedInvestmentsTable
     template_name = 'tasks/row_count_template.html'
@@ -100,7 +97,7 @@ class TaskTranscribeOwnedInvestmentsTable(AbstractTask):
         pass
 
 
-# @register()
+@register()
 class TaskTranscribeOwnedIncomeFromOtherSourcesTable(AbstractTask):
     task_form = forms.TranscribeOwnedIncomeFromOtherSourcesTable
     template_name = 'tasks/row_count_template.html'
@@ -126,7 +123,7 @@ class TaskTranscribeOwnedIncomeFromOtherSourcesTable(AbstractTask):
         pass
 
 
-# @register()
+@register()
 class TaskOwnedJewelry(AbstractTask):
     task_form = forms.TranscribeOwnedJewelry
     template_name = 'tasks/row_count_template.html'
@@ -152,7 +149,7 @@ class TaskOwnedJewelry(AbstractTask):
         pass
 
 
-# @register()
+@register()
 class TaskOwnedAutomobile(AbstractTask):
     task_form = forms.TranscribeOwnedAutomobile
     template_name = 'tasks/row_count_template.html'
@@ -178,7 +175,7 @@ class TaskOwnedAutomobile(AbstractTask):
         pass
 
 
-# @register()
+@register()
 class TaskTranscribeOwnedIncomeFromDeferredUseOfGoods(AbstractTask):
     task_form = forms.TranscribeOwnedIncomeFromDeferredUseOfGoods
     template_name = 'tasks/row_count_template.html'
@@ -203,7 +200,7 @@ class TaskTranscribeOwnedIncomeFromDeferredUseOfGoods(AbstractTask):
         pass
 
 
-# @register()
+@register()
 class TaskTranscribeIndependentActivities(AbstractTask):
     task_form = forms.TranscribeIndependentActivities
     template_name = 'tasks/row_count_template.html'
@@ -228,7 +225,7 @@ class TaskTranscribeIndependentActivities(AbstractTask):
         pass
 
 
-# @register()
+@register()
 class TaskOwnedIncomeFromGamblingTable(AbstractTask):
     task_form = forms.TranscribeOwnedIncomeFromGamblingTable
     template_name = 'tasks/row_count_template.html'
@@ -254,7 +251,7 @@ class TaskOwnedIncomeFromGamblingTable(AbstractTask):
         pass
 
 
-# @register()
+@register()
 class TaskOwnedIncomeFromAgriculturalActivitiesTable(AbstractTask):
     task_form = forms.TranscribeOwnedIncomeFromAgriculturalActivitiesTable
     template_name = 'tasks/row_count_template.html'
@@ -280,7 +277,7 @@ class TaskOwnedIncomeFromAgriculturalActivitiesTable(AbstractTask):
         pass
 
 
-# @register()
+@register()
 class TaskGetDebtsTableRowsCount(AbstractTask):
     task_form = forms.TranscribeDebtsTableRowsCount
     template_name = 'tasks/row_count_template.html'
@@ -306,7 +303,7 @@ class TaskGetDebtsTableRowsCount(AbstractTask):
         pass
 
 
-# @register()
+@register()
 class TaskOwnedIncomeFromSalariesCount(AbstractTask):
     task_form = forms.TranscribeOwnedIncomeFromSalaries
     template_name = 'tasks/row_count_template.html'
@@ -331,7 +328,7 @@ class TaskOwnedIncomeFromSalariesCount(AbstractTask):
         pass
 
 
-# @register()
+@register()
 class TaskOwnedIncomeFromPensionsTable(AbstractTask):
     task_form = forms.TranscribeOwnedIncomeFromPensionsTable
     template_name = 'tasks/row_count_template.html'
@@ -357,7 +354,7 @@ class TaskOwnedIncomeFromPensionsTable(AbstractTask):
         pass
 
 
-# @register()
+@register()
 class TaskOwnedGoodsOrServicesPerChildTable(AbstractTask):
     task_form = forms.TranscribeOwnedGoodsOrServicesPerChildTable
     template_name = 'tasks/row_count_template.html'
@@ -409,7 +406,7 @@ class TaskOwnedGoodsOrServicesPerOwnerTable(AbstractTask):
         pass
 
 
-# @register()
+@register()
 class TaskOwnedLandTable(AbstractTask):
     task_form = forms.TranscribeOwnedLandTable
     template_name = 'tasks/row_count_template.html'
@@ -435,9 +432,9 @@ class TaskOwnedLandTable(AbstractTask):
         pass
 
 
-# @register()
+@register()
 class TaskOwnedBuildingsTable(AbstractTask):
-    task_form = forms.OwnedBuildings
+    task_form = forms.TranscribeOwnedBuildingsTable
     template_name = 'tasks/owned_buildings_task.html'
 
     def get_presenter(self):
