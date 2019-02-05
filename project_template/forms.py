@@ -9,7 +9,7 @@ class TranscribeInitialInformation(forms.Form):
     name = forms.CharField(label=_("What is the name of the current politician?"))
     surname = forms.CharField(label=_("What is the surname of the current politician?"))
     position = forms.CharField(label=_("What is the position of the current politician?"))
-    date = forms.CharField(label=_("Date"), widget=forms.SelectDateWidget(years=YEAR_CHOICES))
+    date = forms.DateField(label=_("Date"), widget=forms.SelectDateWidget(years=YEAR_CHOICES), input_formats=['%Y-%m-%d'])
 
 
 class TranscribeDebtsTableRowsCount(forms.Form):

@@ -437,6 +437,14 @@ class TaskOwnedBuildingsTable(AbstractTask):
     task_form = forms.TranscribeOwnedBuildingsTable
     template_name = 'tasks/owned_buildings_task.html'
 
+    def create_mocked_task(self, task_data):
+        task_data['info'].update({
+            'url': 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf',
+            'page': 10
+        })
+
+        return task_data
+
     def get_presenter(self):
         return super(TaskOwnedBuildingsTable, self).get_presenter()
 
