@@ -75,13 +75,7 @@ Installation process
 
 If you would like to contribute to one of our repositories, first identify the scale of what you would like to contribute. If it is small (grammar/spelling or a bug fix) feel free to start working on a fix. If you are submitting a feature or substantial code contribution, please discuss it with the team and ensure it follows the product roadmap. 
 
-* Fork it: `https://github.com/code4romania/catpol-declaratii/fork`
-* Create your feature branch `git checkout -b feature/fooBar`
-* Commit your changes `git commit -am 'Add some fooBar'`
-* Push to the branch `git push origin feature/fooBar`
-* Create a new Pull Request
-
-We'd appreciate it if you performed a `pull --rebase` before issuing a Pull Request.
+Our collaboration model [is described here](.github/WORKFLOW.md).
 
 [Get familiar with some basic coding guidelines](https://github.com/Microsoft/vscode/wiki/Coding-Guidelines).
 
