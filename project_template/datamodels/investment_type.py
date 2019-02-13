@@ -1,5 +1,5 @@
 from enum import Enum
-from .common_utils import *
+from .common_utils import return_enum_as_iterable
 
 class InvestmentType(Enum):
     VALUE_PAPERS = "HARTII DE VALOARE"
@@ -8,4 +8,4 @@ class InvestmentType(Enum):
 
     @staticmethod
     def return_as_iterable():
-        return common_utils.return_enum_as_iterable(InvestmentType)
+        return return_enum_as_iterable(InvestmentType)

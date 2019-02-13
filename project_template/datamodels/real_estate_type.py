@@ -1,5 +1,5 @@
 from enum import Enum
-from .common_utils import *
+from .common_utils import return_enum_as_iterable
 
 class RealEstateType(Enum):
     AGRICULTURAL = "Agricol"
@@ -10,4 +10,4 @@ class RealEstateType(Enum):
 
     @staticmethod
     def return_as_iterable():
-        return common_utils.return_enum_as_iterable(RealEstateType)
+        return return_enum_as_iterable(RealEstateType)

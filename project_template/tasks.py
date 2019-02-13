@@ -429,7 +429,8 @@ class TaskOwnedLandTable(AbstractTask):
 
     def after_save(self, verified_data):
         # Create a new task for each table, asking the user to transcribe the number of rows
-        for row_number in range(verified_data['count'])
+        number_rows = int(verified_data['count'])
+        for row_number in list(range(1, number_rows)):
             self.create_new_task(TaskOwnedLandRowEntry, row_number)
 
 
@@ -500,13 +501,14 @@ class TaskOwnedLandRowEntry(AbstractTask):
             'url': 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf',
             'page': 10
         })
+        return task_data
 
     def get_presenter(self):
         return super(TaskOwnedLandRowEntry, self).get_presenter()
 
     def save_verified_data(self, verified_data):
         owned_land, created = models.OwnedLandTableEntry.objects.get_or_create(
-            address="Judet: {}, Localitate: {}, Comuna: {}".format(verified_data['judet'], verified_data['localitate'], verified_data['comuna'],
+            address="Judet: {}, Localitate: {}, Comuna: {}".format(verified_data['judet'], verified_data['localitate'], verified_data['comuna']),
             category=verified_data['categorie'],
             acquisition_year=verified_data['an_dobandire'],
             surface=verified_data['suprafata'],
@@ -514,10 +516,13 @@ class TaskOwnedLandRowEntry(AbstractTask):
             attainment_type=verified_data['mod_dobandire'],
             owner="{} {}".format(verified_data['nume_proprietar'], verified_data['prenume_proprietar']),
             observations=""
-            )
+        )
 
     def after_save(self, verified_data):
         pass
+
+
+
 
 
 

@@ -1,5 +1,5 @@
 from enum import Enum
-from .common_utils import *
+from .common_utils import return_enum_as_iterable
 
 class EstrangedGoodsType(Enum):
     APARTMENT = "Apartament"
@@ -14,4 +14,4 @@ class EstrangedGoodsType(Enum):
 
     @staticmethod
     def return_as_iterable():
-        return common_utils.return_enum_as_iterable(EstrangedGoodsType)
+        return return_enum_as_iterable(EstrangedGoodsType)

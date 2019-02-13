@@ -1,5 +1,5 @@
 from enum import Enum
-from .common_utils import *
+from .common_utils import return_enum_as_iterable
 
 class AttainmentType(Enum):
     PURCHASE = "Cumparare/Contract Vanzare Cumparare"
@@ -13,4 +13,4 @@ class AttainmentType(Enum):
 
     @staticmethod
     def return_as_iterable():
-        return common_utils.return_enum_as_iterable(AttainmentType)
+        return return_enum_as_iterable(AttainmentType)

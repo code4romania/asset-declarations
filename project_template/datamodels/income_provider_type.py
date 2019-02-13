@@ -1,5 +1,5 @@
 from enum import Enum
-from .common_utils import *
+from .common_utils import return_enum_as_iterable
 
 class IncomeProviderType(Enum):
     HOLDER = "Titular"
@@ -8,5 +8,5 @@ class IncomeProviderType(Enum):
 
     @staticmethod
     def return_as_iterable():
-        return common_utils.return_enum_as_iterable(IncomeProviderType)
+        return return_enum_as_iterable(IncomeProviderType)
 
