@@ -98,3 +98,6 @@ class TranscribeOwnedBuildingsTable(forms.Form):
     holder = forms.CharField(
         label="Who is the holder of the building?"
     )
+
+class TranscribeOwnedBankAccountsTable(forms.Form):
+    count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['bank_accounts']))

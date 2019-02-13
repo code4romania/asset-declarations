@@ -380,7 +380,7 @@ class TaskOwnedGoodsOrServicesPerChildTable(AbstractTask):
         pass
 
 
-@register()
+# @register()
 class TaskOwnedGoodsOrServicesPerOwnerTable(AbstractTask):
     task_form = forms.TranscribeOwnedGoodsOrServicesPerOwnerTable
     template_name = 'tasks/row_count_template.html'
@@ -462,3 +462,33 @@ class TaskOwnedBuildingsTable(AbstractTask):
     def after_save(self, verified_data):
         # Create a new task for each table, asking the user to transcribe the number of rows
         pass
+
+
+@register()
+class TaskOwnedBankAccountsTable(AbstractTask):
+    task_form = forms.TranscribeOwnedBankAccountsTable
+    template_name = 'tasks/row_count_template.html'
+
+    def create_mocked_task(self, task_data):
+        task_data['info'].update({
+            'url': 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf',
+            'page': 10
+        })
+
+        return task_data
+
+    def get_presenter(self):
+        return super(TaskOwnedBankAccountsTable, self).get_presenter()
+
+    def save_verified_data(self, verified_data):
+        owned_bank_accounts, created = models.OwnedBankAccountsTable.objects.get_or_create(
+            count=verified_data['count'],
+        )
+
+    def after_save(self, verified_data):
+        # Create a new task for each table, asking the user to transcribe the number of rows
+        pass
+
+
+
+
