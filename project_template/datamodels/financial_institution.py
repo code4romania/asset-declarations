@@ -1,5 +1,5 @@
 from enum import Enum
-
+from datamodels import  common_utils
 
 class FinancialInstitution(Enum):
 
@@ -30,3 +30,9 @@ class FinancialInstitution(Enum):
     EXIMBANK = "EXIMBANK (EXPORT-IMPORT BANK OF ROMANIA)"
     ING = "ING BANK N.V. (OF ING GROUP)"
     PARIBAS = "BNP PARIBAS PERSONAL FINANCE"
+
+    @staticmethod
+    def return_as_iterable():
+        return common_utils.return_enum_as_iterable(FinancialInstitution)
+
+
