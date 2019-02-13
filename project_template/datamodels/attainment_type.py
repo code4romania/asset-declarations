@@ -1,5 +1,5 @@
 from enum import Enum
-from datamodels import common_utils
+from .common_utils import *
 
 class AttainmentType(Enum):
     PURCHASE = "Cumparare/Contract Vanzare Cumparare"

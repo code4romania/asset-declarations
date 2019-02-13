@@ -380,7 +380,7 @@ class TaskOwnedGoodsOrServicesPerChildTable(AbstractTask):
         pass
 
 
-# @register()
+@register()
 class TaskOwnedGoodsOrServicesPerOwnerTable(AbstractTask):
     task_form = forms.TranscribeOwnedGoodsOrServicesPerOwnerTable
     template_name = 'tasks/row_count_template.html'
@@ -429,7 +429,8 @@ class TaskOwnedLandTable(AbstractTask):
 
     def after_save(self, verified_data):
         # Create a new task for each table, asking the user to transcribe the number of rows
-        pass
+        for row_number in range(verified_data['count'])
+            self.create_new_task(TaskOwnedLandRowEntry, row_number)
 
 
 @register()
@@ -489,6 +490,34 @@ class TaskOwnedBankAccountsTable(AbstractTask):
         # Create a new task for each table, asking the user to transcribe the number of rows
         pass
 
+
+class TaskOwnedLandRowEntry(AbstractTask):
+    task_form = forms.TranscribeOwnedLandSingleRowEntry
+    tempalte_name = "tasks/owned_land.html"
+
+    def create_mocked_task(self, task_data):
+        task_data['info'].update({
+            'url': 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf',
+            'page': 10
+        })
+
+    def get_presenter(self):
+        return super(TaskOwnedLandRowEntry, self).get_presenter()
+
+    def save_verified_data(self, verified_data):
+        owned_land, created = models.OwnedLandTableEntry.objects.get_or_create(
+            address="Judet: {}, Localitate: {}, Comuna: {}".format(verified_data['judet'], verified_data['localitate'], verified_data['comuna'],
+            category=verified_data['categorie'],
+            acquisition_year=verified_data['an_dobandire'],
+            surface=verified_data['suprafata'],
+            share_ratio=verified_data['cota_parte'],
+            attainment_type=verified_data['mod_dobandire'],
+            owner="{} {}".format(verified_data['nume_proprietar'], verified_data['prenume_proprietar']),
+            observations=""
+            )
+
+    def after_save(self, verified_data):
+        pass
 
 
 

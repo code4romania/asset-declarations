@@ -1,7 +1,5 @@
 from enum import Enum
-
-from datamodels import common_utils
-
+from .common_utils import *
 
 class GoodsSeparationType(Enum):
     SELL = "Vanzare"
