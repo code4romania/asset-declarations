@@ -79,27 +79,7 @@ class TranscribeOwnedLandTable(forms.Form):
 
 
 class TranscribeOwnedBuildingsTable(forms.Form):
-    address = forms.CharField(
-        label="What is the address of the building?"
-    )
-    category = forms.CharField(
-        label="What is the category of the building?"
-    )
-    attainment_year = forms.CharField(
-        label="What is the attainment year of the building?"
-    )
-    surface = forms.CharField(
-        label="What is the surface of the building?"
-    )
-    share = forms.CharField(
-        label="What is the share in the building?"
-    )
-    attainment_type = forms.CharField(
-        label="What is the way the building was attained?"
-    )
-    holder = forms.CharField(
-        label="Who is the holder of the building?"
-    )
+    count = forms.IntegerField(label="How many filled rows are there in the table {}".format(constants.DECLARATION_TABLES['buildings']))
 
 class TranscribeOwnedBankAccountsTable(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['bank_accounts']))
