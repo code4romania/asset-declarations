@@ -1,16 +1,16 @@
 from django.db import models
 
-from datamodels.account_type import AccountType
-from datamodels.attainment_type import AttainmentType
-from datamodels.building_type import BuildingType
-from datamodels.currency import Currency
-from datamodels.financial_institution import FinancialInstitution
-from datamodels.investment_type import InvestmentType
-from datamodels.real_estate_type import RealEstateType
-from datamodels.mobile_goods_type import MobileGoodsType
-from datamodels.income_provider_type import IncomeProviderType
-from datamodels.estranged_goods_type import EstrangedGoodsType
-from datamodels.goods_separation_type import GoodsSeparationType
+from project_template.datamodels.account_type import AccountType
+from project_template.datamodels.attainment_type import AttainmentType
+from project_template.datamodels.building_type import BuildingType
+from project_template.datamodels.currency import Currency
+from project_template.datamodels.financial_institution import FinancialInstitution
+from project_template.datamodels.investment_type import InvestmentType
+from project_template.datamodels.real_estate_type import RealEstateType
+from project_template.datamodels.mobile_goods_type import MobileGoodsType
+from project_template.datamodels.income_provider_type import IncomeProviderType
+from project_template.datamodels.estranged_goods_type import EstrangedGoodsType
+from project_template.datamodels.goods_separation_type import GoodsSeparationType
 
 # More on lazy translations at https://docs.djangoproject.com/en/2.1/topics/i18n/translation/#lazy-translation
 from django.utils.translation import ugettext_lazy as _

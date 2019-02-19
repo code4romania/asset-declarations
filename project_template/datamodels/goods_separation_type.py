@@ -1,6 +1,6 @@
 from enum import Enum
 
-from datamodels import common_utils
+from project_template.datamodels import common_utils
 
 
 class GoodsSeparationType(Enum):
