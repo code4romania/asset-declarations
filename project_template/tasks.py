@@ -42,6 +42,7 @@ class TaskGetInitialInformation(AbstractTask):
 
     def after_save(self, verified_data):
         # Create a new task for each table, asking the user to transcribe the number of rows
+        # self.create_new_task()
         pass
 
 
@@ -433,6 +434,11 @@ class TaskOwnedLandTable(AbstractTask):
         for row_number in list(range(1, number_rows)):
             self.create_new_task(TaskOwnedLandRowEntry, {'row_number': row_number})
 
+    def create_new_task(self, task, info):
+        info['type'] = ".".join([task.__module__, task.__name__])
+        from moonsheep.register import base_task
+        base_task.register(task)
+
 
 # @register()
 class TaskOwnedBuildingsTable(AbstractTask):
@@ -486,7 +492,7 @@ class TaskOwnedBankAccountsTable(AbstractTask):
         pass
 
 
-@register()
+# @register()
 class TaskOwnedLandRowEntry(AbstractTask):
     task_form = forms.TranscribeOwnedLandSingleRowEntry
     template_name = "tasks/owned_land.html"
