@@ -14,4 +14,4 @@ class AttainmentType(Enum):
 
     @staticmethod
     def return_as_iterable():
-        return return_enum_as_iterable(AttainmentType)
+        return common_utils.return_enum_as_iterable(AttainmentType)

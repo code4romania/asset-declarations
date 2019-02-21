@@ -9,4 +9,4 @@ class InvestmentType(Enum):
 
     @staticmethod
     def return_as_iterable():
-        return return_enum_as_iterable(InvestmentType)
+        return common_utils.return_enum_as_iterable(InvestmentType)

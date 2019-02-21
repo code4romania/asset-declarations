@@ -9,5 +9,5 @@ class IncomeProviderType(Enum):
 
     @staticmethod
     def return_as_iterable():
-        return return_enum_as_iterable(IncomeProviderType)
+        return common_utils.return_enum_as_iterable(IncomeProviderType)
 
