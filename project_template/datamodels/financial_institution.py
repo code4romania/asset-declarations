@@ -34,6 +34,6 @@ class FinancialInstitution(Enum):
 
     @staticmethod
     def return_as_iterable():
-        return return_enum_as_iterable(FinancialInstitution)
+        return common_utils.return_enum_as_iterable(FinancialInstitution)
 
 

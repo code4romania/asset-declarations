@@ -11,4 +11,4 @@ class GoodsSeparationType(Enum):
 
     @staticmethod
     def return_as_iterable():
-        return return_enum_as_iterable(GoodsSeparationType)
+        return common_utils.return_enum_as_iterable(GoodsSeparationType)
