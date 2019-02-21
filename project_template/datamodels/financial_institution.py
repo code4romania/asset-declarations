@@ -1,6 +1,7 @@
 from enum import Enum
 from project_template.datamodels import  common_utils
 
+
 class FinancialInstitution(Enum):
 
     ALPHA_BANK = "ALPHA BANK"
@@ -33,6 +34,6 @@ class FinancialInstitution(Enum):
 
     @staticmethod
     def return_as_iterable():
-        return common_utils.return_enum_as_iterable(FinancialInstitution)
+        return return_enum_as_iterable(FinancialInstitution)
 
 

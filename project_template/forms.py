@@ -1,6 +1,8 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from project_template import constants
+from .datamodels.real_estate_type import RealEstateType
+from .datamodels.attainment_type import AttainmentType
 
 YEAR_CHOICES = ('2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019')
 
@@ -77,27 +79,19 @@ class TranscribeOwnedLandTable(forms.Form):
 
 
 class TranscribeOwnedBuildingsTable(forms.Form):
-    address = forms.CharField(
-        label="What is the address of the building?"
-    )
-    category = forms.CharField(
-        label="What is the category of the building?"
-    )
-    attainment_year = forms.CharField(
-        label="What is the attainment year of the building?"
-    )
-    surface = forms.CharField(
-        label="What is the surface of the building?"
-    )
-    share = forms.CharField(
-        label="What is the share in the building?"
-    )
-    attainment_type = forms.CharField(
-        label="What is the way the building was attained?"
-    )
-    holder = forms.CharField(
-        label="Who is the holder of the building?"
-    )
+    count = forms.IntegerField(label="How many filled rows are there in the table {}".format(constants.DECLARATION_TABLES['buildings']))
 
 class TranscribeOwnedBankAccountsTable(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['bank_accounts']))
+
+class TranscribeOwnedLandSingleRowEntry(forms.Form):
+    judet = forms.CharField(label="Care este judetul in care se gaseste terenul detinut?")
+    localitate = forms.CharField(label="Care este localitatea in care se gaseste terenul detinut?")
+    comuna = forms.CharField(label="Care este comuna in care se gaseste terenul detinut?")
+    categorie = forms.ChoiceField(label="Care este categoria de teren?", choices=RealEstateType.return_as_iterable())
+    an_dobandire = forms.DateField(label="Care este anul cand terenul a fost dobandit?", widget=forms.SelectDateWidget(years=YEAR_CHOICES), input_formats=['%Y-%m-%d'])
+    mod_dobandire = forms.ChoiceField(label="Care este modul in care terenul a fost dobandit?", choices=AttainmentType.return_as_iterable())
+    suprafata = forms.CharField(label="Care este suprafata terenului? (mp)")
+    cota_parte = forms.IntegerField(label="Care este cota parte din acest teren? (in procente)", max_value=100, min_value=0)
+    nume_proprietar = forms.CharField(label="Care este numele proprietarului?")
+    prenume_proprietar = forms.CharField(label="Care este prenumele proprietarului")

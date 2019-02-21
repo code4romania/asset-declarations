@@ -1,16 +1,16 @@
 import datetime
-from moonsheep.tasks import AbstractTask
+ 
 from moonsheep import verifiers
 from moonsheep.decorators import register
-
 
 import project_template.models as models
 import project_template.views
 import project_template.forms as forms
+from project_template.base_task import DigitalizationTask
 
 
 @register()
-class TaskGetInitialInformation(AbstractTask):
+class TaskGetInitialInformation(DigitalizationTask):
     task_form = forms.TranscribeInitialInformation
     template_name = 'tasks/general_information_task.html'
 
@@ -37,16 +37,17 @@ class TaskGetInitialInformation(AbstractTask):
         income_declaration, created = models.IncomeDeclaration.objects.get_or_create(
             url=self.url,
             politician=politician,
-            date=datetime.datetime.strptime(verified_data['date'], "%Y-%m-%d")
+            date=verified_data['date']
         )
 
     def after_save(self, verified_data):
         # Create a new task for each table, asking the user to transcribe the number of rows
+        # self.create_new_task()
         pass
 
 
-@register()
-class TaskOwnedGoodsOrServicesPerSpouse(AbstractTask):
+# @register()
+class TaskOwnedGoodsOrServicesPerSpouse(DigitalizationTask):
     task_form = forms.TranscribeOwnedGoodsOrServicesPerSpouse
     template_name = 'tasks/row_count_template.html'
 
@@ -71,8 +72,8 @@ class TaskOwnedGoodsOrServicesPerSpouse(AbstractTask):
         pass
 
 
-@register()
-class TaskTranscribeOwnedInvestmentsTable(AbstractTask):
+# @register()
+class TaskTranscribeOwnedInvestmentsTable(DigitalizationTask):
     task_form = forms.TranscribeOwnedInvestmentsTable
     template_name = 'tasks/row_count_template.html'
 
@@ -97,8 +98,8 @@ class TaskTranscribeOwnedInvestmentsTable(AbstractTask):
         pass
 
 
-@register()
-class TaskTranscribeOwnedIncomeFromOtherSourcesTable(AbstractTask):
+# @register()
+class TaskTranscribeOwnedIncomeFromOtherSourcesTable(DigitalizationTask):
     task_form = forms.TranscribeOwnedIncomeFromOtherSourcesTable
     template_name = 'tasks/row_count_template.html'
 
@@ -123,8 +124,8 @@ class TaskTranscribeOwnedIncomeFromOtherSourcesTable(AbstractTask):
         pass
 
 
-@register()
-class TaskOwnedJewelry(AbstractTask):
+# @register()
+class TaskOwnedJewelry(DigitalizationTask):
     task_form = forms.TranscribeOwnedJewelry
     template_name = 'tasks/row_count_template.html'
 
@@ -149,8 +150,8 @@ class TaskOwnedJewelry(AbstractTask):
         pass
 
 
-@register()
-class TaskOwnedAutomobile(AbstractTask):
+# @register()
+class TaskOwnedAutomobile(DigitalizationTask):
     task_form = forms.TranscribeOwnedAutomobile
     template_name = 'tasks/row_count_template.html'
 
@@ -175,8 +176,8 @@ class TaskOwnedAutomobile(AbstractTask):
         pass
 
 
-@register()
-class TaskTranscribeOwnedIncomeFromDeferredUseOfGoods(AbstractTask):
+# @register()
+class TaskTranscribeOwnedIncomeFromDeferredUseOfGoods(DigitalizationTask):
     task_form = forms.TranscribeOwnedIncomeFromDeferredUseOfGoods
     template_name = 'tasks/row_count_template.html'
 
@@ -200,8 +201,8 @@ class TaskTranscribeOwnedIncomeFromDeferredUseOfGoods(AbstractTask):
         pass
 
 
-@register()
-class TaskTranscribeIndependentActivities(AbstractTask):
+# @register()
+class TaskTranscribeIndependentActivities(DigitalizationTask):
     task_form = forms.TranscribeIndependentActivities
     template_name = 'tasks/row_count_template.html'
 
@@ -225,8 +226,8 @@ class TaskTranscribeIndependentActivities(AbstractTask):
         pass
 
 
-@register()
-class TaskOwnedIncomeFromGamblingTable(AbstractTask):
+# @register()
+class TaskOwnedIncomeFromGamblingTable(DigitalizationTask):
     task_form = forms.TranscribeOwnedIncomeFromGamblingTable
     template_name = 'tasks/row_count_template.html'
 
@@ -251,8 +252,8 @@ class TaskOwnedIncomeFromGamblingTable(AbstractTask):
         pass
 
 
-@register()
-class TaskOwnedIncomeFromAgriculturalActivitiesTable(AbstractTask):
+# @register()
+class TaskOwnedIncomeFromAgriculturalActivitiesTable(DigitalizationTask):
     task_form = forms.TranscribeOwnedIncomeFromAgriculturalActivitiesTable
     template_name = 'tasks/row_count_template.html'
 
@@ -277,8 +278,8 @@ class TaskOwnedIncomeFromAgriculturalActivitiesTable(AbstractTask):
         pass
 
 
-@register()
-class TaskGetDebtsTableRowsCount(AbstractTask):
+# @register()
+class TaskGetDebtsTableRowsCount(DigitalizationTask):
     task_form = forms.TranscribeDebtsTableRowsCount
     template_name = 'tasks/row_count_template.html'
 
@@ -303,8 +304,8 @@ class TaskGetDebtsTableRowsCount(AbstractTask):
         pass
 
 
-@register()
-class TaskOwnedIncomeFromSalariesCount(AbstractTask):
+# @register()
+class TaskOwnedIncomeFromSalariesCount(DigitalizationTask):
     task_form = forms.TranscribeOwnedIncomeFromSalaries
     template_name = 'tasks/row_count_template.html'
 
@@ -328,8 +329,8 @@ class TaskOwnedIncomeFromSalariesCount(AbstractTask):
         pass
 
 
-@register()
-class TaskOwnedIncomeFromPensionsTable(AbstractTask):
+# @register()
+class TaskOwnedIncomeFromPensionsTable(DigitalizationTask):
     task_form = forms.TranscribeOwnedIncomeFromPensionsTable
     template_name = 'tasks/row_count_template.html'
 
@@ -354,8 +355,8 @@ class TaskOwnedIncomeFromPensionsTable(AbstractTask):
         pass
 
 
-@register()
-class TaskOwnedGoodsOrServicesPerChildTable(AbstractTask):
+# @register()
+class TaskOwnedGoodsOrServicesPerChildTable(DigitalizationTask):
     task_form = forms.TranscribeOwnedGoodsOrServicesPerChildTable
     template_name = 'tasks/row_count_template.html'
 
@@ -381,7 +382,7 @@ class TaskOwnedGoodsOrServicesPerChildTable(AbstractTask):
 
 
 # @register()
-class TaskOwnedGoodsOrServicesPerOwnerTable(AbstractTask):
+class TaskOwnedGoodsOrServicesPerOwnerTable(DigitalizationTask):
     task_form = forms.TranscribeOwnedGoodsOrServicesPerOwnerTable
     template_name = 'tasks/row_count_template.html'
 
@@ -407,7 +408,7 @@ class TaskOwnedGoodsOrServicesPerOwnerTable(AbstractTask):
 
 
 @register()
-class TaskOwnedLandTable(AbstractTask):
+class TaskOwnedLandTable(DigitalizationTask):
     task_form = forms.TranscribeOwnedLandTable
     template_name = 'tasks/row_count_template.html'
 
@@ -429,11 +430,18 @@ class TaskOwnedLandTable(AbstractTask):
 
     def after_save(self, verified_data):
         # Create a new task for each table, asking the user to transcribe the number of rows
-        pass
+        number_rows = int(verified_data['count'])
+        for row_number in list(range(1, number_rows)):
+            self.create_new_task(TaskOwnedLandRowEntry, {'row_number': row_number})
+
+    def create_new_task(self, task, info):
+        info['type'] = ".".join([task.__module__, task.__name__])
+        from moonsheep.register import base_task
+        base_task.register(task)
 
 
-@register()
-class TaskOwnedBuildingsTable(AbstractTask):
+# @register()
+class TaskOwnedBuildingsTable(DigitalizationTask):
     task_form = forms.TranscribeOwnedBuildingsTable
     template_name = 'tasks/owned_buildings_task.html'
 
@@ -450,13 +458,7 @@ class TaskOwnedBuildingsTable(AbstractTask):
 
     def save_verified_data(self, verified_data):
         owned_building, created = models.OwnedBuildingsTable.objects.get_or_create(
-            address=verified_data['adress'],
-            category=verified_data['category'],
-            attainment_year=verified_data['attainment_year'],
-            surface=verified_data['surface'],
-            share=verified_data['share'],
-            attainment_type=verified_data['attainment_type'],
-            holder=verified_data['holder']
+            count=verified_data['count']
         )
 
     def after_save(self, verified_data):
@@ -464,8 +466,8 @@ class TaskOwnedBuildingsTable(AbstractTask):
         pass
 
 
-@register()
-class TaskOwnedBankAccountsTable(AbstractTask):
+# @register()
+class TaskOwnedBankAccountsTable(DigitalizationTask):
     task_form = forms.TranscribeOwnedBankAccountsTable
     template_name = 'tasks/row_count_template.html'
 
@@ -488,6 +490,39 @@ class TaskOwnedBankAccountsTable(AbstractTask):
     def after_save(self, verified_data):
         # Create a new task for each table, asking the user to transcribe the number of rows
         pass
+
+
+# @register()
+class TaskOwnedLandRowEntry(DigitalizationTask):
+    task_form = forms.TranscribeOwnedLandSingleRowEntry
+    template_name = "tasks/owned_land.html"
+
+    def create_mocked_task(self, task_data):
+        task_data['info'].update({
+            'url': 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf',
+            'page': 10
+        })
+        return task_data
+
+    def get_presenter(self):
+        return super(TaskOwnedLandRowEntry, self).get_presenter()
+
+    def save_verified_data(self, verified_data):
+        owned_land, created = models.OwnedLandTableEntry.objects.get_or_create(
+            address="Judet: {}, Localitate: {}, Comuna: {}".format(verified_data['judet'], verified_data['localitate'], verified_data['comuna']),
+            category=verified_data['categorie'],
+            acquisition_year=verified_data['an_dobandire'],
+            surface=verified_data['suprafata'],
+            share_ratio=verified_data['cota_parte'],
+            attainment_type=verified_data['mod_dobandire'],
+            owner="{} {}".format(verified_data['nume_proprietar'], verified_data['prenume_proprietar']),
+            observations=""
+        )
+
+    def after_save(self, verified_data):
+        pass
+
+
 
 
 

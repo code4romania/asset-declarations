@@ -1,6 +1,7 @@
 from enum import Enum
 from project_template.datamodels import common_utils
 
+
 class InvestmentType(Enum):
     VALUE_PAPERS = "HARTII DE VALOARE"
     SHARES = "ACTIUNI/PARTI SOCIALE"
@@ -8,4 +9,4 @@ class InvestmentType(Enum):
 
     @staticmethod
     def return_as_iterable():
-        return common_utils.return_enum_as_iterable(InvestmentType)
+        return return_enum_as_iterable(InvestmentType)
