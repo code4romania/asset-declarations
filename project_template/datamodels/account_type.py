@@ -1,5 +1,5 @@
 from enum import Enum
-from .common_utils import *
+from project_template.datamodels import common_utils
 
 
 class AccountType(Enum):
