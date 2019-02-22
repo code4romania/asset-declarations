@@ -4,26 +4,13 @@ from moonsheep import verifiers
 from moonsheep.decorators import register
 
 import project_template.models as models
-import project_template.views
 import project_template.forms as forms
-from project_template.base_task import DigitalizationTask
-
+from project_template.task_templates import DigitalizationTask, CountTableRowsTask
 
 @register()
 class TaskGetInitialInformation(DigitalizationTask):
     task_form = forms.TranscribeInitialInformation
     template_name = 'tasks/general_information_task.html'
-
-    def create_mocked_task(self, task_data):
-        task_data['info'].update({
-            'url': 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf',
-            'page': 10
-        })
-
-        return task_data
-
-    def get_presenter(self):
-        return super(TaskGetInitialInformation, self).get_presenter()
 
     def save_verified_data(self, verified_data):
         politician, created = models.Politician.objects.get_or_create(
@@ -40,472 +27,10 @@ class TaskGetInitialInformation(DigitalizationTask):
             date=verified_data['date']
         )
 
-    def after_save(self, verified_data):
-        # Create a new task for each table, asking the user to transcribe the number of rows
-        # self.create_new_task()
-        pass
 
-
-# @register()
-class TaskOwnedGoodsOrServicesPerSpouse(DigitalizationTask):
-    task_form = forms.TranscribeOwnedGoodsOrServicesPerSpouse
-    template_name = 'tasks/row_count_template.html'
-
-    def create_mocked_task(self, task_data):
-        task_data['info'].update({
-            'url': 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf',
-            'page': 10
-        })
-
-        return task_data
-
-    def get_presenter(self):
-        return super(TaskOwnedGoodsOrServicesPerSpouse, self).get_presenter()
-
-    def save_verified_data(self, verified_data):
-        owned_goods_or_services_per_spouse, created = models.OwnedGoodsOrServicesPerSpouseTable.objects.get_or_create(
-            count = verified_data['count']
-            )
-
-    def after_save(self, verified_data):
-        # Create a new task for each table, asking the user to transcribe the number of rows
-        pass
-
-
-# @register()
-class TaskTranscribeOwnedInvestmentsTable(DigitalizationTask):
-    task_form = forms.TranscribeOwnedInvestmentsTable
-    template_name = 'tasks/row_count_template.html'
-
-    def create_mocked_task(self, task_data):
-        task_data['info'].update({
-            'url': 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf',
-            'page': 10
-        })
-
-        return task_data
-
-    def get_presenter(self):
-        return super(TaskTranscribeOwnedInvestmentsTable, self).get_presenter()
-
-    def save_verified_data(self, verified_data):
-        owned_investments_table, created = models.OwnedInvestmentsTable.objects.get_or_create(
-            count=verified_data['count'],
-        )
-
-    def after_save(self, verified_data):
-        # Create a new task for each table, asking the user to transcribe the number of rows
-        pass
-
-
-# @register()
-class TaskTranscribeOwnedIncomeFromOtherSourcesTable(DigitalizationTask):
-    task_form = forms.TranscribeOwnedIncomeFromOtherSourcesTable
-    template_name = 'tasks/row_count_template.html'
-
-    def create_mocked_task(self, task_data):
-        task_data['info'].update({
-            'url': 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf',
-            'page': 10
-        })
-
-        return task_data
-
-    def get_presenter(self):
-        return super(TaskTranscribeOwnedIncomeFromOtherSourcesTable, self).get_presenter()
-
-    def save_verified_data(self, verified_data):
-        owned_income_from_other_sources_table, created = models.OwnedIncomeFromOtherSourcesTable.objects.get_or_create(
-            count=verified_data['count'],
-        )
-
-    def after_save(self, verified_data):
-        # Create a new task for each table, asking the user to transcribe the number of rows
-        pass
-
-
-# @register()
-class TaskOwnedJewelry(DigitalizationTask):
-    task_form = forms.TranscribeOwnedJewelry
-    template_name = 'tasks/row_count_template.html'
-
-    def create_mocked_task(self, task_data):
-        task_data['info'].update({
-            'url': 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf',
-            'page': 10
-        })
-
-        return task_data
-
-    def get_presenter(self):
-        return super(TaskOwnedJewelry, self).get_presenter()
-
-    def save_verified_data(self, verified_data):
-        owned_jewelry_table, created = models.OwnedJewelryTable.objects.get_or_create(
-            count=verified_data['count'],
-        )
-
-    def after_save(self, verified_data):
-        # Create a new task for each table, asking the user to transcribe the number of rows
-        pass
-
-
-# @register()
-class TaskOwnedAutomobile(DigitalizationTask):
-    task_form = forms.TranscribeOwnedAutomobile
-    template_name = 'tasks/row_count_template.html'
-
-    def create_mocked_task(self, task_data):
-        task_data['info'].update({
-            'url': 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf',
-            'page': 10
-        })
-
-        return task_data
-
-    def get_presenter(self):
-        return super(TaskOwnedAutomobile, self).get_presenter()
-
-    def save_verified_data(self, verified_data):
-        owned_automobile_table, created = models.OwnedAutomobileTable.objects.get_or_create(
-            count=verified_data['count'],
-        )
-
-    def after_save(self, verified_data):
-        # Create a new task for each table, asking the user to transcribe the number of rows
-        pass
-
-
-# @register()
-class TaskTranscribeOwnedIncomeFromDeferredUseOfGoods(DigitalizationTask):
-    task_form = forms.TranscribeOwnedIncomeFromDeferredUseOfGoods
-    template_name = 'tasks/row_count_template.html'
-
-    def create_mocked_task(self, task_data):
-        task_data['info'].update({
-            'url': 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf',
-            'page': 10
-        })
-
-        return task_data
-
-    def get_presenter(self):
-        return super(TaskTranscribeOwnedIncomeFromDeferredUseOfGoods, self).get_presenter()
-
-    def save_verified_data(self, verified_data):
-        count, created = models.OwnedIncomeFromDeferredUseOfGoodsTable.objects.get_or_create(
-            count=verified_data['count'],
-        )
-
-    def after_save(self, verified_data):
-        pass
-
-
-# @register()
-class TaskTranscribeIndependentActivities(DigitalizationTask):
-    task_form = forms.TranscribeIndependentActivities
-    template_name = 'tasks/row_count_template.html'
-
-    def create_mocked_task(self, task_data):
-        task_data['info'].update({
-            'url': 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf',
-            'page': 10
-        })
-
-        return task_data
-
-    def get_presenter(self):
-        return super(TaskTranscribeIndependentActivities, self).get_presenter()
-
-    def save_verified_data(self, verified_data):
-        owned_income_from_independent_activities, created = models.OwnedIncomeFromIndependentActivities.objects.get_or_create(
-            count=verified_data['count'],
-        )
-
-    def after_save(self, verified_data):
-        pass
-
-
-# @register()
-class TaskOwnedIncomeFromGamblingTable(DigitalizationTask):
-    task_form = forms.TranscribeOwnedIncomeFromGamblingTable
-    template_name = 'tasks/row_count_template.html'
-
-    def create_mocked_task(self, task_data):
-        task_data['info'].update({
-            'url': 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf',
-            'page': 10
-        })
-
-        return task_data
-
-    def get_presenter(self):
-        return super(TaskOwnedIncomeFromGamblingTable, self).get_presenter()
-
-    def save_verified_data(self, verified_data):
-        owned_income_from_gambling_table, created = models.OwnedIncomeFromGamblingTable.objects.get_or_create(
-            count=verified_data['count'],
-        )
-
-    def after_save(self, verified_data):
-        # Create a new task for each table, asking the user to transcribe the number of rows
-        pass
-
-
-# @register()
-class TaskOwnedIncomeFromAgriculturalActivitiesTable(DigitalizationTask):
-    task_form = forms.TranscribeOwnedIncomeFromAgriculturalActivitiesTable
-    template_name = 'tasks/row_count_template.html'
-
-    def create_mocked_task(self, task_data):
-        task_data['info'].update({
-            'url': 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf',
-            'page': 10
-        })
-
-        return task_data
-
-    def get_presenter(self):
-        return super(TaskOwnedIncomeFromAgriculturalActivitiesTable, self).get_presenter()
-
-    def save_verified_data(self, verified_data):
-        owned_income_from_agricultural_activities_table, created = models.OwnedIncomeFromAgriculturalActivitiesTable.objects.get_or_create(
-            count=verified_data['count'],
-        )
-
-    def after_save(self, verified_data):
-        # Create a new task for each table, asking the user to transcribe the number of rows
-        pass
-
-
-# @register()
-class TaskGetDebtsTableRowsCount(DigitalizationTask):
-    task_form = forms.TranscribeDebtsTableRowsCount
-    template_name = 'tasks/row_count_template.html'
-
-    def create_mocked_task(self, task_data):
-        task_data['info'].update({
-            'url': 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf',
-            'page': 10
-        })
-
-        return task_data
-
-    def get_presenter(self):
-        return super(TaskGetDebtsTableRowsCount, self).get_presenter()
-
-    def save_verified_data(self, verified_data):
-        owned_debts_table, created = models.OwnedDebtsTable.objects.get_or_create(
-            count=verified_data['count'],
-        )
-
-    def after_save(self, verified_data):
-        # Create a new task for each table, asking the user to transcribe the number of rows
-        pass
-
-
-# @register()
-class TaskOwnedIncomeFromSalariesCount(DigitalizationTask):
-    task_form = forms.TranscribeOwnedIncomeFromSalaries
-    template_name = 'tasks/row_count_template.html'
-
-    def create_mocked_task(self, task_data):
-        task_data['info'].update({
-            'url': 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf',
-            'page': 10
-        })
-
-        return task_data
-
-    def get_presenter(self):
-        return super(TaskOwnedIncomeFromSalariesCount, self).get_presenter()
-
-    def save_verified_data(self, verified_data):
-        owned_income_from_salaries_table, created = models.OwnedIncomeFromSalariesTable.objects.get_or_create(
-            count=verified_data['count']
-        )
-
-    def after_save(self, verified_data):
-        pass
-
-
-# @register()
-class TaskOwnedIncomeFromPensionsTable(DigitalizationTask):
-    task_form = forms.TranscribeOwnedIncomeFromPensionsTable
-    template_name = 'tasks/row_count_template.html'
-
-    def create_mocked_task(self, task_data):
-        task_data['info'].update({
-            'url': 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf',
-            'page': 10
-        })
-
-        return task_data
-
-    def get_presenter(self):
-        return super(TaskOwnedIncomeFromPensionsTable, self).get_presenter()
-
-    def save_verified_data(self, verified_data):
-        owned_income_from_pensions_table, created = models.OwnedIncomeFromPensionsTable.objects.get_or_create(
-            count=verified_data['count'],
-        )
-
-    def after_save(self, verified_data):
-        # Create a new task for each table, asking the user to transcribe the number of rows
-        pass
-
-
-# @register()
-class TaskOwnedGoodsOrServicesPerChildTable(DigitalizationTask):
-    task_form = forms.TranscribeOwnedGoodsOrServicesPerChildTable
-    template_name = 'tasks/row_count_template.html'
-
-    def create_mocked_task(self, task_data):
-        task_data['info'].update({
-            'url': 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf',
-            'page': 10
-        })
-
-        return task_data
-
-    def get_presenter(self):
-        return super(TaskOwnedGoodsOrServicesPerChildTable, self).get_presenter()
-
-    def save_verified_data(self, verified_data):
-        owned_goods_or_services_per_child_table, created = models.OwnedGoodsOrServicesPerChildTable.objects.get_or_create(
-            count=verified_data['count'],
-        )
-
-    def after_save(self, verified_data):
-        # Create a new task for each table, asking the user to transcribe the number of rows
-        pass
-
-
-# @register()
-class TaskOwnedGoodsOrServicesPerOwnerTable(DigitalizationTask):
-    task_form = forms.TranscribeOwnedGoodsOrServicesPerOwnerTable
-    template_name = 'tasks/row_count_template.html'
-
-    def create_mocked_task(self, task_data):
-        task_data['info'].update({
-            'url': 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf',
-            'page': 10
-        })
-
-        return task_data
-
-    def get_presenter(self):
-        return super(TaskOwnedGoodsOrServicesPerOwnerTable, self).get_presenter()
-
-    def save_verified_data(self, verified_data):
-        owned_goods_or_services_per_owner_table, created = models.OwnedGoodsOrServicesPerOwnerTable.objects.get_or_create(
-            count=verified_data['count'],
-        )
-
-    def after_save(self, verified_data):
-        # Create a new task for each table, asking the user to transcribe the number of rows
-        pass
-
-
-@register()
-class TaskOwnedLandTable(DigitalizationTask):
-    task_form = forms.TranscribeOwnedLandTable
-    template_name = 'tasks/row_count_template.html'
-
-    def create_mocked_task(self, task_data):
-        task_data['info'].update({
-            'url': 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf',
-            'page': 10
-        })
-
-        return task_data
-
-    def get_presenter(self):
-        return super(TaskOwnedLandTable, self).get_presenter()
-
-    def save_verified_data(self, verified_data):
-        owned_land_table, created = models.OwnedLandTable.objects.get_or_create(
-            count=verified_data['count'],
-        )
-
-    def after_save(self, verified_data):
-        # Create a new task for each table, asking the user to transcribe the number of rows
-        number_rows = int(verified_data['count'])
-        for row_number in list(range(1, number_rows)):
-            self.create_new_task(TaskOwnedLandRowEntry, {'row_number': row_number})
-
-    def create_new_task(self, task, info):
-        info['type'] = ".".join([task.__module__, task.__name__])
-        from moonsheep.register import base_task
-        base_task.register(task)
-
-
-# @register()
-class TaskOwnedBuildingsTable(DigitalizationTask):
-    task_form = forms.TranscribeOwnedBuildingsTable
-    template_name = 'tasks/owned_buildings_task.html'
-
-    def create_mocked_task(self, task_data):
-        task_data['info'].update({
-            'url': 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf',
-            'page': 10
-        })
-
-        return task_data
-
-    def get_presenter(self):
-        return super(TaskOwnedBuildingsTable, self).get_presenter()
-
-    def save_verified_data(self, verified_data):
-        owned_building, created = models.OwnedBuildingsTable.objects.get_or_create(
-            count=verified_data['count']
-        )
-
-    def after_save(self, verified_data):
-        # Create a new task for each table, asking the user to transcribe the number of rows
-        pass
-
-
-# @register()
-class TaskOwnedBankAccountsTable(DigitalizationTask):
-    task_form = forms.TranscribeOwnedBankAccountsTable
-    template_name = 'tasks/row_count_template.html'
-
-    def create_mocked_task(self, task_data):
-        task_data['info'].update({
-            'url': 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf',
-            'page': 10
-        })
-
-        return task_data
-
-    def get_presenter(self):
-        return super(TaskOwnedBankAccountsTable, self).get_presenter()
-
-    def save_verified_data(self, verified_data):
-        owned_bank_accounts, created = models.OwnedBankAccountsTable.objects.get_or_create(
-            count=verified_data['count'],
-        )
-
-    def after_save(self, verified_data):
-        # Create a new task for each table, asking the user to transcribe the number of rows
-        pass
-
-
-# @register()
 class TaskOwnedLandRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedLandSingleRowEntry
     template_name = "tasks/owned_land.html"
-
-    def create_mocked_task(self, task_data):
-        task_data['info'].update({
-            'url': 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf',
-            'page': 10
-        })
-        return task_data
-
-    def get_presenter(self):
-        return super(TaskOwnedLandRowEntry, self).get_presenter()
 
     def save_verified_data(self, verified_data):
         owned_land, created = models.OwnedLandTableEntry.objects.get_or_create(
@@ -519,11 +44,137 @@ class TaskOwnedLandRowEntry(DigitalizationTask):
             observations=""
         )
 
-    def after_save(self, verified_data):
-        pass
+
+@register()
+class TaskOwnedGoodsOrServicesPerSpouse(CountTableRowsTask):
+    task_form = forms.TranscribeOwnedGoodsOrServicesPerSpouse
+    storage_model = models.OwnedGoodsOrServicesPerSpouseTable
+    # TODO - add child_class
+    child_class = None
 
 
+@register()
+class TaskTranscribeOwnedInvestmentsTable(CountTableRowsTask):
+    task_form = forms.TranscribeOwnedInvestmentsTable
+    storage_model = models.OwnedInvestmentsTable
+    # TODO - add child_class
+    child_class = None
 
 
+@register()
+class TaskTranscribeOwnedIncomeFromOtherSourcesTable(CountTableRowsTask):
+    task_form = forms.TranscribeOwnedIncomeFromOtherSourcesTable
+    storage_model = models.OwnedIncomeFromOtherSourcesTable
+    # TODO - add child_class
+    child_class = None
 
 
+@register()
+class TaskOwnedJewelry(CountTableRowsTask):
+    task_form = forms.TranscribeOwnedJewelry
+    storage_model = models.OwnedJewelryTable
+    # TODO - add child_class
+    child_class = None
+
+
+@register()
+class TaskOwnedAutomobile(CountTableRowsTask):
+    task_form = forms.TranscribeOwnedAutomobile
+    storage_model = models.OwnedAutomobileTable
+    # TODO - add child_class
+    child_class = None
+
+
+@register()
+class TaskTranscribeOwnedIncomeFromDeferredUseOfGoods(CountTableRowsTask):
+    task_form = forms.TranscribeOwnedIncomeFromDeferredUseOfGoods
+    storage_model = models.OwnedIncomeFromDeferredUseOfGoodsTable
+    # TODO - add child_class
+    child_class = None
+
+
+@register()
+class TaskTranscribeIndependentActivities(CountTableRowsTask):
+    task_form = forms.TranscribeIndependentActivities
+    storage_model = models.OwnedIncomeFromIndependentActivitiesTable
+    # TODO - add child_class
+    child_class = None
+
+
+@register()
+class TaskOwnedIncomeFromGamblingTable(CountTableRowsTask):
+    task_form = forms.TranscribeOwnedIncomeFromGamblingTable
+    storage_model = models.OwnedIncomeFromGamblingTable
+    # TODO - add child_class
+    child_class = None
+
+
+@register()
+class TaskOwnedIncomeFromAgriculturalActivitiesTable(CountTableRowsTask):
+    task_form = forms.TranscribeOwnedIncomeFromAgriculturalActivitiesTable
+    storage_model = models.OwnedIncomeFromAgriculturalActivitiesTable
+    # TODO - add child_class
+    child_class = None
+
+
+@register()
+class TaskGetDebtsTableRowsCount(CountTableRowsTask):
+    task_form = forms.TranscribeDebtsTableRowsCount
+    storage_model = models.OwnedDebtsTable
+    # TODO - add child_class
+    child_class = None
+
+
+@register()
+class TaskOwnedIncomeFromSalariesCount(CountTableRowsTask):
+    task_form = forms.TranscribeOwnedIncomeFromSalaries
+    storage_model = models.OwnedIncomeFromSalariesTable
+    # TODO - add child_class
+    child_class = None
+
+
+@register()
+class TaskOwnedIncomeFromPensionsTable(CountTableRowsTask):
+    task_form = forms.TranscribeOwnedIncomeFromPensionsTable
+    storage_model = models.OwnedIncomeFromPensionsTable
+    # TODO - add child_class
+    child_class = None
+
+
+@register()
+class TaskOwnedGoodsOrServicesPerChildTable(CountTableRowsTask):
+    task_form = forms.TranscribeOwnedGoodsOrServicesPerChildTable
+    storage_model = models.OwnedGoodsOrServicesPerChildTable
+    # TODO - add child_class
+    child_class = None
+
+
+@register()
+class TaskOwnedGoodsOrServicesPerOwnerTable(CountTableRowsTask):
+    task_form = forms.TranscribeOwnedGoodsOrServicesPerOwnerTable
+    storage_model = models.OwnedGoodsOrServicesPerOwnerTable
+    # TODO - add child_class
+    child_class = None
+
+
+@register()
+class TaskOwnedLandTable(CountTableRowsTask):
+    task_form = forms.TranscribeOwnedLandTable
+    storage_model = models.OwnedLandTable
+    child_class = TaskOwnedLandRowEntry
+
+
+@register()
+class TaskOwnedBuildingsTable(CountTableRowsTask):
+    task_form = forms.TranscribeOwnedBuildingsTable
+    storage_model = models.OwnedBuildingsTable
+    # TODO - add child_class
+    child_class = None
+
+
+@register()
+class TaskOwnedBankAccountsTable(CountTableRowsTask):
+    task_form = forms.TranscribeOwnedBankAccountsTable
+    storage_model = models.OwnedBankAccountsTable
+    # TODO - add child_class
+    child_class = None

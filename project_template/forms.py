@@ -1,8 +1,9 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
+
 from project_template import constants
-from .datamodels.real_estate_type import RealEstateType
-from .datamodels.attainment_type import AttainmentType
+from project_template.datamodels.real_estate_type import RealEstateType
+from project_template.datamodels.attainment_type import AttainmentType
 
 YEAR_CHOICES = ('2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019')
 
