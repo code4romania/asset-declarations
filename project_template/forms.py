@@ -118,21 +118,21 @@ class TranscribeOwnedBankAccountsTable(forms.Form):
 
 
 class TranscribeOwnedLandSingleRowEntry(forms.Form):
-    judet = forms.CharField(
+    county = forms.CharField(
         label="Care este judetul in care se gaseste terenul detinut?")
-    localitate = forms.CharField(
+    town = forms.CharField(
         label="Care este localitatea in care se gaseste terenul detinut?")
-    comuna = forms.CharField(
+    village = forms.CharField(
         label="Care este comuna in care se gaseste terenul detinut?")
-    categorie = forms.ChoiceField(
+    category = forms.ChoiceField(
         label="Care este categoria de teren?", choices=RealEstateType.return_as_iterable())
-    an_dobandire = forms.DateField(label="Care este anul cand terenul a fost dobandit?",
+    acquisition_year = forms.DateField(label="Care este anul cand terenul a fost dobandit?",
                                    widget=forms.SelectDateWidget(years=YEAR_CHOICES), input_formats=['%Y-%m-%d'])
-    mod_dobandire = forms.ChoiceField(
+    acquisition_mode = forms.ChoiceField(
         label="Care este modul in care terenul a fost dobandit?", choices=AttainmentType.return_as_iterable())
-    suprafata = forms.CharField(label="Care este suprafata terenului? (mp)")
-    cota_parte = forms.IntegerField(
+    area = forms.CharField(label="Care este suprafata terenului? (mp)")
+    share = forms.IntegerField(
         label="Care este cota parte din acest teren? (in procente)", max_value=100, min_value=0)
-    nume_proprietar = forms.CharField(label="Care este numele proprietarului?")
-    prenume_proprietar = forms.CharField(
+    owner_surname = forms.CharField(label="Care este numele proprietarului?")
+    owner_name = forms.CharField(
         label="Care este prenumele proprietarului")
