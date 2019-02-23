@@ -1,5 +1,5 @@
 import datetime
- 
+
 from moonsheep import verifiers
 from moonsheep.decorators import register
 
@@ -44,6 +44,18 @@ class TaskOwnedLandRowEntry(DigitalizationTask):
             observations=""
         )
 
+class TaskOwnedBankAccountsRowEntry(DigitalizationTask):
+    task_form = forms.TranscribeOwnedBankAccountsRowEntry
+    template_name = "tasks/owned_bank_accounts.html"
+
+    def save_verified_data(self, verified_data):
+        owned_bank_accounts, created = models.OwnedBankAccountsTableEntry.object.get_or_create(
+            institution = verified_data['institutia_administrativa'],
+            account_type = verified_data['tip_cont'],
+            currency = verified_data['valuta'],
+            opening_year = verified_data['anul_deschiderii'],
+            account_balance = verified_data['sold'],
+        )
 
 @register()
 class TaskOwnedGoodsOrServicesPerSpouse(CountTableRowsTask):
@@ -176,5 +188,4 @@ class TaskOwnedBuildingsTable(CountTableRowsTask):
 class TaskOwnedBankAccountsTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedBankAccountsTable
     storage_model = models.OwnedBankAccountsTable
-    # TODO - add child_class
-    child_class = None
+    child_class = TaskOwnedBankAccountsRowEntry

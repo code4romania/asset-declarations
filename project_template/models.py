@@ -154,16 +154,15 @@ class OwnedBankAccountsTableEntry(models.Model):
     institution = models.CharField("Instituția",
                                    max_length=128,
                                    choices=FinancialInstitution.return_as_iterable())
-    address = models.CharField("Adresa institutiei",
-                               max_length=128)
-    account_holder = models.CharField("Titular",
-                                      max_length=128)
+    account_type = models.IntegerField("Tipul",
+                                       choices=AccountType.return_as_iterable())
     currency = models.CharField("Valuta",
                                 max_length=16,
                                 choices=Currency.return_as_iterable())
     opening_year = models.DateField("Deschis in anul")
-    account_type = models.IntegerField("Tipul",
-                                       choices=AccountType.return_as_iterable())
+    account_balance = models.DecimalField("Soldul",
+                                          decimal_places=2,
+                                          max_digits=10)
 
 
 class OwnedInvestmentsTable(models.Model):
@@ -398,7 +397,7 @@ class OwnedIncomeFromAgriculturalActivitiesTableEntry(models.Model):
     annual_income_currency = models.CharField("Valuta",
                                               max_length=16,
                                               choices=Currency.return_as_iterable())
-    
+
 
 class OwnedIncomeFromGamblingTable(models.Model):
     __full_name = DECLARATION_TABLES['gambling']
