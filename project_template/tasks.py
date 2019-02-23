@@ -44,7 +44,19 @@ class TaskOwnedLandRowEntry(DigitalizationTask):
             observations=""
         )
 
-
+class TaskOwnedAutomobileRowEntry(DigitalizationTask):
+    task_form = forms.TranscribeOwnedAutomobileSingleRowEntry
+    tempate_name = "tasks/owned_automobile.html"
+    
+    def save_verified_data(self, verified_data):
+        owned_automobile, created = models.OwnedAutomobileTableEntry.object.get_or_create(
+            car_type = verified_data['tip'],
+            brand = verified_data['marca'],
+            no_owned = verified_data['numar_bucati'],
+            fabrication_year = verified_data['an_fabricatie'],
+            attainment_type = verified_data['mod_dobandire'],
+        )
+                                       
 @register()
 class TaskOwnedGoodsOrServicesPerSpouse(CountTableRowsTask):
     task_form = forms.TranscribeOwnedGoodsOrServicesPerSpouse
@@ -81,8 +93,7 @@ class TaskOwnedJewelry(CountTableRowsTask):
 class TaskOwnedAutomobile(CountTableRowsTask):
     task_form = forms.TranscribeOwnedAutomobile
     storage_model = models.OwnedAutomobileTable
-    # TODO - add child_class
-    child_class = None
+    child_class = TaskOwnedAutomobileRowEntry
 
 
 @register()

@@ -94,7 +94,7 @@ class OwnedAutomobileTable(models.Model):
 
 class OwnedAutomobileTableEntry(models.Model):
     table = models.ForeignKey(OwnedAutomobileTable, on_delete=models.CASCADE)
-    type = models.CharField("Natura",
+    car_type = models.CharField("Natura",
                             max_length=32,
                             choices=MobileGoodsType.return_as_iterable())
     brand = models.CharField("Marca", max_length=128)

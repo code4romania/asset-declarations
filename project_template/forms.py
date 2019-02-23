@@ -4,6 +4,8 @@ from django.utils.translation import ugettext_lazy as _
 from project_template import constants
 from project_template.datamodels.real_estate_type import RealEstateType
 from project_template.datamodels.attainment_type import AttainmentType
+from project_template.datamodels.mobile_goods_type import MobileGoodsType
+
 
 YEAR_CHOICES = ('2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019')
 
@@ -96,3 +98,10 @@ class TranscribeOwnedLandSingleRowEntry(forms.Form):
     cota_parte = forms.IntegerField(label="Care este cota parte din acest teren? (in procente)", max_value=100, min_value=0)
     nume_proprietar = forms.CharField(label="Care este numele proprietarului?")
     prenume_proprietar = forms.CharField(label="Care este prenumele proprietarului")
+    
+class TaskOwnedAutomobileRowEntry(forms.Form):
+    tip = forms.CharField(label="Care este tipul autovehiculului?", choices=MobileGoodsType.return_as_iterable())
+    marca = forms.CharField(label="Care este marca autovehiculului?")
+    numar_bucati = forms.PositiveSmallIntegerField(label="Care este numarul de autovehicule detinute?")
+    an_fabricatie = forms.DataField(label="Care este anul de fabricatie al autovehiculului?")
+    mod_dobandire = forms.CharField(label="Care este modul in care a fost dobandit autovehiculul?", choices=AttainmentType.return_as_iterable())
