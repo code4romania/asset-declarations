@@ -46,7 +46,7 @@ class TaskOwnedLandRowEntry(DigitalizationTask):
 
 class TaskOwnedAutomobileRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedAutomobileSingleRowEntry
-    tempate_name = "tasks/owned_automobile.html"
+    template_name = "tasks/owned_automobile.html"
     
     def save_verified_data(self, verified_data):
         owned_automobile, created = models.OwnedAutomobileTableEntry.object.get_or_create(
@@ -56,7 +56,27 @@ class TaskOwnedAutomobileRowEntry(DigitalizationTask):
             fabrication_year = verified_data['an_fabricatie'],
             attainment_type = verified_data['mod_dobandire'],
         )
-                                       
+
+class TaskGetDebtsTableRowsCountEntry(DigitalizationTask):
+    task_form = forms.TranscribeDebtsTableRowsCountEntry
+    template_name = "task/owned_get_debts.html"
+        
+    def save_verified_data(self, verified_data):
+        if verified_data['nume_creditor'] and verified_data['prenume_creditor']:
+            lender_identity = "Nume: {}, Prenume: {}".format(verified_data['nume_creditor'], verified_data['prenume_creditor'])
+        else: 
+            lender_identity = "Institutie: {}".format(verified_data['institutie'])
+            
+        owned_debts, created = models.OwnedDebtsTableEntry.object.get_or_create(
+                lender=lender_identity,
+                debt_type = verified_data['tip_imprumut'],
+                acquirement_year = verified_data['an_contractare'],
+                due_value = verified_data['scadenta'],
+                value = verified_data['valoare'],
+                currency = verified_data['moneda']
+                )
+    
+                                
 @register()
 class TaskOwnedGoodsOrServicesPerSpouse(CountTableRowsTask):
     task_form = forms.TranscribeOwnedGoodsOrServicesPerSpouse
@@ -132,8 +152,7 @@ class TaskOwnedIncomeFromAgriculturalActivitiesTable(CountTableRowsTask):
 class TaskGetDebtsTableRowsCount(CountTableRowsTask):
     task_form = forms.TranscribeDebtsTableRowsCount
     storage_model = models.OwnedDebtsTable
-    # TODO - add child_class
-    child_class = None
+    child_class = TaskGetDebtsTableRowsCountEntry
 
 
 @register()

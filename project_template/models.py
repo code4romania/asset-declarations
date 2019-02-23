@@ -11,6 +11,8 @@ from project_template.datamodels.mobile_goods_type import MobileGoodsType
 from project_template.datamodels.income_provider_type import IncomeProviderType
 from project_template.datamodels.estranged_goods_type import EstrangedGoodsType
 from project_template.datamodels.goods_separation_type import GoodsSeparationType
+from project_template.datamodels.debt_type import DebtType
+
 
 # More on lazy translations at https://docs.djangoproject.com/en/2.1/topics/i18n/translation/#lazy-translation
 from django.utils.translation import ugettext_lazy as _
@@ -217,7 +219,11 @@ class OwnedDebtsTable(models.Model):
 
 class OwnedDebtsTableEntry(models.Model):
     table = models.ForeignKey(OwnedDebtsTable, on_delete=models.CASCADE)
-    lender = models.CharField("Creditor", max_length=128)
+    lender = models.CharField("Creditor", max_length=128,
+                              choices=FinancialInstitution.return_as_iterable(),
+                              blank=True)
+    debt_type = models.CharField("Tip datorie", max_length=30,
+                                 choices=DebtType.return_as_iterable())
     acquirement_year = models.DateField("Contractat in anul")
     due_date = models.DateField("Scadent la")
     value = models.IntegerField("Valoare")

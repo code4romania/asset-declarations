@@ -5,9 +5,11 @@ from project_template import constants
 from project_template.datamodels.real_estate_type import RealEstateType
 from project_template.datamodels.attainment_type import AttainmentType
 from project_template.datamodels.mobile_goods_type import MobileGoodsType
+from project_template.datamodels.financial_institution import FinancialInstitution
+from project_template.datamodels.currency import Currency
+from project_template.datamodels.debt_type import DebtType
 
-
-YEAR_CHOICES = ('2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019')
+YEAR_CHOICES = ('2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025')
 
 
 class TranscribeInitialInformation(forms.Form):
@@ -105,3 +107,13 @@ class TaskOwnedAutomobileRowEntry(forms.Form):
     numar_bucati = forms.PositiveSmallIntegerField(label="Care este numarul de autovehicule detinute?")
     an_fabricatie = forms.DataField(label="Care este anul de fabricatie al autovehiculului?")
     mod_dobandire = forms.CharField(label="Care este modul in care a fost dobandit autovehiculul?", choices=AttainmentType.return_as_iterable())
+    
+class TaskGetDebtsTableRowsCountEntry(forms.Form):
+    nume_creditor = forms.CharField(label="Care este numele creditorului?")
+    prenume_creditor = forms.CharField(label="Care este prenumele creditorului?")
+    institutie = forms.CharField(label="Care este numele institutiei creditoare?", choices=FinancialInstitution.return_as_iterable())
+    tip_imprumut = forms.CharField(label="Care este tipul de imprumut?", choices=DebtType.return_as_iterable())
+    an_contractare = forms.DataField(label="Care este anul contractarii imprumutului?", widget=forms.SelectDateWidget(years=YEAR_CHOICES), input_formats=['%Y-%m-%d'])
+    scadenta = forms.DataField(label="Care este data scadentei?", widget=forms.SelectDateWidget(years=YEAR_CHOICES), input_formats=['%Y-%m-%d'])
+    valoare = forms.CharField(label="Care este valoarea imprumutului?")
+    moneda = forms.IntegerField(label="Care este moneda in care s-a facut imprumutul?", choices=Currency.return_as_iterable())
