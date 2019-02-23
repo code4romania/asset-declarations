@@ -7,7 +7,7 @@ import project_template.models as models
 import project_template.forms as forms
 from project_template.task_templates import DigitalizationTask, CountTableRowsTask
 
-@register()
+#@register()
 class TaskGetInitialInformation(DigitalizationTask):
     task_form = forms.TranscribeInitialInformation
     template_name = 'tasks/general_information_task.html'
@@ -28,24 +28,7 @@ class TaskGetInitialInformation(DigitalizationTask):
         )
 
 
-class TaskOwnedLandRowEntry(DigitalizationTask):
-    task_form = forms.TranscribeOwnedLandSingleRowEntry
-    template_name = "tasks/owned_land.html"
-
-    def save_verified_data(self, verified_data):
-        owned_land, created = models.OwnedLandTableEntry.objects.get_or_create(
-            address="Judet: {}, Localitate: {}, Comuna: {}".format(verified_data['judet'], verified_data['localitate'], verified_data['comuna']),
-            category=verified_data['categorie'],
-            acquisition_year=verified_data['an_dobandire'],
-            surface=verified_data['suprafata'],
-            share_ratio=verified_data['cota_parte'],
-            attainment_type=verified_data['mod_dobandire'],
-            owner="{} {}".format(verified_data['nume_proprietar'], verified_data['prenume_proprietar']),
-            observations=""
-        )
-
-
-@register()
+#@register()
 class TaskOwnedGoodsOrServicesPerSpouse(CountTableRowsTask):
     task_form = forms.TranscribeOwnedGoodsOrServicesPerSpouse
     storage_model = models.OwnedGoodsOrServicesPerSpouseTable
@@ -53,7 +36,7 @@ class TaskOwnedGoodsOrServicesPerSpouse(CountTableRowsTask):
     child_class = None
 
 
-@register()
+#@register()
 class TaskTranscribeOwnedInvestmentsTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedInvestmentsTable
     storage_model = models.OwnedInvestmentsTable
@@ -61,7 +44,7 @@ class TaskTranscribeOwnedInvestmentsTable(CountTableRowsTask):
     child_class = None
 
 
-@register()
+#@register()
 class TaskTranscribeOwnedIncomeFromOtherSourcesTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromOtherSourcesTable
     storage_model = models.OwnedIncomeFromOtherSourcesTable
@@ -69,7 +52,7 @@ class TaskTranscribeOwnedIncomeFromOtherSourcesTable(CountTableRowsTask):
     child_class = None
 
 
-@register()
+#@register()
 class TaskOwnedJewelry(CountTableRowsTask):
     task_form = forms.TranscribeOwnedJewelry
     storage_model = models.OwnedJewelryTable
@@ -77,7 +60,7 @@ class TaskOwnedJewelry(CountTableRowsTask):
     child_class = None
 
 
-@register()
+#@register()
 class TaskOwnedAutomobile(CountTableRowsTask):
     task_form = forms.TranscribeOwnedAutomobile
     storage_model = models.OwnedAutomobileTable
@@ -85,7 +68,7 @@ class TaskOwnedAutomobile(CountTableRowsTask):
     child_class = None
 
 
-@register()
+#@register()
 class TaskTranscribeOwnedIncomeFromDeferredUseOfGoods(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromDeferredUseOfGoods
     storage_model = models.OwnedIncomeFromDeferredUseOfGoodsTable
@@ -93,7 +76,7 @@ class TaskTranscribeOwnedIncomeFromDeferredUseOfGoods(CountTableRowsTask):
     child_class = None
 
 
-@register()
+#@register()
 class TaskTranscribeIndependentActivities(CountTableRowsTask):
     task_form = forms.TranscribeIndependentActivities
     storage_model = models.OwnedIncomeFromIndependentActivitiesTable
@@ -101,7 +84,7 @@ class TaskTranscribeIndependentActivities(CountTableRowsTask):
     child_class = None
 
 
-@register()
+#@register()
 class TaskOwnedIncomeFromGamblingTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromGamblingTable
     storage_model = models.OwnedIncomeFromGamblingTable
@@ -109,7 +92,7 @@ class TaskOwnedIncomeFromGamblingTable(CountTableRowsTask):
     child_class = None
 
 
-@register()
+#@register()
 class TaskOwnedIncomeFromAgriculturalActivitiesTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromAgriculturalActivitiesTable
     storage_model = models.OwnedIncomeFromAgriculturalActivitiesTable
@@ -117,7 +100,7 @@ class TaskOwnedIncomeFromAgriculturalActivitiesTable(CountTableRowsTask):
     child_class = None
 
 
-@register()
+#@register()
 class TaskGetDebtsTableRowsCount(CountTableRowsTask):
     task_form = forms.TranscribeDebtsTableRowsCount
     storage_model = models.OwnedDebtsTable
@@ -125,7 +108,7 @@ class TaskGetDebtsTableRowsCount(CountTableRowsTask):
     child_class = None
 
 
-@register()
+#@register()
 class TaskOwnedIncomeFromSalariesCount(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromSalaries
     storage_model = models.OwnedIncomeFromSalariesTable
@@ -133,15 +116,30 @@ class TaskOwnedIncomeFromSalariesCount(CountTableRowsTask):
     child_class = None
 
 
+class TaskOwnedIncomeFromPensionsRowEntry(DigitalizationTask):
+    task_form = forms.TranscribeOwnedIncomeFromPensionsSingleRowEntry
+    template_name = "tasks/empty_template.html"
+
+    def save_verified_data(self, verified_data):
+        owned_income_from_pensions, created = models.OwnedIncomeFromPensionsTableEntry.objects.get_or_create(
+            address_source_of_goods="Judet: {}, Localitate: {}, Comuna: {}".format(verified_data['county'], verified_data['town'], verified_data['village']),
+            income_provider="Nume: {}, Prenume: {}".format(verified_data['owner_surname'], verified_data['owner_name']),
+            name_source_of_goods=verified_data['name_source_of_goods'],
+            goods_name=verified_data['goods_name'],
+            annual_income=verified_data['annual_income'],
+            annual_income_currency=verified_data['annual_income_currency']
+        )
+        
+
 @register()
 class TaskOwnedIncomeFromPensionsTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromPensionsTable
     storage_model = models.OwnedIncomeFromPensionsTable
     # TODO - add child_class
-    child_class = None
+    child_class = TaskOwnedIncomeFromPensionsRowEntry
 
 
-@register()
+#@register()
 class TaskOwnedGoodsOrServicesPerChildTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedGoodsOrServicesPerChildTable
     storage_model = models.OwnedGoodsOrServicesPerChildTable
@@ -149,7 +147,7 @@ class TaskOwnedGoodsOrServicesPerChildTable(CountTableRowsTask):
     child_class = None
 
 
-@register()
+#@register()
 class TaskOwnedGoodsOrServicesPerOwnerTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedGoodsOrServicesPerOwnerTable
     storage_model = models.OwnedGoodsOrServicesPerOwnerTable
@@ -157,14 +155,31 @@ class TaskOwnedGoodsOrServicesPerOwnerTable(CountTableRowsTask):
     child_class = None
 
 
-@register()
+class TaskOwnedLandRowEntry(DigitalizationTask):
+    task_form = forms.TranscribeOwnedLandSingleRowEntry
+    template_name = "tasks/owned_land.html"
+
+    def save_verified_data(self, verified_data):
+        owned_land, created = models.OwnedLandTableEntry.objects.get_or_create(
+            address="Judet: {}, Localitate: {}, Comuna: {}".format(verified_data['county'], verified_data['town'], verified_data['village']),
+            category=verified_data['category'],
+            acquisition_year=verified_data['acquisition_year'],
+            surface=verified_data['area'],
+            share_ratio=verified_data['share'],
+            attainment_type=verified_data['acquisition_mode'],
+            owner="{} {}".format(verified_data['owner_surname'], verified_data['owner_name']),
+            observations=""
+        )
+
+
+#@register()
 class TaskOwnedLandTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedLandTable
     storage_model = models.OwnedLandTable
     child_class = TaskOwnedLandRowEntry
 
 
-@register()
+#@register()
 class TaskOwnedBuildingsTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedBuildingsTable
     storage_model = models.OwnedBuildingsTable
@@ -172,7 +187,7 @@ class TaskOwnedBuildingsTable(CountTableRowsTask):
     child_class = None
 
 
-@register()
+#@register()
 class TaskOwnedBankAccountsTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedBankAccountsTable
     storage_model = models.OwnedBankAccountsTable

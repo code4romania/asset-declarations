@@ -368,9 +368,7 @@ class OwnedIncomeFromPensionsTable(models.Model):
 
 class OwnedIncomeFromPensionsTableEntry(models.Model):
     table = models.ForeignKey(OwnedIncomeFromPensionsTable, on_delete=models.CASCADE)
-    income_provider_type = models.CharField("Cine a realizat venitul",
-                                            max_length=128,
-                                            choices=IncomeProviderType.return_as_iterable()[0:FIRST_2_TYPES])
+    income_provider = models.CharField("Cine a realizat venitul", max_length=128)
     name_source_of_goods = models.CharField("Sursa venitului: nume", max_length=128)
     address_source_of_goods = models.CharField("Sursa venitului: adresa", max_length=128)
     goods_name = models.CharField("Serviciul prestat/Obiectul generator de venit", max_length=128)

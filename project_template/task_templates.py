@@ -38,5 +38,6 @@ class CountTableRowsTask(DigitalizationTask):
 	def after_save(self, verified_data):
 		# Create a new task for each table, asking the user to transcribe the number of rows
 		number_rows = int(verified_data['count'])
-		for row_number in list(range(1, number_rows)):
+		for row_number in range(0, number_rows):
+			print("!!!!!!!!!!!!!!!!!!!!!!!!")
 			self.create_new_task(self.child_class, {'row_number': row_number})

@@ -4,6 +4,9 @@ from django.utils.translation import ugettext_lazy as _
 from project_template import constants
 from project_template.datamodels.real_estate_type import RealEstateType
 from project_template.datamodels.attainment_type import AttainmentType
+from project_template.datamodels.holder_relationship import HolderRelationship
+from project_template.datamodels.currency import Currency
+
 
 YEAR_CHOICES = ('2008', '2009', '2010', '2011', '2012', '2013',
                 '2014', '2015', '2016', '2017', '2018', '2019')
@@ -87,6 +90,29 @@ class TranscribeOwnedIncomeFromPensionsTable(forms.Form):
         constants.DECLARATION_TABLES['pensions'], table_of_contents['debts']))
 
 
+class TranscribeOwnedIncomeFromPensionsSingleRowEntry(forms.Form):
+    relationship = forms.ChoiceField(
+        label="Care este relatia?", choices=HolderRelationship.return_as_iterable())
+    owner_surname = forms.CharField(
+        label="Care este numele?")
+    owner_name = forms.CharField(
+        label="Care este prenumele?")
+    name_source_of_goods = forms.CharField(
+        label="Care este sursa de venit?")
+    county = forms.CharField(
+        label="Care este judetul?")
+    town = forms.CharField(
+        label="Care este localitatea?")
+    village = forms.CharField(
+        label="Care este comuna?")
+    goods_name = forms.CharField(
+        label="Care este serviciul prestat?")
+    annual_income = forms.CharField(
+        label="Cat?")
+    annual_income_currency = forms.ChoiceField(
+        label="In ce?", choices=Currency.return_as_iterable())
+
+
 class TranscribeOwnedIncomeFromInvestmentsTable(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {0} on page {1}?".format(
         constants.DECLARATION_TABLES['income_investments'], table_of_contents['debts']))
@@ -105,16 +131,6 @@ class TranscribeOwnedGoodsOrServicesPerOwnerTable(forms.Form):
 class TranscribeOwnedLandTable(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {0} on page {1}?".format(
         constants.DECLARATION_TABLES['land'], table_of_contents['debts']))
-
-
-class TranscribeOwnedBuildingsTable(forms.Form):
-    count = forms.IntegerField(label="How many filled rows are there in the table {0} on page {1}?".format(
-        constants.DECLARATION_TABLES['buildings'], table_of_contents['debts']))
-
-
-class TranscribeOwnedBankAccountsTable(forms.Form):
-    count = forms.IntegerField(label="How many filled rows are there in the table {0} on page {1}?".format(
-        constants.DECLARATION_TABLES['bank_accounts'], table_of_contents['debts']))
 
 
 class TranscribeOwnedLandSingleRowEntry(forms.Form):
@@ -136,3 +152,13 @@ class TranscribeOwnedLandSingleRowEntry(forms.Form):
     owner_surname = forms.CharField(label="Care este numele proprietarului?")
     owner_name = forms.CharField(
         label="Care este prenumele proprietarului")
+
+
+class TranscribeOwnedBuildingsTable(forms.Form):
+    count = forms.IntegerField(label="How many filled rows are there in the table {0} on page {1}?".format(
+        constants.DECLARATION_TABLES['buildings'], table_of_contents['debts']))
+
+
+class TranscribeOwnedBankAccountsTable(forms.Form):
+    count = forms.IntegerField(label="How many filled rows are there in the table {0} on page {1}?".format(
+        constants.DECLARATION_TABLES['bank_accounts'], table_of_contents['debts']))
