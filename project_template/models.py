@@ -12,6 +12,7 @@ from project_template.datamodels.income_provider_type import IncomeProviderType
 from project_template.datamodels.estranged_goods_type import EstrangedGoodsType
 from project_template.datamodels.goods_separation_type import GoodsSeparationType
 from project_template.datamodels.debt_type import DebtType
+from project_template.datamodels.position import Position
 
 
 # More on lazy translations at https://docs.djangoproject.com/en/2.1/topics/i18n/translation/#lazy-translation
@@ -377,9 +378,12 @@ class OwnedIncomeFromPensionsTableEntry(models.Model):
     income_provider_type = models.CharField("Cine a realizat venitul",
                                             max_length=128,
                                             choices=IncomeProviderType.return_as_iterable()[0:FIRST_2_TYPES])
+    provider_name = models.CharField("Nume beneficiar")
     name_source_of_goods = models.CharField("Sursa venitului: nume", max_length=128)
     address_source_of_goods = models.CharField("Sursa venitului: adresa", max_length=128)
     goods_name = models.CharField("Serviciul prestat/Obiectul generator de venit", max_length=128)
+    ex_position = models.CharField("Functia", max_length = 128,
+                                   choices=Position.return_as_iterable())
     annual_income = models.IntegerField("Venitul anual incasat")
     annual_income_currency = models.CharField("Valuta",
                                               max_length=16,

@@ -8,9 +8,12 @@ from project_template.datamodels.mobile_goods_type import MobileGoodsType
 from project_template.datamodels.financial_institution import FinancialInstitution
 from project_template.datamodels.currency import Currency
 from project_template.datamodels.debt_type import DebtType
+from project_template.datamodels.IncomeProviderType import IncomeProviderType
+from project_template.datamodels.position import Position
+
 
 YEAR_CHOICES = ('2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025')
-
+FIRST_2_TYPES = 2
 
 class TranscribeInitialInformation(forms.Form):
     name = forms.CharField(label=_("What is the name of the current politician?"))
@@ -117,3 +120,17 @@ class TaskGetDebtsTableRowsCountEntry(forms.Form):
     scadenta = forms.DataField(label="Care este data scadentei?", widget=forms.SelectDateWidget(years=YEAR_CHOICES), input_formats=['%Y-%m-%d'])
     valoare = forms.CharField(label="Care este valoarea imprumutului?")
     moneda = forms.IntegerField(label="Care este moneda in care s-a facut imprumutul?", choices=Currency.return_as_iterable())
+    
+class TaskOwnedIncomeFromPensionsTableEntry(forms.Form):
+    beneficiar_pensie = forms.CharField(label="Cine este beneficiarul pensiei?", choices=IncomeProviderType.return_as_iterable()[0:FIRST_2_TYPES])
+    nume_beneficiar = forms.CharField(label="Care este numele beneficiarului?")
+    prenume_beneficiar = forms.CharField(label="Care este prenumele beneficiarului?")
+    sursa_venit = forms.CharField(label="Care este numele sursei de venit?")
+    judet = forms.CharField(label="Care este judetul unde se afla sursa de venit?")
+    localitate = forms.CharField(label="Care este localitatea unde se afla sursa de venit?")
+    comuna = forms.CharField(label="Care este comuna unde se afla sursa de venit?")
+    strainatate = forms.CharField(label="Care este adresa din strainatate unde se afla susa de venit?")
+    serviciu_prestat = forms.CharField(label="Care a fost serviciul prestat?")
+    functie = forms.CharField(label="Care a fost functia detinuta?", choices=Position.return_as_iterable())
+    venit = forms.IntegerField(label="Care este valoarea venitului?")
+    moneda = forms.CharField(label="Care este moneda venitului?", choices=Currency.return_as_iterable())

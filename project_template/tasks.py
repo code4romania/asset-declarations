@@ -75,13 +75,27 @@ class TaskGetDebtsTableRowsCountEntry(DigitalizationTask):
                 value = verified_data['valoare'],
                 currency = verified_data['moneda']
                 )
+
+class TaskOwnedIncomeFromPensionsTableEntry(DigitalizationTask):
+    task_form = forms.TranscribeOwnedIncomeFromPensionsTableEntry
+    template_name = "task/owned_income_from_pensions.html"
     
-                                
+    def save_verified_data(self, verified_data):
+        owned_income_from_pensions = models.OwnedIncomeFromPensionsTableEntry.object.gen_or_create(
+                income_provider_type = verified_data['beneficiar_pensie'],
+                provider_name = "Nume:{}, Prenume:{}".format(verified_data['nume_beneficiar'], verified_data['prenume_beneficiar']),
+                name_source_of_goods = verified_data['sursa_venit'],
+                address_souce_of_goods = "Judet: {}, Localitate: {}, Comuna: {}, Strainatate: {}".format(verified_data['judet'], verified_data['localitate'], verified_data['comuna']. verified_data['strainatate']),
+                goods_name = verified_data['serviciu_prestat'],
+                ex_position = verified_data['functie'],
+                annual_income = verified_data['venit'],
+                annual_income_currency = verified_data['moneda'])
+    
 @register()
 class TaskOwnedGoodsOrServicesPerSpouse(CountTableRowsTask):
     task_form = forms.TranscribeOwnedGoodsOrServicesPerSpouse
     storage_model = models.OwnedGoodsOrServicesPerSpouseTable
-    # TODO - add child_class
+    # TODO - add child class
     child_class = None
 
 
@@ -167,8 +181,7 @@ class TaskOwnedIncomeFromSalariesCount(CountTableRowsTask):
 class TaskOwnedIncomeFromPensionsTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromPensionsTable
     storage_model = models.OwnedIncomeFromPensionsTable
-    # TODO - add child_class
-    child_class = None
+    child_class = TaskOwnedIncomeFromPensionsTableEntry
 
 
 @register()
