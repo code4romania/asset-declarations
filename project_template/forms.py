@@ -104,32 +104,32 @@ class TranscribeOwnedLandSingleRowEntry(forms.Form):
     nume_proprietar = forms.CharField(label="Care este numele proprietarului?")
     prenume_proprietar = forms.CharField(label="Care este prenumele proprietarului")
     
-class TaskOwnedAutomobileRowEntry(forms.Form):
+class TaskOwnedAutomobileSingleRowEntry(forms.Form):
     tip = forms.CharField(label="Care este tipul autovehiculului?", choices=MobileGoodsType.return_as_iterable())
     marca = forms.CharField(label="Care este marca autovehiculului?")
     numar_bucati = forms.PositiveSmallIntegerField(label="Care este numarul de autovehicule detinute?")
     an_fabricatie = forms.DataField(label="Care este anul de fabricatie al autovehiculului?")
     mod_dobandire = forms.CharField(label="Care este modul in care a fost dobandit autovehiculul?", choices=AttainmentType.return_as_iterable())
     
-class TaskGetDebtsTableRowsCountEntry(forms.Form):
+class TaskOwnedDebtsSingleRowEntry(forms.Form):
     nume_creditor = forms.CharField(label="Care este numele creditorului?")
     prenume_creditor = forms.CharField(label="Care este prenumele creditorului?")
     institutie = forms.CharField(label="Care este numele institutiei creditoare?", choices=FinancialInstitution.return_as_iterable())
-    tip_imprumut = forms.CharField(label="Care este tipul de imprumut?", choices=DebtType.return_as_iterable())
+    tip_datorie = forms.CharField(label="Care este tipul de datorie?", choices=DebtType.return_as_iterable())
     an_contractare = forms.DataField(label="Care este anul contractarii imprumutului?", widget=forms.SelectDateWidget(years=YEAR_CHOICES), input_formats=['%Y-%m-%d'])
-    scadenta = forms.DataField(label="Care este data scadentei?", widget=forms.SelectDateWidget(years=YEAR_CHOICES), input_formats=['%Y-%m-%d'])
+    scadenta = forms.DataField(label="Care este data scadentei?", widget=forms.SelectDateWidget(years=YEAR_CHOICES))
     valoare = forms.CharField(label="Care este valoarea imprumutului?")
     moneda = forms.IntegerField(label="Care este moneda in care s-a facut imprumutul?", choices=Currency.return_as_iterable())
     
-class TaskOwnedIncomeFromPensionsTableEntry(forms.Form):
+class TaskOwnedIncomeFromPensionsSingleRowEntry(forms.Form):
     beneficiar_pensie = forms.CharField(label="Cine este beneficiarul pensiei?", choices=IncomeProviderType.return_as_iterable()[0:FIRST_2_TYPES])
     nume_beneficiar = forms.CharField(label="Care este numele beneficiarului?")
     prenume_beneficiar = forms.CharField(label="Care este prenumele beneficiarului?")
     sursa_venit = forms.CharField(label="Care este numele sursei de venit?")
-    judet = forms.CharField(label="Care este judetul unde se afla sursa de venit?")
-    localitate = forms.CharField(label="Care este localitatea unde se afla sursa de venit?")
-    comuna = forms.CharField(label="Care este comuna unde se afla sursa de venit?")
-    strainatate = forms.CharField(label="Care este adresa din strainatate unde se afla susa de venit?")
+    judet = forms.CharField(label="Care este judetul de unde provine sursa de venit?")
+    localitate = forms.CharField(label="Care este localitatea de unde provine sursa de venit?")
+    comuna = forms.CharField(label="Care este comuna de unde provine sursa de venit?")
+    strainatate = forms.CharField(label="Care este tara din care provine sursa de venit?")
     serviciu_prestat = forms.CharField(label="Care a fost serviciul prestat?")
     functie = forms.CharField(label="Care a fost functia detinuta?", choices=Position.return_as_iterable())
     venit = forms.IntegerField(label="Care este valoarea venitului?")

@@ -57,9 +57,9 @@ class TaskOwnedAutomobileRowEntry(DigitalizationTask):
             attainment_type = verified_data['mod_dobandire'],
         )
 
-class TaskGetDebtsTableRowsCountEntry(DigitalizationTask):
-    task_form = forms.TranscribeDebtsTableRowsCountEntry
-    template_name = "task/owned_get_debts.html"
+class TaskOwnedDebtsRowEntry(DigitalizationTask):
+    task_form = forms.TranscribeOwnedDebtsSingleRowEntry
+    template_name = "task/owned_debts.html"
         
     def save_verified_data(self, verified_data):
         if verified_data['nume_creditor'] and verified_data['prenume_creditor']:
@@ -69,19 +69,19 @@ class TaskGetDebtsTableRowsCountEntry(DigitalizationTask):
             
         owned_debts, created = models.OwnedDebtsTableEntry.object.get_or_create(
                 lender=lender_identity,
-                debt_type = verified_data['tip_imprumut'],
+                debt_type = verified_data['tip_datorie'],
                 acquirement_year = verified_data['an_contractare'],
                 due_value = verified_data['scadenta'],
                 value = verified_data['valoare'],
                 currency = verified_data['moneda']
                 )
 
-class TaskOwnedIncomeFromPensionsTableEntry(DigitalizationTask):
-    task_form = forms.TranscribeOwnedIncomeFromPensionsTableEntry
+class TaskOwnedIncomeFromPensionsRowEntry(DigitalizationTask):
+    task_form = forms.TranscribeOwnedIncomeFromPensionsSingleRowEntry
     template_name = "task/owned_income_from_pensions.html"
     
     def save_verified_data(self, verified_data):
-        owned_income_from_pensions = models.OwnedIncomeFromPensionsTableEntry.object.gen_or_create(
+        owned_income_from_pensions, created = models.OwnedIncomeFromPensionsTableEntry.object.gen_or_create(
                 income_provider_type = verified_data['beneficiar_pensie'],
                 provider_name = "Nume:{}, Prenume:{}".format(verified_data['nume_beneficiar'], verified_data['prenume_beneficiar']),
                 name_source_of_goods = verified_data['sursa_venit'],
@@ -163,10 +163,10 @@ class TaskOwnedIncomeFromAgriculturalActivitiesTable(CountTableRowsTask):
 
 
 @register()
-class TaskGetDebtsTableRowsCount(CountTableRowsTask):
-    task_form = forms.TranscribeDebtsTableRowsCount
+class TaskOwnedDebtsTable(CountTableRowsTask):
+    task_form = forms.TranscribeOwnedDebtsTable
     storage_model = models.OwnedDebtsTable
-    child_class = TaskGetDebtsTableRowsCountEntry
+    child_class = TaskOwnedDebtsRowEntry
 
 
 @register()
@@ -181,7 +181,7 @@ class TaskOwnedIncomeFromSalariesCount(CountTableRowsTask):
 class TaskOwnedIncomeFromPensionsTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromPensionsTable
     storage_model = models.OwnedIncomeFromPensionsTable
-    child_class = TaskOwnedIncomeFromPensionsTableEntry
+    child_class = TaskOwnedIncomeFromPensionsRowEntry
 
 
 @register()
