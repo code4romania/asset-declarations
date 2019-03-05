@@ -3,6 +3,9 @@ from django.utils.translation import ugettext_lazy as _
 
 from project_template import constants
 from project_template.datamodels.attainment_type import AttainmentType
+from project_template.datamodels.financial_institution import FinancialInstitution
+from project_template.datamodels.account_type import AccountType
+from project_template.datamodels.currency import Currency
 from project_template.datamodels.counties import Counties
 from project_template.datamodels.real_estate_type import RealEstateType
 
@@ -101,3 +104,12 @@ class TranscribeOwnedLandSingleRowEntry(forms.Form):
     cota_parte = forms.IntegerField(label="Care este cota parte din acest teren? (in procente)", max_value=100, min_value=0)
     nume_proprietar = forms.CharField(label="Care este numele proprietarului?")
     prenume_proprietar = forms.CharField(label="Care este prenumele proprietarului")
+
+class TranscribeOwnedBankAccountsRowEntry(forms.Form):
+    institutia_administrativa = forms.ChoiceField(label="Care este institutia financiara?", choices=FinancialInstitution.return_as_iterable())
+    tip_cont = forms.ChoiceField(label="Care este tipul contului?", choices=AccountType.return_as_iterable())
+    valuta = forms.ChoiceField(label="Care este valuta?", choices=Currency.return_as_iterable())
+    # TODO might need to increase the range of YEAR_CHOICES since the account could have been opened in 1989 for all we know
+    anul_deschiderii = forms.DateField(label="Care este anul deschiderii contului?", widget=forms.SelectDateWidget(years=YEAR_CHOICES), input_formats=['%Y-%m-%d'])
+    sold = forms.DecimalField(label="Care este valoarea soldului?", decimal_places=2, max_digits=10)
+
