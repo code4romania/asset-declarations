@@ -49,7 +49,7 @@ class TaskOwnedBankAccountsRowEntry(DigitalizationTask):
     template_name = "tasks/owned_bank_accounts.html"
 
     def save_verified_data(self, verified_data):
-        owned_bank_accounts, created = models.OwnedBankAccountsTableEntry.object.get_or_create(
+        owned_bank_accounts, created = models.OwnedBankAccountsTableEntry.objects.get_or_create(
             institution = verified_data['institutia_administrativa'],
             account_type = verified_data['tip_cont'],
             currency = verified_data['valuta'],
