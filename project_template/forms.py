@@ -6,8 +6,10 @@ from project_template.datamodels.attainment_type import AttainmentType
 from project_template.datamodels.counties import Counties
 from project_template.datamodels.real_estate_type import RealEstateType
 
-YEAR_CHOICES = ('2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019')
-
+import datetime
+start_date = 2008
+end_date = datetime.datetime.now().year
+YEAR_CHOICES = tuple(map(str, range(start_date, end_date + 1)))
 
 class TranscribeInitialInformation(forms.Form):
     name = forms.CharField(label=_("What is the name of the current politician?"))
