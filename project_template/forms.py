@@ -2,11 +2,12 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from project_template import constants
-from project_template.datamodels.real_estate_type import RealEstateType
 from project_template.datamodels.attainment_type import AttainmentType
 from project_template.datamodels.financial_institution import FinancialInstitution
 from project_template.datamodels.account_type import AccountType
 from project_template.datamodels.currency import Currency
+from project_template.datamodels.counties import Counties
+from project_template.datamodels.real_estate_type import RealEstateType
 
 YEAR_CHOICES = ('2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019')
 
@@ -85,11 +86,13 @@ class TranscribeOwnedLandTable(forms.Form):
 class TranscribeOwnedBuildingsTable(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {}".format(constants.DECLARATION_TABLES['buildings']))
 
+
 class TranscribeOwnedBankAccountsTable(forms.Form):
     count = forms.IntegerField(label="How many filled rows are there in the table {}?".format(constants.DECLARATION_TABLES['bank_accounts']))
 
+
 class TranscribeOwnedLandSingleRowEntry(forms.Form):
-    judet = forms.CharField(label="Care este judetul in care se gaseste terenul detinut?")
+    judet = forms.ChoiceField(label="Care este judetul in care se gaseste terenul detinut?", choices=Counties.return_counties())
     localitate = forms.CharField(label="Care este localitatea in care se gaseste terenul detinut?")
     comuna = forms.CharField(label="Care este comuna in care se gaseste terenul detinut?")
     categorie = forms.ChoiceField(label="Care este categoria de teren?", choices=RealEstateType.return_as_iterable())
@@ -100,7 +103,6 @@ class TranscribeOwnedLandSingleRowEntry(forms.Form):
     nume_proprietar = forms.CharField(label="Care este numele proprietarului?")
     prenume_proprietar = forms.CharField(label="Care este prenumele proprietarului")
 
-
 class TranscribeOwnedBankAccountsRowEntry(forms.Form):
     institutia_administrativa = forms.ChoiceField(label="Care este institutia financiara?", choices=FinancialInstitution.return_as_iterable())
     tip_cont = forms.ChoiceField(label="Care este tipul contului?", choices=AccountType.return_as_iterable())
@@ -108,3 +110,4 @@ class TranscribeOwnedBankAccountsRowEntry(forms.Form):
     # TODO might need to increase the range of YEAR_CHOICES since the account could have been opened in 1989 for all we know
     anul_deschiderii = forms.DateField(label="Care este anul deschiderii contului?", widget=forms.SelectDateWidget(years=YEAR_CHOICES), input_formats=['%Y-%m-%d'])
     sold = forms.DecimalField(label="Care este valoarea soldului?", decimal_places=2, max_digits=10)
+
