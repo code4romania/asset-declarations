@@ -54,7 +54,7 @@ class TaskOwnedIncomeFromAgriculturalActivitiesTask(DigitalizationTask):
         optiune=int(verified_data['optiune'])
 
         income_declaration, created = models.OwnedIncomeFromAgriculturalActivitiesTableEntry.objects.get_or_create(
-            name_source_of_goods="{} {} {}".format(verified_data["sursa"], verified_data['judet'], verified_data['localitate'], verified_data['comuna']),
+            name_source_of_goods=verified_data['sursa'],
             holder_relationship=verified_data['relatie_titular'],
             address_source_of_goods="Judet: {}, Localitate: {}, Comuna: {}".format(verified_data['judet'], verified_data['localitate'], verified_data['comuna']),
             goods_name=verified_data['serviciul_prestat'],
