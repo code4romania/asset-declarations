@@ -1,4 +1,5 @@
 from enum import Enum
+
 from project_template.datamodels import common_utils
 
 class Position(Enum):

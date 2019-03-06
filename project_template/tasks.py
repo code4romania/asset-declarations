@@ -1,5 +1,5 @@
 import datetime
- 
+
 from moonsheep import verifiers
 from moonsheep.decorators import register
 
@@ -55,6 +55,36 @@ class TaskOwnedAutomobileRowEntry(DigitalizationTask):
             no_owned = verified_data['numar_bucati'],
             fabrication_year = verified_data['an_fabricatie'],
             attainment_type = verified_data['mod_dobandire'],
+        )
+
+class TaskOwnedBankAccountsRowEntry(DigitalizationTask):
+    task_form = forms.TranscribeOwnedBankAccountsRowEntry
+    template_name = "tasks/owned_bank_accounts.html"
+
+    def save_verified_data(self, verified_data):
+        owned_bank_accounts, created = models.OwnedBankAccountsTableEntry.objects.get_or_create(
+            institution = verified_data['institutia_administrativa'],
+            account_type = verified_data['tip_cont'],
+            currency = verified_data['valuta'],
+            opening_year = verified_data['anul_deschiderii'],
+            account_balance = verified_data['sold'],
+        )
+
+class TaskOwnedIncomeFromAgriculturalActivitiesTask(DigitalizationTask):
+    task_form = forms.TranscribeOwnedIncomeFromAgriculturalActivitiesRowEntry
+    template_name = "tasks/agricultural_activity.html"
+
+    def save_verified_data(self, verified_data):
+        # Check if option is person or institution
+        optiune=int(verified_data['optiune'])
+
+        income_declaration, created = models.OwnedIncomeFromAgriculturalActivitiesTableEntry.objects.get_or_create(
+            name_source_of_goods=verified_data['sursa'],
+            holder_relationship=verified_data['relatie_titular'],
+            address_source_of_goods="Judet: {}, Localitate: {}, Comuna: {}".format(verified_data['judet'], verified_data['localitate'], verified_data['comuna']),
+            goods_name=verified_data['serviciul_prestat'],
+            annual_income=verified_data['venit_anual_incasat'],
+            annual_income_currency=verified_data['valuta']
         )
 
 class TaskOwnedDebtsRowEntry(DigitalizationTask):
@@ -158,8 +188,7 @@ class TaskOwnedIncomeFromGamblingTable(CountTableRowsTask):
 class TaskOwnedIncomeFromAgriculturalActivitiesTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromAgriculturalActivitiesTable
     storage_model = models.OwnedIncomeFromAgriculturalActivitiesTable
-    # TODO - add child_class
-    child_class = None
+    child_class = TaskOwnedIncomeFromAgriculturalActivitiesTask
 
 
 @register()
@@ -219,5 +248,4 @@ class TaskOwnedBuildingsTable(CountTableRowsTask):
 class TaskOwnedBankAccountsTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedBankAccountsTable
     storage_model = models.OwnedBankAccountsTable
-    # TODO - add child_class
-    child_class = None
+    child_class = TaskOwnedBankAccountsRowEntry
