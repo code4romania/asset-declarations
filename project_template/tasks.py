@@ -49,7 +49,7 @@ class TaskOwnedAutomobileRowEntry(DigitalizationTask):
     template_name = "tasks/owned_automobile.html"
     
     def save_verified_data(self, verified_data):
-        owned_automobile, created = models.OwnedAutomobileTableEntry.object.get_or_create(
+        owned_automobile, created = models.OwnedAutomobileTableEntry.objects.get_or_create(
             car_type = verified_data['tip'],
             brand = verified_data['marca'],
             no_owned = verified_data['numar_bucati'],
@@ -59,7 +59,7 @@ class TaskOwnedAutomobileRowEntry(DigitalizationTask):
 
 class TaskOwnedDebtsRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedDebtsSingleRowEntry
-    template_name = "task/owned_debts.html"
+    template_name = "tasks/owned_debts.html"
         
     def save_verified_data(self, verified_data):
         if verified_data['nume_creditor'] and verified_data['prenume_creditor']:
@@ -67,25 +67,25 @@ class TaskOwnedDebtsRowEntry(DigitalizationTask):
         else: 
             lender_identity = "Institutie: {}".format(verified_data['institutie'])
             
-        owned_debts, created = models.OwnedDebtsTableEntry.object.get_or_create(
+        owned_debts, created = models.OwnedDebtsTableEntry.objects.get_or_create(
                 lender=lender_identity,
                 debt_type = verified_data['tip_datorie'],
                 acquirement_year = verified_data['an_contractare'],
-                due_value = verified_data['scadenta'],
+                due_date = verified_data['scadenta'],
                 value = verified_data['valoare'],
                 currency = verified_data['moneda']
                 )
 
 class TaskOwnedIncomeFromPensionsRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedIncomeFromPensionsSingleRowEntry
-    template_name = "task/owned_income_from_pensions.html"
+    template_name = "tasks/owned_income_from_pensions.html"
     
     def save_verified_data(self, verified_data):
-        owned_income_from_pensions, created = models.OwnedIncomeFromPensionsTableEntry.object.gen_or_create(
+        owned_income_from_pensions, created = models.OwnedIncomeFromPensionsTableEntry.objects.get_or_create(
                 income_provider_type = verified_data['beneficiar_pensie'],
                 provider_name = "Nume:{}, Prenume:{}".format(verified_data['nume_beneficiar'], verified_data['prenume_beneficiar']),
                 name_source_of_goods = verified_data['sursa_venit'],
-                address_souce_of_goods = "Judet: {}, Localitate: {}, Comuna: {}, Strainatate: {}".format(verified_data['judet'], verified_data['localitate'], verified_data['comuna']. verified_data['strainatate']),
+                address_source_of_goods = "Judet: {}, Localitate: {}, Comuna: {}, Strainatate: {}".format(verified_data['judet'], verified_data['localitate'], verified_data['comuna'], verified_data['strainatate']),
                 goods_name = verified_data['serviciu_prestat'],
                 ex_position = verified_data['functie'],
                 annual_income = verified_data['venit'],
@@ -163,8 +163,8 @@ class TaskOwnedIncomeFromAgriculturalActivitiesTable(CountTableRowsTask):
 
 
 @register()
-class TaskOwnedDebtsTable(CountTableRowsTask):
-    task_form = forms.TranscribeOwnedDebtsTable
+class TaskGetDebtsTableRowsCount(CountTableRowsTask):
+    task_form = forms.TranscribeDebtsTableRowsCount
     storage_model = models.OwnedDebtsTable
     child_class = TaskOwnedDebtsRowEntry
 
