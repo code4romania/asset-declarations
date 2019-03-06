@@ -2,7 +2,6 @@ from enum import Enum
 
 from project_template.datamodels import common_utils
 
-
 class Position(Enum):
     GENERAL_SECRETARY = "Secretar General"
     DEPUTY = "Deputat"
@@ -18,8 +17,8 @@ class Position(Enum):
     STATE_SECRETARY = "Secretar de Stat"
     OTHER = "Alta Valoare"
 
-
     @staticmethod
     def return_as_iterable():
         return common_utils.return_enum_as_iterable(Position)
+
 
