@@ -5,6 +5,7 @@ from project_template.datamodels.attainment_type import AttainmentType
 from project_template.datamodels.building_type import BuildingType
 from project_template.datamodels.currency import Currency
 from project_template.datamodels.financial_institution import FinancialInstitution
+from project_template.datamodels.holder_relationship import HolderRelationship
 from project_template.datamodels.investment_type import InvestmentType
 from project_template.datamodels.real_estate_type import RealEstateType
 from project_template.datamodels.mobile_goods_type import MobileGoodsType
@@ -393,6 +394,9 @@ class OwnedIncomeFromAgriculturalActivitiesTableEntry(models.Model):
     income_provider_type = models.CharField("Cine a realizat venitul",
                                             max_length=128,
                                             choices=IncomeProviderType.return_as_iterable()[0:FIRST_2_TYPES])
+    holder_relationship = models.CharField("Relatie titular",
+                                           max_length=128,
+                                           choices=HolderRelationship.return_as_iterable()[0:FIRST_2_TYPES])
     name_source_of_goods = models.CharField("Sursa venitului: nume", max_length=128)
     address_source_of_goods = models.CharField("Sursa venitului: adresa", max_length=128)
     goods_name = models.CharField("Serviciul prestat/Obiectul generator de venit", max_length=128)

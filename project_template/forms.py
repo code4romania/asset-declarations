@@ -2,6 +2,10 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from project_template import constants
+from project_template.datamodels.debt_type import DebtType
+from project_template.datamodels.holder_relationship import HolderRelationship
+from project_template.datamodels.institution import Institution
+from project_template.datamodels.position import Position
 from project_template.datamodels.attainment_type import AttainmentType
 from project_template.datamodels.financial_institution import FinancialInstitution
 from project_template.datamodels.account_type import AccountType
@@ -104,6 +108,21 @@ class TranscribeOwnedLandSingleRowEntry(forms.Form):
     cota_parte = forms.IntegerField(label="Care este cota parte din acest teren? (in procente)", max_value=100, min_value=0)
     nume_proprietar = forms.CharField(label="Care este numele proprietarului?")
     prenume_proprietar = forms.CharField(label="Care este prenumele proprietarului")
+
+class TranscribeOwnedIncomeFromAgriculturalActivitiesRowEntry(forms.Form):
+    relatie_titular = forms.ChoiceField(label="Relatie titular", choices=HolderRelationship.return_as_iterable())
+    optiune = forms.ChoiceField(label="Optiune", choices=[(0, "Insitutie"), (1, "Persoana")], widget=forms.RadioSelect)
+    nume_persoana = forms.CharField(label="Nume Persoana")
+    prenume_persoana = forms.CharField(label="Prenume Persoana")
+    sursa = forms.CharField(label="Sursa")
+    judet = forms.CharField(label="Care este judetul in care se gaseste terenul detinut?")
+    localitate = forms.CharField(label="Care este localitatea in care se gaseste terenul detinut?")
+    comuna = forms.CharField(label="Care este comuna in care se gaseste terenul detinut?")
+    adresa_strainatate = forms.CharField(label="Adresa strainatate")
+    serviciul_prestat = forms.CharField(label="Serviciul prestat")
+    pozitie = forms.ChoiceField(label="Pozitie", choices=Position.return_as_iterable())
+    venit_anual_incasat = forms.IntegerField(label="Venit anual incasat", min_value=0)
+    valuta = forms.ChoiceField(label="Valuta", choices=Currency.return_as_iterable())
 
 class TranscribeOwnedBankAccountsRowEntry(forms.Form):
     institutia_administrativa = forms.ChoiceField(label="Care este institutia financiara?", choices=FinancialInstitution.return_as_iterable())
