@@ -126,7 +126,12 @@ class TranscribeOwnedAutomobileSingleRowEntry(forms.Form):
     year_of_manufacture = forms.DateField(label="Care este anul de fabricatie al autovehiculului?")
     attainment_type = forms.CharField(label="Care este modul in care a fost dobandit autovehiculul?", widget=forms.Select(choices=AttainmentType.return_as_iterable()))
 
-
+class TranscribeOwnedJewelrySingleRowEntry(forms.Form):
+    description = forms.CharField(label="Care este descrierea bunului?")
+    ownership_start_year = forms.DateField(label="Care este anul dobandirii bunului?", widget=forms.SelectDateWidget(years=YEAR_CHOICES), input_formats=['%Y-%m-%d'])
+    estimated_value = forms.FloatField(label="Care este valoarea estimata a bunului?")
+    currency = forms.ChoiceField(label = "Care este moneda in care este estimata valoarea bunului?", choices=Currency.return_as_iterable())
+    
 class TranscribeOwnedDebtsSingleRowEntry(forms.Form):
     loaner_surname = forms.CharField(label="Care este numele creditorului?")
     loaner_name = forms.CharField(label="Care este prenumele creditorului?")
