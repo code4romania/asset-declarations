@@ -163,6 +163,27 @@ class TaskOwnedIncomeFromPensionsTable(CountTableRowsTask):
     child_class = TaskOwnedIncomeFromPensionsRowEntry
 
 
+class TaskOwnedGoodsOrServicesPerOwnerRowEntry(DigitalizationTask):
+    task_form = forms.TranscribeOwnedGoodsOrServicesPerOwnerSingleRowTable
+    template_name = "task/owned_goods_or_services_per_owner.html"
+
+    def save_verified_data(self, verified_data):
+        owned_goods_or_services_per_owner, created = models.OwnedGoodsOrServicesPerOwnerTableEntry.object.gen_or_create(
+                holder="Nume:{}, Prenume:{}".format(verified_data['nume_titular'], verified_data['prenume_titular']),
+                name_source_of_goods="Nume:{}, Prenume:{}".forms(verified_data['nume_sursa'], verified_data['prenume_sursa']),
+                address_source_of_goods="Judet:{}, Localitate:{}, Comuna:{}".forms(verified_data['judet_provenienta'], verified_data['localitate_provenienta'], verified_data['comuna_provenieta']),
+                goods_name=verified_data['nume_produs/serviciu'],
+                annual_income=verified_data['venit_anual'],
+                annual_income_currency=verified_data['moneda'],
+                )
+
+
+class TaskOwnedGoodsOrServicesPerOwnerTable(CountTableRowsTask):
+    task_form = forms.TranscribeOwnedGoodsOrServicesPerOwnerTable
+    storage_model = models.OwnedGoodsOrServicesPerOwnerTable
+    child_class = TaskOwnedGoodsOrServicesPerOwnerRowEntry
+
+
 class TaskOwnedGoodsOrServicesPerSpouseTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedGoodsOrServicesPerSpouse
     storage_model = models.OwnedGoodsOrServicesPerSpouseTable
@@ -254,13 +275,6 @@ class TaskOwnedIncomeFromSalariesTable(CountTableRowsTask):
 class TaskOwnedGoodsOrServicesPerChildTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedGoodsOrServicesPerChildTable
     storage_model = models.OwnedGoodsOrServicesPerChildTable
-    # TODO - add child_class
-    child_class = None
-
-
-class TaskOwnedGoodsOrServicesPerOwnerTable(CountTableRowsTask):
-    task_form = forms.TranscribeOwnedGoodsOrServicesPerOwnerTable
-    storage_model = models.OwnedGoodsOrServicesPerOwnerTable
     # TODO - add child_class
     child_class = None
 

@@ -201,3 +201,15 @@ class TranscribeExtraValuableRowEntry(forms.Form):
     estimated_value = forms.FloatField(label="Care este valoarea bunului instrainat?")
     currency = forms.ChoiceField(label="Care este valuta in care este exprimata valoarea bunului instrainat?", 
                                     choices=Currency.return_as_iterable())
+    
+class TranscribeOwnedGoodsOrServicesPerOwnerSingleRowEntry(forms.Form):
+    holder_surname = forms.CharField(label="Care este numele titularului?")
+    holder_name = forms.CharField(label="Care este prenumele titularului?")
+    source_surname = forms.CharField(label="Care este numele sursei de bunuri/servicii?")
+    source_name = forms.CharField(label="Care este prenumele sursei de bunuri/servicii?")
+    county = forms.CharField(label="Care este judetul de provenienta al bunului/serviciului?")
+    city = forms.CharField(label="Care este localitatea de provenienta a bunului/serviciului?")
+    commune = forms.CharField(label="Care este comuna de provenienta a bunului/serviciului?")
+    goods_name = forms.CharField(label="Care este bunul/serviciul generator de venit?")
+    annual_income = forms.IntegerField(label="Care este valoarea venitului anual obtinut?")
+    currency = forms.ChoiceField(label="Care este moneda venitului?", choices=Currency.return_as_iterable())
