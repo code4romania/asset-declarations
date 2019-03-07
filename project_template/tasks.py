@@ -216,7 +216,6 @@ class TaskExtraValuableRowEntry(DigitalizationTask):
             currency = verified_data['currency']
         )
 
-@register()
 class TaskExtraValuableTable(CountTableRowsTask):
     task_form = forms.TranscribeExtraValuable
     storage_model = models.OwnedExtraValuableTable
