@@ -201,6 +201,27 @@ class TaskOwnedJewelryTable(CountTableRowsTask):
     # TODO - add child_class
     child_class = TaskOwnedJewelryRowEntry
 
+class TaskExtraValuableRowEntry(DigitalizationTask):
+    task_form = forms.TranscribeExtraValuableRowEntry
+    template_name = "tasks/owned_extra_valuable.html"
+
+    def save_verified_data(self, verified_data):
+        owned_extra_valuable, created = models.OwnedExtraValuableTableEntry.objects.get_or_create(
+            estrangement_goods_type = verified_data['estranged_goods_type'],
+            estragement_goods_address = "{}, {}, {}".format(verified_data['goods_county'], verified_data['goods_town'], verified_data['goods_commune']),
+            estrangement_date = verified_data['estranged_date'],
+            receiver_of_goods = "{} {}".format(verified_data['owner_name'], verified_data['owner_surname']),
+            goods_separation_type = verified_data['estranged_goods_separation'],
+            value = verified_data['estimated_value'],
+            currency = verified_data['currency']
+        )
+
+class TaskExtraValuableTable(CountTableRowsTask):
+    task_form = forms.TranscribeExtraValuable
+    storage_model = models.OwnedExtraValuableTable
+    # TODO - add child_class
+    child_class = TaskExtraValuableRowEntry
+
 
 class TaskOwnedIncomeFromDeferredUseOfGoodsTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromDeferredUseOfGoods

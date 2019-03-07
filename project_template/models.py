@@ -139,6 +139,8 @@ class OwnedExtraValuableTableEntry(models.Model):
     estrangement_goods_type = models.CharField("Natura bunului instrainat",
                                                max_length=128,
                                                choices=EstrangedGoodsType.return_as_iterable())
+    estragement_goods_address = models.CharField("Locatia bunului",
+                                            max_length=128)
     estrangement_date = models.DateField("Data instrainarii")
     receiver_of_goods = models.CharField("Persoana catre care s-a instrainat", max_length=128)
     goods_separation_type = models.CharField("Forma instrainarii",
