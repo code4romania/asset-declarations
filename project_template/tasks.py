@@ -195,7 +195,6 @@ class TaskOwnedJewelryRowEntry(DigitalizationTask):
         currency = verified_data['currency']
     )
 
-@register()
 class TaskOwnedJewelryTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedJewelry
     storage_model = models.OwnedJewelryTable
