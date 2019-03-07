@@ -122,7 +122,7 @@ class OwnedJewelryTableEntry(models.Model):
     table = models.ForeignKey(OwnedJewelryTable, on_delete=models.CASCADE, null=True)
     summary_description = models.CharField("Descriere sumara", max_length=256)
     acquisition_year = models.DateField("Anul dobandirii")
-    sum = models.IntegerField("Suma")
+    goods_value = models.IntegerField("Suma")
     currency = models.CharField("Valuta",
                                 max_length=16,
                                 choices=Currency.return_as_iterable())
