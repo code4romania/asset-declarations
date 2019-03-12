@@ -14,6 +14,7 @@ from project_template.datamodels.estranged_goods_type import EstrangedGoodsType
 from project_template.datamodels.goods_separation_type import GoodsSeparationType
 from project_template.datamodels.debt_type import DebtType
 from project_template.datamodels.position import Position
+from project_template.datamodels.institution import Institution
 
 
 # More on lazy translations at https://docs.djangoproject.com/en/2.1/topics/i18n/translation/#lazy-translation
@@ -29,9 +30,11 @@ FIRST_2_TYPES = 2
 class Politician(models.Model):
     __positions = []
 
-    name = models.CharField(_("The name"), max_length=128)
-    surname = models.CharField(_("The surname"), max_length=128)
-    position = models.CharField(_("The current poition the politician holds"), max_length=128)
+    name = models.CharField(_("Name"), max_length=128)
+    surname = models.CharField(_("Surname"), max_length=128)
+    position = models.CharField(_("Position"), max_length=128)
+    initials = models.CharField(_("Initials"), max_length=20)
+    previous_name = models.CharField(_("PreviousName"), max_length=128)
 
     # Automatically set the field to now every time the object is saved. Useful for “last-modified” timestamps.
     # Note that the current date is always used; it’s not just a default value that you can override.
@@ -63,6 +66,20 @@ class Politician(models.Model):
         return "{} {}".format(self.name, self.surname)
 
 
+class Declaration(models.Model):
+    politician = models.ForeignKey(Politician, on_delete=models.CASCADE, null=True)
+
+    position = models.CharField(_("Functie"), 
+                        max_length=128,
+                        choices=Position.return_as_iterable())
+    date = models.DateField(_("Data completare"))
+    institution = models.CharField(_("Institutie"), 
+                        max_length=128,
+                        choices=Institution.return_as_iterable() )
+    declaration_type = models.CharField(_("Tip declaratie"), 
+                            max_length=128,
+                            choices=Institution.return_as_iterable())
+                    
 class IncomeDeclaration(models.Model):
     url = models.URLField(max_length=500)
     politician = models.ForeignKey(Politician, on_delete=models.CASCADE, null=True)
@@ -76,7 +93,7 @@ class IncomeDeclaration(models.Model):
 
 class OwnedBuildingsTable(models.Model):
     __full_name = DECLARATION_TABLES['buildings']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE, null=True)
+    declaration = models.ForeignKey(Declaration, on_delete=models.CASCADE, null=True)
     count = models.IntegerField("The number of rows")
 
 
@@ -95,7 +112,7 @@ class OwnedBuildingsTableEntry(models.Model):
 
 class OwnedAutomobileTable(models.Model):
     __full_name = DECLARATION_TABLES['automobiles']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE, null=True)
+    declaration = models.ForeignKey(Declaration, on_delete=models.CASCADE, null=True)
     count = models.IntegerField(_("The number of rows"))
 
 
@@ -114,7 +131,7 @@ class OwnedAutomobileTableEntry(models.Model):
 
 class OwnedJewelryTable(models.Model):
     __full_name = DECLARATION_TABLES['jewelry']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE, null=True)
+    declaration = models.ForeignKey(Declaration, on_delete=models.CASCADE, null=True)
     count = models.IntegerField("The number of rows")
 
 
@@ -130,7 +147,7 @@ class OwnedJewelryTableEntry(models.Model):
 
 class OwnedExtraValuableTable(models.Model):
     __full_name = DECLARATION_TABLES['extra_valuable']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE, null=True)
+    declaration = models.ForeignKey(Declaration, on_delete=models.CASCADE, null=True)
     count = models.IntegerField(_("The number of rows"))
 
 
@@ -154,7 +171,7 @@ class OwnedExtraValuableTableEntry(models.Model):
 
 class OwnedBankAccountsTable(models.Model):
     __full_name = DECLARATION_TABLES['bank_accounts']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE, null=True)
+    declaration = models.ForeignKey(Declaration, on_delete=models.CASCADE, null=True)
     count = models.IntegerField("The number of rows")
 
 
@@ -176,7 +193,7 @@ class OwnedBankAccountsTableEntry(models.Model):
 
 class OwnedInvestmentsTable(models.Model):
     __full_name = DECLARATION_TABLES['investments']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE, null=True)
+    declaration = models.ForeignKey(Declaration, on_delete=models.CASCADE, null=True)
     count = models.IntegerField(_("The number of rows"))
 
 
@@ -197,7 +214,7 @@ class OwnedInvestmentsTableEntry(models.Model):
 
 class OwnedLandTable(models.Model):
     __full_name = DECLARATION_TABLES['land']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE, null=True)
+    declaration = models.ForeignKey(Declaration, on_delete=models.CASCADE, null=True)
     count = models.IntegerField(_("The number of rows"))
 
 
@@ -219,7 +236,7 @@ class OwnedLandTableEntry(models.Model):
 
 class OwnedDebtsTable(models.Model):
     __full_name = DECLARATION_TABLES['debts']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE, null=True)
+    declaration = models.ForeignKey(Declaration, on_delete=models.CASCADE, null=True)
     count = models.IntegerField("The number of rows")
 
 
@@ -240,7 +257,7 @@ class OwnedDebtsTableEntry(models.Model):
 
 class OwnedGoodsOrServicesPerOwnerTable(models.Model):
     __full_name = DECLARATION_TABLES['goods']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE, null=True)
+    declaration = models.ForeignKey(Declaration, on_delete=models.CASCADE, null=True)
     count = models.IntegerField("The number of rows")
 
 
@@ -258,7 +275,7 @@ class OwnedGoodsOrServicesPerOwnerTableEntry(models.Model):
 
 class OwnedGoodsOrServicesPerSpouseTable(models.Model):
     __full_name = DECLARATION_TABLES['gifts_spouse']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE, null=True)
+    declaration = models.ForeignKey(Declaration, on_delete=models.CASCADE, null=True)
     count = models.IntegerField("The number of rows")
 
 
@@ -276,7 +293,7 @@ class OwnedGoodsOrServicesPerSpouseTableEntry(models.Model):
 
 class OwnedGoodsOrServicesPerChildTable(models.Model):
     __full_name = DECLARATION_TABLES['gifts_kids']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE, null=True)
+    declaration = models.ForeignKey(Declaration, on_delete=models.CASCADE, null=True)
     count = models.IntegerField("The number of rows")
 
 
@@ -294,7 +311,7 @@ class OwnedGoodsOrServicesPerChildTableEntry(models.Model):
 
 class OwnedIncomeFromSalariesTable(models.Model):
     __full_name = DECLARATION_TABLES['salaries']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE, null=True)
+    declaration = models.ForeignKey(Declaration, on_delete=models.CASCADE, null=True)
     count = models.IntegerField(_("The number of rows"))
 
 
@@ -314,7 +331,7 @@ class OwnedIncomeFromSalariesTableEntry(models.Model):
 
 class OwnedIncomeFromIndependentActivitiesTable(models.Model):
     __full_name = DECLARATION_TABLES['independent_activities']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE, null=True)
+    declaration = models.ForeignKey(Declaration, on_delete=models.CASCADE, null=True)
     count = models.IntegerField(_("The number of rows"))
 
 
@@ -334,7 +351,7 @@ class OwnedIncomeFromIndependentActivitiesTableEntry(models.Model):
 
 class OwnedIncomeFromDeferredUseOfGoodsTable(models.Model):
     __full_name = DECLARATION_TABLES['deferred_use']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE, null=True)
+    declaration = models.ForeignKey(Declaration, on_delete=models.CASCADE, null=True)
     count = models.IntegerField(_("The number of rows"))
 
 
@@ -354,7 +371,7 @@ class OwnedIncomeFromDeferredUseOfGoodsTableEntry(models.Model):
 
 class OwnedIncomeFromInvestmentsTable(models.Model):
     __full_name = DECLARATION_TABLES['income_investments']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE, null=True)
+    declaration = models.ForeignKey(Declaration, on_delete=models.CASCADE, null=True)
     count = models.IntegerField(_("The number of rows"))
 
 
@@ -374,7 +391,7 @@ class OwnedIncomeFromInvestmentsTableEntry(models.Model):
 
 class OwnedIncomeFromPensionsTable(models.Model):
     __full_name = DECLARATION_TABLES['pensions']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE, null=True)
+    declaration = models.ForeignKey(Declaration, on_delete=models.CASCADE, null=True)
     count = models.IntegerField(_("The number of rows"))
 
 
@@ -397,7 +414,7 @@ class OwnedIncomeFromPensionsTableEntry(models.Model):
 
 class OwnedIncomeFromAgriculturalActivitiesTable(models.Model):
     __full_name = DECLARATION_TABLES['agriculture']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE, null=True)
+    declaration = models.ForeignKey(Declaration, on_delete=models.CASCADE, null=True)
     count = models.IntegerField(_("The number of rows"))
 
 
@@ -420,7 +437,7 @@ class OwnedIncomeFromAgriculturalActivitiesTableEntry(models.Model):
 
 class OwnedIncomeFromGamblingTable(models.Model):
     __full_name = DECLARATION_TABLES['gambling']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE, null=True)
+    declaration = models.ForeignKey(Declaration, on_delete=models.CASCADE, null=True)
     count = models.IntegerField("The number of rows")
 
 
@@ -440,7 +457,7 @@ class OwnedIncomeFromGamblingTableEntry(models.Model):
 
 class OwnedIncomeFromOtherSourcesTable(models.Model):
     __full_name = DECLARATION_TABLES['other_sources']
-    declaration = models.ForeignKey(IncomeDeclaration, on_delete=models.CASCADE, null=True)
+    declaration = models.ForeignKey(Declaration, on_delete=models.CASCADE, null=True)
     count = models.IntegerField("The number of rows")
 
 

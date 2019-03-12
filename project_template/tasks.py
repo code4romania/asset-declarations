@@ -7,7 +7,7 @@ import project_template.models as models
 import project_template.forms as forms
 from project_template.task_templates import DigitalizationTask, CountTableRowsTask
 
-
+@register()
 class TaskGetInitialInformation(DigitalizationTask):
     task_form = forms.TranscribeInitialInformation
     template_name = 'tasks/general_information_task.html'
@@ -16,15 +16,18 @@ class TaskGetInitialInformation(DigitalizationTask):
         politician, created = models.Politician.objects.get_or_create(
             name=verified_data['name'],
             surname=verified_data['surname'],
-            position=verified_data['position']
+            initials=verified_data['initials'],
+            previous_name=verified_data['previous_name']
         )
 
         politician.add_position(verified_data['position'])
 
-        income_declaration, created = models.IncomeDeclaration.objects.get_or_create(
-            url=self.url,
+        processed_declaration, created = models.Declaration.objects.get_or_create(
             politician=politician,
-            date=verified_data['date']
+            date=verified_data['date'],
+            position=verified_data['position'],
+            institution=verified_data['institution'],
+            declaration_type=verified_data['declaration_type']
         )
 
 
