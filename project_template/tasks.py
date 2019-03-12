@@ -25,6 +25,7 @@ class TaskGetInitialInformation(DigitalizationTask):
         processed_declaration, created = models.Declaration.objects.get_or_create(
             politician=politician,
             date=verified_data['date'],
+            position=verified_data['position'],
             institution=verified_data['institution'],
             declaration_type=verified_data['declaration_type']
         )
