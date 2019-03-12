@@ -21,6 +21,7 @@ from project_template.datamodels.counties import Counties
 from project_template.datamodels.real_estate_type import RealEstateType
 from project_template.datamodels.estranged_goods_type import EstrangedGoodsType
 from project_template.datamodels.goods_separation_type import GoodsSeparationType
+from project_template.datamodels.declaration_type import DeclarationType
 
 start_date = 1989
 end_date = datetime.datetime.now().year
@@ -29,10 +30,17 @@ FIRST_2_TYPES = 2
 
 
 class TranscribeInitialInformation(forms.Form):
-    name = forms.CharField(label=_("Care este prenumele politicianului?"))
-    surname = forms.CharField(label=_("Care este numele politicianului?"))
-    position = forms.CharField(label=_("Care este pozitia politicianului?"))
-    date = forms.DateField(label=_("Care este data completării declarției de avere?"), widget=forms.SelectDateWidget(years=YEAR_CHOICES), input_formats=['%Y-%m-%d'])
+    # Form fields for identifying the politician
+    name = forms.CharField(label=_("Care este numele politicianului?"))
+    previous_name = forms.CharField(label=_("Care este numele anterior al politicianului? (in cazul in care se aplica)"), required = False)
+    initials = forms.CharField(label=_("Care sunt initialele politicianului? (in cazul in care se aplica)"), required = False)
+    surname = forms.CharField(label=_("Care este prenumele politicianului?"))
+    # Form fields for identifying the declaration
+    position = forms.ChoiceField(label=_("Care este pozitia politicianului?"), choices=Position.return_as_iterable())
+    date = forms.DateField(label=_("Care este data completării declarației de avere?"), widget=forms.SelectDateWidget(years=YEAR_CHOICES), input_formats=['%Y-%m-%d'])
+    institution = forms.ChoiceField(label=_("Care este institutia in cadrul careia lucra politicianul la data completarii declaratiei de avere?"), 
+                                        choices=Institution.return_as_iterable())
+    declaration_type = forms.ChoiceField(label=_("Ce tip de declaratie este completata?"), choices=DeclarationType.return_as_iterable())
 
 
 class TranscribeDebtsTableRowsCount(forms.Form):
