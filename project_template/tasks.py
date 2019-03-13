@@ -7,6 +7,7 @@ import project_template.models as models
 import project_template.forms as forms
 from project_template.task_templates import DigitalizationTask, CountTableRowsTask
 
+
 @register()
 class TaskGetInitialInformation(DigitalizationTask):
     task_form = forms.TranscribeInitialInformation
@@ -37,14 +38,14 @@ class TaskOwnedLandRowEntry(DigitalizationTask):
 
     def save_verified_data(self, verified_data):
         owned_land, created = models.OwnedLandTableEntry.objects.get_or_create(
-            address="Judet: {}, Localitate: {}, Comuna: {}".format(verified_data['judet'], verified_data['localitate'], verified_data['comuna']),
-            category=verified_data['categorie'],
-            acquisition_year=verified_data['an_dobandire'],
-            surface=verified_data['suprafata'],
-            share_ratio=verified_data['cota_parte'],
-            attainment_type=verified_data['mod_dobandire'],
-            owner="{} {}".format(verified_data['nume_proprietar'], verified_data['prenume_proprietar']),
-            observations=""
+            address="Judet: {}, Localitate: {}, Comuna: {}".format(verified_data['county'], verified_data['city'], verified_data['commune']),
+            category=verified_data['real_estate_type'],
+            acquisition_year=verified_data['ownership_start_year'],
+            attainment_type=verified_data['attainment_type'],
+            surface=verified_data['surface_area'],
+            share_ratio=verified_data['percent_of_ownership'],
+            owner="{} {}".format(verified_data['owner_surname'], verified_data['owner_name']),
+            observations=verified_data.get('observations', '')
         )
 
 
@@ -60,11 +61,11 @@ class TaskOwnedAutomobileRowEntry(DigitalizationTask):
     
     def save_verified_data(self, verified_data):
         owned_automobile, created = models.OwnedAutomobileTableEntry.objects.get_or_create(
-            car_type=verified_data['tip'],
-            brand=verified_data['marca'],
-            no_owned=verified_data['numar_bucati'],
-            fabrication_year=verified_data['an_fabricatie'],
-            attainment_type=verified_data['mod_dobandire'],
+            car_type=verified_data['type'],
+            brand=verified_data['manufacturer'],
+            no_owned=verified_data['num_of_automobiles'],
+            fabrication_year=verified_data['year_of_manufacture'],
+            attainment_type=verified_data['attainment_type'],
         )
 
 
@@ -80,11 +81,11 @@ class TaskOwnedBankAccountsRowEntry(DigitalizationTask):
 
     def save_verified_data(self, verified_data):
         owned_bank_accounts, created = models.OwnedBankAccountsTableEntry.objects.get_or_create(
-            institution=verified_data['institutia_administrativa'],
-            account_type=verified_data['tip_cont'],
-            currency=verified_data['valuta'],
-            opening_year=verified_data['anul_deschiderii'],
-            account_balance=verified_data['sold'],
+            institution=verified_data['financial_institution'],
+            account_type=verified_data['account_type'],
+            currency=verified_data['currency'],
+            opening_year=verified_data['account_start_date'],
+            account_balance=verified_data['balance'],
         )
 
 
@@ -105,10 +106,10 @@ class TaskOwnedIncomeFromAgriculturalActivitiesRowEntry(DigitalizationTask):
         income_declaration, created = models.OwnedIncomeFromAgriculturalActivitiesTableEntry.objects.get_or_create(
             name_source_of_goods=verified_data['sursa'],
             holder_relationship=verified_data['relatie_titular'],
-            address_source_of_goods="Judet: {}, Localitate: {}, Comuna: {}".format(verified_data['judet'], verified_data['localitate'], verified_data['comuna']),
-            goods_name=verified_data['serviciul_prestat'],
-            annual_income=verified_data['venit_anual_incasat'],
-            annual_income_currency=verified_data['valuta']
+            address_source_of_goods="Judet: {}, Localitate: {}, Comuna: {}".format(verified_data['county'], verified_data['city'], verified_data['commune']),
+            goods_name=verified_data['offered_service'],
+            annual_income=verified_data['income_amount'],
+            annual_income_currency=verified_data['currency']
         )
 
 
@@ -124,17 +125,17 @@ class TaskOwnedDebtsRowEntry(DigitalizationTask):
         
     def save_verified_data(self, verified_data):
         if verified_data['nume_creditor'] and verified_data['prenume_creditor']:
-            lender_identity = "Nume: {}, Prenume: {}".format(verified_data['nume_creditor'], verified_data['prenume_creditor'])
+            lender_identity = "Nume: {}, Prenume: {}".format(verified_data['loaner_surname'], verified_data['loaner_name'])
         else: 
-            lender_identity = "Institutie: {}".format(verified_data['institutie'])
+            lender_identity = "Institutie: {}".format(verified_data['institution'])
             
         owned_debts, created = models.OwnedDebtsTableEntry.objects.get_or_create(
                 lender=lender_identity,
-                debt_type=verified_data['tip_datorie'],
-                acquirement_year=verified_data['an_contractare'],
-                due_date=verified_data['scadenta'],
-                value=verified_data['valoare'],
-                currency=verified_data['moneda']
+                debt_type=verified_data['type_of_debt'],
+                acquirement_year=verified_data['loan_start_year'],
+                due_date=verified_data['loan_maturity'],
+                value=verified_data['loan_amount'],
+                currency=verified_data['currency']
                 )
 
 
@@ -150,14 +151,14 @@ class TaskOwnedIncomeFromPensionsRowEntry(DigitalizationTask):
     
     def save_verified_data(self, verified_data):
         owned_income_from_pensions, created = models.OwnedIncomeFromPensionsTableEntry.objects.get_or_create(
-                income_provider_type=verified_data['beneficiar_pensie'],
-                provider_name="Nume:{}, Prenume:{}".format(verified_data['nume_beneficiar'], verified_data['prenume_beneficiar']),
-                name_source_of_goods=verified_data['sursa_venit'],
-                address_source_of_goods="Judet: {}, Localitate: {}, Comuna: {}, Strainatate: {}".format(verified_data['judet'], verified_data['localitate'], verified_data['comuna'], verified_data['strainatate']),
-                goods_name=verified_data['serviciu_prestat'],
-                ex_position=verified_data['functie'],
-                annual_income=verified_data['venit'],
-                annual_income_currency=verified_data['moneda'])
+                income_provider_type=verified_data['beneficiary_relationship'],
+                provider_name="Nume:{}, Prenume:{}".format(verified_data['beneficiary_surname'], verified_data['beneficiary_name']),
+                name_source_of_goods=verified_data['income_source'],
+                address_source_of_goods="Judet: {}, Localitate: {}, Comuna: {}, Strainatate: {}".format(verified_data['county'], verified_data['city'], verified_data['commune'], verified_data['country']),
+                goods_name=verified_data['offered_service'],
+                ex_position=verified_data['position'],
+                annual_income=verified_data['income_amount'],
+                annual_income_currency=verified_data['currency'])
 
 
 class TaskOwnedIncomeFromPensionsTable(CountTableRowsTask):
@@ -186,23 +187,24 @@ class TaskTranscribeOwnedIncomeFromOtherSourcesTable(CountTableRowsTask):
     # TODO - add child_class
     child_class = None
 
+
 class TaskOwnedJewelryRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedJewelrySingleRowEntry
     template_name = "tasks/owned_jewelry.html"
 
     def save_verified_data(self, verified_data):
         owned_jewelry, created = models.OwnedJewelryTableEntry.objects.get_or_create(
-        summary_description = verified_data['description'],
-        acquisition_year = verified_data['ownership_start_year'],
-        goods_value = verified_data['estimated_value'],
-        currency = verified_data['currency']
-    )
+            summary_description=verified_data['description'],
+            acquisition_year=verified_data['ownership_start_year'],
+            goods_value=verified_data['estimated_value'],
+            currency=verified_data['currency'])
+
 
 class TaskOwnedJewelryTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedJewelry
     storage_model = models.OwnedJewelryTable
-    # TODO - add child_class
     child_class = TaskOwnedJewelryRowEntry
+
 
 class TaskExtraValuableRowEntry(DigitalizationTask):
     task_form = forms.TranscribeExtraValuableRowEntry
@@ -210,19 +212,19 @@ class TaskExtraValuableRowEntry(DigitalizationTask):
 
     def save_verified_data(self, verified_data):
         owned_extra_valuable, created = models.OwnedExtraValuableTableEntry.objects.get_or_create(
-            estrangement_goods_type = verified_data['estranged_goods_type'],
-            estragement_goods_address = "{}, {}, {}".format(verified_data['goods_county'], verified_data['goods_town'], verified_data['goods_commune']),
-            estrangement_date = verified_data['estranged_date'],
-            receiver_of_goods = "{} {}".format(verified_data['owner_name'], verified_data['owner_surname']),
-            goods_separation_type = verified_data['estranged_goods_separation'],
-            value = verified_data['estimated_value'],
-            currency = verified_data['currency']
+            estrangement_goods_type=verified_data['estranged_goods_type'],
+            estragement_goods_address="{}, {}, {}".format(verified_data['goods_county'], verified_data['goods_town'], verified_data['goods_commune']),
+            estrangement_date=verified_data['estranged_date'],
+            receiver_of_goods="{} {}".format(verified_data['owner_name'], verified_data['owner_surname']),
+            goods_separation_type=verified_data['estranged_goods_separation'],
+            value=verified_data['estimated_value'],
+            currency=verified_data['currency']
         )
+
 
 class TaskExtraValuableTable(CountTableRowsTask):
     task_form = forms.TranscribeExtraValuable
     storage_model = models.OwnedExtraValuableTable
-    # TODO - add child_class
     child_class = TaskExtraValuableRowEntry
 
 
