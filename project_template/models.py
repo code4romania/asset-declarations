@@ -69,17 +69,17 @@ class Politician(models.Model):
 class Declaration(models.Model):
     politician = models.ForeignKey(Politician, on_delete=models.CASCADE, null=True)
 
-    position = models.CharField(_("Functie"), 
+    position = models.CharField(_("Functie"),
                         max_length=128,
                         choices=Position.return_as_iterable())
     date = models.DateField(_("Data completare"))
-    institution = models.CharField(_("Institutie"), 
+    institution = models.CharField(_("Institutie"),
                         max_length=128,
                         choices=Institution.return_as_iterable() )
-    declaration_type = models.CharField(_("Tip declaratie"), 
+    declaration_type = models.CharField(_("Tip declaratie"),
                             max_length=128,
                             choices=Institution.return_as_iterable())
-                    
+
 class IncomeDeclaration(models.Model):
     url = models.URLField(max_length=500)
     politician = models.ForeignKey(Politician, on_delete=models.CASCADE, null=True)
@@ -280,15 +280,35 @@ class OwnedGoodsOrServicesPerSpouseTable(models.Model):
 
 
 class OwnedGoodsOrServicesPerSpouseTableEntry(models.Model):
-    table = models.ForeignKey(OwnedGoodsOrServicesPerSpouseTable, on_delete=models.CASCADE, null=True)
-    holder = models.CharField("Cine a realizat venitul(Sot/sotie)", max_length=128)
-    name_source_of_goods = models.CharField("Sursa venitului: nume", max_length=128)
-    address_source_of_goods = models.CharField("Sursa venitului: adresa", max_length=128)
-    goods_name = models.CharField("Serviciul prestat/Obiectul generator de venit", max_length=128)
-    annual_income = models.IntegerField("Venitul anual incasat")
-    annual_income_currency = models.CharField("Valuta",
-                                              max_length=16,
-                                              choices=Currency.return_as_iterable())
+    table = models.ForeignKey(
+        OwnedGoodsOrServicesPerSpouseTable,
+        on_delete=models.CASCADE,
+        null=True
+    )
+    holder = models.CharField(
+        "Nume complet titular",
+        max_length=128
+    )
+    name_source_of_goods = models.CharField(
+        "Serviciul prestat/Obiectul generator de venit",
+        max_length=128
+    )
+    address_source_of_goods = models.CharField(
+        "Sursa venitului: adresa",
+        max_length=128
+    )
+    goods_name = models.CharField(
+        "Serviciul prestat/Obiectul generator de venit",
+        max_length=128
+    )
+    annual_income = models.IntegerField(
+        "Venitul anual incasat"
+    )
+    annual_income_currency = models.CharField(
+        "Valuta",
+        max_length=16,
+        choices=Currency.return_as_iterable()
+    )
 
 
 class OwnedGoodsOrServicesPerChildTable(models.Model):
