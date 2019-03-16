@@ -190,7 +190,6 @@ class TaskOwnedGoodsOrServicesPerSpouseRowEntry(DigitalizationTask):
         )
 
 
-# @register()
 class TaskOwnedGoodsOrServicesPerSpouseTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedGoodsOrServicesPerSpouse
     storage_model = models.OwnedGoodsOrServicesPerSpouseTable
