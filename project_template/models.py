@@ -1,3 +1,4 @@
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 from project_template.datamodels.account_type import AccountType
@@ -103,7 +104,7 @@ class OwnedBuildingsTableEntry(models.Model):
     category = models.IntegerField("Categorie", choices=BuildingType.return_as_iterable())
     acquisition_year = models.DateField("Anul dobandirii")
     surface = models.IntegerField("Suprafata", blank=True)
-    share_ratio = models.DecimalField("Cota-parte", max_digits=3, decimal_places=2, blank=True)
+    share_ratio = models.IntegerField("Cota-parte", validators=[MaxValueValidator(100), MinValueValidator(0)], blank=True)
     attainment_type = models.CharField("Modul de dobandire", max_length=32,
                                        choices=AttainmentType.return_as_iterable(), blank=True)
     owner_name = models.CharField("Titular", max_length=128, blank=True)

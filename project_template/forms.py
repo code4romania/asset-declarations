@@ -3,6 +3,7 @@ import datetime
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
+from project_template.datamodels.building_type import BuildingType
 from project_template import constants
 from project_template.datamodels.debt_type import DebtType
 from project_template.datamodels.holder_relationship import HolderRelationship
@@ -202,6 +203,24 @@ class TranscribeOwnedLandSingleRowEntry(forms.Form):
 
 class TranscribeOwnedBuildingsTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}".format(constants.DECLARATION_TABLES['buildings']))
+
+
+class TranscribeOwnedBuildingsSingleRowEntry(forms.Form):
+    county = forms.ChoiceField(label="Care este judetul in care se gaseste cladirea detinuta?",
+                               choices=Counties.return_counties())
+    city = forms.CharField(label="Care este localitatea in care se gaseste cladirea detinuta?")
+    town = forms.CharField(label="Care este comuna in care se gaseste cladirea detinuta?")
+    category = forms.ChoiceField(label="Care este categoria cladirii?", choices=BuildingType.return_as_iterable())
+    acquisition_year = forms.DateField(label="Care este anul cand cladirea a fost dobandita?",
+                                       widget=forms.SelectDateWidget(years=YEAR_CHOICES), input_formats=['%Y-%m-%d'])
+    attainment_type = forms.ChoiceField(label="Care este modul in care cladirea a fost dobandita?",
+                                        choices=AttainmentType.return_as_iterable(), required=False)
+    surface = forms.IntegerField(label="Care este suprafata cladirii? (mp)", required=False)
+    share_ratio = forms.IntegerField(label="Care este cota parte din aceasta cladire? (in procente)", max_value=100,
+                                     min_value=0, required=False)
+    owner_last_name = forms.CharField(label="Care este numele proprietarului?", required=False)
+    owner_first_name = forms.CharField(label="Care este prenumele proprietarului", required=False)
+    observations = forms.CharField(label="Observatii?")
 
 
 class TranscribeOwnedBankAccountsTable(forms.Form):

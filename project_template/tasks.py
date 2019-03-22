@@ -58,7 +58,7 @@ class TaskOwnedLandTable(CountTableRowsTask):
 class TaskOwnedAutomobileRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedAutomobileSingleRowEntry
     template_name = "tasks/owned_automobile.html"
-    
+
     def save_verified_data(self, verified_data):
         owned_automobile, created = models.OwnedAutomobileTableEntry.objects.get_or_create(
             car_type=verified_data['type'],
@@ -122,13 +122,13 @@ class TaskOwnedIncomeFromAgriculturalActivitiesTable(CountTableRowsTask):
 class TaskOwnedDebtsRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedDebtsSingleRowEntry
     template_name = "tasks/owned_debts.html"
-        
+
     def save_verified_data(self, verified_data):
         if verified_data['nume_creditor'] and verified_data['prenume_creditor']:
             lender_identity = "Nume: {}, Prenume: {}".format(verified_data['loaner_surname'], verified_data['loaner_name'])
-        else: 
+        else:
             lender_identity = "Institutie: {}".format(verified_data['institution'])
-            
+
         owned_debts, created = models.OwnedDebtsTableEntry.objects.get_or_create(
                 lender=lender_identity,
                 debt_type=verified_data['type_of_debt'],
@@ -148,7 +148,7 @@ class TaskOwnedDebtsTable(CountTableRowsTask):
 class TaskOwnedIncomeFromPensionsRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedIncomeFromPensionsSingleRowEntry
     template_name = "tasks/owned_income_from_pensions.html"
-    
+
     def save_verified_data(self, verified_data):
         owned_income_from_pensions, created = models.OwnedIncomeFromPensionsTableEntry.objects.get_or_create(
                 income_provider_type=verified_data['beneficiary_relationship'],
@@ -270,8 +270,26 @@ class TaskOwnedGoodsOrServicesPerOwnerTable(CountTableRowsTask):
     child_class = None
 
 
+class TaskOwnedBuildingRowEntry(DigitalizationTask):
+    task_form = forms.TranscribeOwnedBuildingsSingleRowEntry
+    template_name = "tasks/owned_buildings.html"
+
+    def save_verified_data(self, verified_data):
+        owned_building, created = models.OwnedBuildingsTableEntry.objects.get_or_create(
+            address="Judet: {}, Localitate: {}, Comuna: {}".format(verified_data['county'],
+                                                                   verified_data['city'],
+                                                                   verified_data['town']),
+            category=verified_data['category'],
+            acquisition_year=verified_data['acquisition_year'],
+            surface=verified_data['surface'],
+            share_ratio=verified_data['share_ratio'],
+            attainment_type=verified_data['attainment_type'],
+            owner_name="{} {}".format(verified_data['owner_last_name'], verified_data['owner_first_name']),
+            observations=""
+        )
+
+
 class TaskOwnedBuildingsTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedBuildingsTable
     storage_model = models.OwnedBuildingsTable
-    # TODO - add child_class
-    child_class = None
+    child_class = TaskOwnedBuildingRowEntry
