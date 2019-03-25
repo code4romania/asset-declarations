@@ -4,24 +4,22 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from project_template import constants
-from project_template.datamodels.debt_type import DebtType
-from project_template.datamodels.holder_relationship import HolderRelationship
-from project_template.datamodels.institution import Institution
-from project_template.datamodels.position import Position
+from project_template.datamodels.account_type import AccountType
 from project_template.datamodels.attainment_type import AttainmentType
-
-from project_template.datamodels.mobile_goods_type import MobileGoodsType
-from project_template.datamodels.financial_institution import FinancialInstitution
+from project_template.datamodels.cities import Cities
+from project_template.datamodels.counties import Counties
 from project_template.datamodels.currency import Currency
 from project_template.datamodels.debt_type import DebtType
-from project_template.datamodels.income_provider_type import IncomeProviderType
-from project_template.datamodels.position import Position
-from project_template.datamodels.account_type import AccountType
-from project_template.datamodels.counties import Counties
-from project_template.datamodels.real_estate_type import RealEstateType
-from project_template.datamodels.estranged_goods_type import EstrangedGoodsType
-from project_template.datamodels.goods_separation_type import GoodsSeparationType
 from project_template.datamodels.declaration_type import DeclarationType
+from project_template.datamodels.estranged_goods_type import EstrangedGoodsType
+from project_template.datamodels.financial_institution import FinancialInstitution
+from project_template.datamodels.goods_separation_type import GoodsSeparationType
+from project_template.datamodels.holder_relationship import HolderRelationship
+from project_template.datamodels.income_provider_type import IncomeProviderType
+from project_template.datamodels.institution import Institution
+from project_template.datamodels.mobile_goods_type import MobileGoodsType
+from project_template.datamodels.position import Position
+from project_template.datamodels.real_estate_type import RealEstateType
 
 start_date = 1989
 end_date = datetime.datetime.now().year
@@ -60,6 +58,39 @@ class TranscribeOwnedDebtsSingleRowEntry(forms.Form):
 
 class TranscribeOwnedGoodsOrServicesPerSpouse(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['gifts_spouse']))
+
+
+class TranscribeOwnedGoodsOrServicesPerSpouseRowEntry(forms.Form):
+    holder_surname = forms.CharField(
+        label="Care este numele persoanei?"
+    )
+    holder_name = forms.CharField(
+        label="Care este prenumele persoanei"
+    )
+    income_source = forms.CharField(
+        label="Care este numele sursei de venit?"
+    )
+    county = forms.ChoiceField(
+        label="Care este judetul de domiciliu?",
+        choices=Counties.return_counties()
+    )
+    # TODO tudoramariei change to ChoiceField with choices=cities of county
+    city = forms.CharField(
+        label="Care este localitatea de domiciliu?"
+    )
+    commune = forms.CharField(
+        label="Care este comuna de domiciliu?"
+    )
+    goods_name = forms.CharField(
+        label="Care este fost serviciul prestat?"
+    )
+    annual_income = forms.IntegerField(
+        label="Care este venitul persoanei?"
+    )
+    currency = forms.ChoiceField(
+        label="Care este valuta in care e incasat venitul?",
+        choices=Currency.return_as_iterable()
+    )
 
 
 class TranscribeOwnedIncomeFromOtherSourcesTable(forms.Form):
