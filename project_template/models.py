@@ -48,27 +48,14 @@ class Politician(models.Model):
             self.surname, self.name, self.all_positions, self.created_at, self.updated_at
         )
 
-    def add_position(self, position):
-        # the position might already be in the list, under a different form
-        variations = [position, position.lower(), position.title()]
-        if not any(variation in self.__positions for variation in variations):
-            self.__positions.append(position.lower())
-
-    @property
-    def all_positions(self):
-        if self.__positions:
-            return ', '.join(self.__positions)
-        else:
-            return 'No positions have been entered yet.'
-
     @property
     def __full_name(self):
         return "{} {}".format(self.name, self.surname)
 
 
 class Declaration(models.Model):
+    url = models.URLField(max_length=500)
     politician = models.ForeignKey(Politician, on_delete=models.CASCADE, null=True)
-
     position = models.CharField(_("Functie"),
                                 max_length=128,
                                 choices=Position.return_as_iterable())
@@ -79,13 +66,6 @@ class Declaration(models.Model):
     declaration_type = models.CharField(_("Tip declaratie"),
                                         max_length=128,
                                         choices=Institution.return_as_iterable())
-
-
-
-class IncomeDeclaration(models.Model):
-    url = models.URLField(max_length=500)
-    politician = models.ForeignKey(Politician, on_delete=models.CASCADE, null=True)
-    date = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return "Income declaration, url: {}\ndate: {}\nfor politician:\n{}".format(
@@ -222,13 +202,14 @@ class OwnedInvestmentsTable(models.Model):
 
 class OwnedInvestmentsTableEntry(models.Model):
     table = models.ForeignKey(OwnedInvestmentsTable, on_delete=models.CASCADE, null=True)
-    investment_issuer_name = models.CharField("Emitent titlu/societate in care persoana este actionar sau asociat"
-                                              "/beneficiar de imprumut",
-                                              max_length=128)
+    issue_title = models.CharField("Emitent titlu", max_length=128, null=True, blank=True)
+    shareholder_society = models.CharField("Societate in care persoana este actionar sau asociat", max_length=128,
+                                           null=True, blank=True)
+    loan_beneficiary = models.CharField("Beneficiar de imprumut", max_length=128, null=True, blank=True)
     type_of_investment = models.IntegerField("Tipul",
                                              choices=InvestmentType.return_as_iterable())
-    number_of_stocks = models.IntegerField("Numar de titluri")
-    share_ratio = models.DecimalField("Cota de participare", max_digits=3, decimal_places=2)
+    number_of_stocks = models.IntegerField("Numar de titluri", null=True, blank=True)
+    share_ratio = models.DecimalField("Cota de participare", max_digits=3, decimal_places=2, null=True, blank=True)
     total_value = models.IntegerField("Valoare totala la zi")
     currency = models.CharField("Valuta",
                                 max_length=16,
