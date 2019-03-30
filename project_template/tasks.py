@@ -167,12 +167,12 @@ class TaskOwnedIncomeFromPensionsTable(CountTableRowsTask):
     child_class = TaskOwnedIncomeFromPensionsRowEntry
 
 
-class TaskOwnedGoodsOrServicesPerSpouseRowEntry(DigitalizationTask):
-    task_form = forms.TranscribeOwnedGoodsOrServicesPerSpouseRowEntry
+class TaskOwnedGoodsOrServicesRowEntry(DigitalizationTask):
+    task_form = forms.TranscribeOwnedGoodsOrServicesRowEntry
     template_name = "tasks/owned_gifts_spouse.html"
 
     def save_verified_data(self, verified_data):
-        owned_gifts_spouse, created = models.OwnedGoodsOrServicesPerSpouseTableEntry.objects.get_or_create(
+        owned_gifts_spouse, created = models.OwnedGoodsOrServicesTable.objects.get_or_create(
             holder="Nume: {0}, Prenume: {1}".format(
                 verified_data['holder_surname'],
                 verified_data['holder_name']
@@ -191,9 +191,9 @@ class TaskOwnedGoodsOrServicesPerSpouseRowEntry(DigitalizationTask):
 
 
 class TaskOwnedGoodsOrServicesPerSpouseTable(CountTableRowsTask):
-    task_form = forms.TranscribeOwnedGoodsOrServicesPerSpouse
-    storage_model = models.OwnedGoodsOrServicesPerSpouseTable
-    child_class = TaskOwnedGoodsOrServicesPerSpouseRowEntry
+    task_form = forms.TranscribeOwnedGoodsOrServicesTable
+    storage_model = models.OwnedGoodsOrServicesTable
+    child_class = TaskOwnedGoodsOrServicesRowEntry
 
 
 class TaskTranscribeOwnedInvestmentsTable(CountTableRowsTask):
@@ -274,20 +274,6 @@ class TaskOwnedIncomeFromGamblingTable(CountTableRowsTask):
 class TaskOwnedIncomeFromSalariesTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromSalaries
     storage_model = models.OwnedIncomeFromSalariesTable
-    # TODO - add child_class
-    child_class = None
-
-
-class TaskOwnedGoodsOrServicesPerChildTable(CountTableRowsTask):
-    task_form = forms.TranscribeOwnedGoodsOrServicesPerChildTable
-    storage_model = models.OwnedGoodsOrServicesPerChildTable
-    # TODO - add child_class
-    child_class = None
-
-
-class TaskOwnedGoodsOrServicesPerOwnerTable(CountTableRowsTask):
-    task_form = forms.TranscribeOwnedGoodsOrServicesPerOwnerTable
-    storage_model = models.OwnedGoodsOrServicesPerOwnerTable
     # TODO - add child_class
     child_class = None
 
