@@ -56,11 +56,11 @@ class TranscribeOwnedDebtsSingleRowEntry(forms.Form):
     currency = forms.ChoiceField(label="Care este moneda in care s-a facut imprumutul?", choices=Currency.return_as_iterable())
 
 
-class TranscribeOwnedGoodsOrServicesPerSpouse(forms.Form):
+class TranscribeOwnedGoodsOrServicesTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['gifts_spouse']))
 
 
-class TranscribeOwnedGoodsOrServicesPerSpouseRowEntry(forms.Form):
+class TranscribeOwnedGoodsOrServicesRowEntry(forms.Form):
     holder_surname = forms.CharField(
         label="Care este numele persoanei?"
     )
