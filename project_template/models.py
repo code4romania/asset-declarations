@@ -81,6 +81,7 @@ class Declaration(models.Model):
                                         choices=Institution.return_as_iterable())
 
 
+
 class IncomeDeclaration(models.Model):
     url = models.URLField(max_length=500)
     politician = models.ForeignKey(Politician, on_delete=models.CASCADE, null=True)
