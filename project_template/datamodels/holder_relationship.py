@@ -4,7 +4,7 @@ from project_template.datamodels import common_utils
 
 
 class HolderRelationship(Enum):
-    HOLDER = "HOLDER"
+    HOLDER = "TITULAR"
     SPOUSE = "SOT/SOTIE"
     CHILDREN = "COPII"
 
