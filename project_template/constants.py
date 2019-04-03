@@ -1,5 +1,6 @@
 # The complete Romanian names of all the tables inside an income declaration
 DECLARATION_TABLES = {
+    'land': "Bunuri Imobile - Terenuri",
     'buildings': "Bunuri Imobile - Cladiri",
     'automobiles': "Bunuri Mobile - Autovehicule/Autoturisme",
     'jewelry': "Bunuri Mobile - Metale pretioase, bijuterii, etc",
@@ -7,7 +8,6 @@ DECLARATION_TABLES = {
     'bank_accounts': "Active Financiare - Conturi si depozite bancare",
     'investments': "Active Financiare - Plasamente/Investitii directe",
     'other_actives': "Alte active producatoare de venituri",
-    'land': "Bunuri Imobile - Terenuri",
     'debts': "Datorii",
     'goods': "Cadouri/Servicii",
     'salaries': "Venituri ale declarantului si ale membrilor sai de familie - 1. Venituri din salarii",
