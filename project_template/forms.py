@@ -24,6 +24,7 @@ from project_template.datamodels.real_estate_type import RealEstateType
 start_date = 1989
 end_date = datetime.datetime.now().year
 YEAR_CHOICES = tuple(map(str, range(start_date, end_date + 1)))
+YEAR_DICT_CHOICES = [(date, date) for date in YEAR_CHOICES]
 FIRST_2_TYPES = 2
 
 
@@ -35,7 +36,7 @@ class TranscribeInitialInformation(forms.Form):
     surname = forms.CharField(label=_("Care este prenumele politicianului?"))
     # Form fields for identifying the declaration
     position = forms.ChoiceField(label=_("Care este pozitia politicianului?"), choices=Position.return_as_iterable())
-    date = forms.DateField(label=_("Care este data completării declarației de avere?"), widget=forms.SelectDateWidget(years=YEAR_CHOICES), input_formats=['%Y-%m-%d'])
+    date = forms.ChoiceField(label=_("Care este data completării declarației de avere?"), choices=YEAR_DICT_CHOICES)
     institution = forms.ChoiceField(label=_("Care este institutia in cadrul careia lucra politicianul la data completarii declaratiei de avere?"),
                                         choices=Institution.return_as_iterable())
     declaration_type = forms.ChoiceField(label=_("Ce tip de declaratie este completata?"), choices=DeclarationType.return_as_iterable())
@@ -49,9 +50,9 @@ class TranscribeOwnedLandSingleRowEntry(forms.Form):
     city = forms.CharField(label="Care este localitatea in care se gaseste terenul detinut?")
     commune = forms.CharField(label="Care este comuna in care se gaseste terenul detinut?")
     real_estate_type = forms.ChoiceField(label="Care este categoria de teren?", choices=RealEstateType.return_as_iterable())
-    ownership_start_year = forms.DateField(label="Care este anul cand terenul a fost dobandit?", widget=forms.SelectDateWidget(years=YEAR_CHOICES), input_formats=['%Y-%m-%d'])
+    ownership_start_year = forms.ChoiceField(label="Care este anul cand terenul a fost dobandit?", choices = YEAR_DICT_CHOICES)
     attainment_type = forms.ChoiceField(label="Care este modul in care terenul a fost dobandit?", choices=AttainmentType.return_as_iterable())
-    surface_area = forms.CharField(label="Care este suprafata terenului? (mp)")
+    surface_area = forms.FloatField(label="Care este suprafata terenului? (mp)")
     percent_of_ownership = forms.IntegerField(label="Care este cota parte din acest teren? (in procente)", max_value=100, min_value=0)
     owner_surname = forms.CharField(label="Care este numele proprietarului?")
     owner_name = forms.CharField(label="Care este prenumele proprietarului")

@@ -8,7 +8,6 @@ import project_template.forms as forms
 from project_template.task_templates import DigitalizationTask, CountTableRowsTask
 
 
-@register()
 class TaskGetInitialInformation(DigitalizationTask):
     task_form = forms.TranscribeInitialInformation
     template_name = 'tasks/general_information_task.html'
@@ -37,18 +36,26 @@ class TaskOwnedLandRowEntry(DigitalizationTask):
     template_name = "tasks/owned_land.html"
 
     def save_verified_data(self, verified_data):
+        person, created = models.Person.objects.get_or_create(
+            name = verified_data['owner_name'],
+            initials = '',
+            previous_name = '',
+            surname = verified_data['owner_surname']
+        )
+
         owned_land, created = models.OwnedLandTableEntry.objects.get_or_create(
-            address="Judet: {}, Localitate: {}, Comuna: {}".format(verified_data['county'], verified_data['city'], verified_data['commune']),
+            coowner = person,
+            county = verified_data['county'],
+            city = verified_data['city'],
+            commune = verified_data['commune'],
             category=verified_data['real_estate_type'],
             acquisition_year=verified_data['ownership_start_year'],
             attainment_type=verified_data['attainment_type'],
             surface=verified_data['surface_area'],
-            share_ratio=verified_data['percent_of_ownership'],
-            owner="{} {}".format(verified_data['owner_surname'], verified_data['owner_name']),
-            observations=verified_data.get('observations', '')
+            share_ratio=verified_data['percent_of_ownership']
         )
 
-
+@register()
 class TaskOwnedLandTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedLandTable
     storage_model = models.OwnedLandTable

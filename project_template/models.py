@@ -74,31 +74,14 @@ class Declaration(models.Model):
 class Person(models.Model):
     name = models.CharField("Nume persoana", max_length=128)
     previous_name = models.CharField("Nume anterior", max_length=128)
-    intials = models.CharField("Initiale", max_length=10)
+    initials = models.CharField("Initiale", max_length=10)
     surname = models.CharField("Prenume", max_length=128)
 
 class CommonInfo(models.Model):
-    county = models.CharField(
-        "Judet",
-        max_length=32,
-        choices=Counties.return_counties()
-    )
-    city = models.CharField(
-        "Localitate",
-        max_length=32,
-        null=True,
-        blank=True
-    )
-    commune = models.CharField(
-        "Comuna",
-        max_length=32,
-        null=True,
-        blank=True
-    )
-    address = models.CharField(
-        "Adresa",
-        max_length=64
-    )
+    county = models.CharField("Judet", max_length=32, choices=Counties.return_counties())
+    city = models.CharField("Localitate", max_length=32, null=True, blank=True)
+    commune = models.CharField("Comuna", max_length=32, null=True, blank=True)
+    address = models.CharField("Adresa", max_length=64)
 
 class CommonIncomeFields(CommonInfo):
     holder_relationship = models.CharField("Cine a realizat venitul", max_length=128, choices=HolderRelationship.return_as_iterable())
@@ -121,7 +104,7 @@ class OwnedLandTableEntry(CommonInfo):
     category = models.CharField("Categorie", max_length=32, choices=RealEstateType.return_as_iterable())
     acquisition_year = models.IntegerField("Anul dobandirii")
     surface = models.IntegerField("Suprafata mp")
-    share_ratio = models.DecimalField("Cota-parte", max_digits=3, decimal_places=2)
+    share_ratio = models.DecimalField("Cota-parte", max_digits=5, decimal_places=2)
     attainment_type = models.CharField("Modul de dobandire",
                                        max_length=32,
                                        choices=AttainmentType.return_as_iterable(),
