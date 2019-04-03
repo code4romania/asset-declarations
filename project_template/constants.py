@@ -6,6 +6,7 @@ DECLARATION_TABLES = {
     'extra_valuable': "Bunuri Mobile - Valoare depaseste 3000euro",
     'bank_accounts': "Active Financiare - Conturi si depozite bancare",
     'investments': "Active Financiare - Plasamente/Investitii directe",
+    'other_actives': "Alte active producatoare de venituri",
     'land': "Bunuri Imobile - Terenuri",
     'debts': "Datorii",
     'goods': "Cadouri/Servicii",

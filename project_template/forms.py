@@ -57,7 +57,7 @@ class TranscribeOwnedDebtsSingleRowEntry(forms.Form):
 
 
 class TranscribeOwnedGoodsOrServicesTable(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['gifts_spouse']))
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['goods']))
 
 
 class TranscribeOwnedGoodsOrServicesRowEntry(forms.Form):
@@ -207,7 +207,7 @@ class TranscribeOwnedIncomeFromInvestmentsTable(forms.Form):
 
 
 class TranscribeOwnedGoodsOrServicesPerChildTable(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['gifts_kids']))
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['goods']))
 
 
 class TranscribeOwnedGoodsOrServicesPerOwnerTable(forms.Form):
