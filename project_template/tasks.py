@@ -38,8 +38,7 @@ class TaskOwnedLandRowEntry(DigitalizationTask):
     def save_verified_data(self, verified_data):
         owner_person, created = models.Person.objects.get_or_create(
             name=verified_data['owner_name'],
-            surname=verified_data['owner_surname']
-        )
+            surname=verified_data['owner_surname'])
 
         owned_land, created = models.OwnedLandTableEntry.objects.get_or_create(
             coowner=owner_person,
@@ -50,7 +49,9 @@ class TaskOwnedLandRowEntry(DigitalizationTask):
             acquisition_year=verified_data['ownership_start_year'],
             attainment_type=verified_data['attainment_type'],
             surface=verified_data['surface_area'],
-            share_ratio=verified_data['percent_of_ownership']
+            share_ratio=verified_data['percent_of_ownership'],
+            owner=owner_person,
+            observations=verified_data.get('observations', '')
         )
 
 @register()
@@ -251,6 +252,7 @@ class TaskExtraValuableRowEntry(DigitalizationTask):
             name=verified_data['owner_name'],
             surname=verified_data['owner_surname']
         )
+
         owned_extra_valuable, created = models.OwnedExtraValuableTableEntry.objects.get_or_create(
             receiver_of_goods=owner_person,
             estrangement_goods_type=verified_data['estranged_goods_type'],
