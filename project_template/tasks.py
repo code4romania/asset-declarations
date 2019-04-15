@@ -37,6 +37,13 @@ class TaskOwnedLandRowEntry(DigitalizationTask):
     template_name = "tasks/owned_land.html"
 
     def save_verified_data(self, verified_data):
+        coowner, created = models.Person.objects.get_or_create(
+            name=verified_data['name'],
+            previous_name=verified_data.get('previous_name', ''),
+            initials=verified_data['initials'],
+            surname=verified_data['surname']
+        )
+
         owned_land, created = models.OwnedLandTableEntry.objects.get_or_create(
             address="Judet: {}, Localitate: {}, Comuna: {}".format(verified_data['county'], verified_data['city'], verified_data['commune']),
             category=verified_data['real_estate_type'],
@@ -44,7 +51,7 @@ class TaskOwnedLandRowEntry(DigitalizationTask):
             attainment_type=verified_data['attainment_type'],
             surface=verified_data['surface_area'],
             share_ratio=verified_data['percent_of_ownership'],
-            owner="{} {}".format(verified_data['owner_surname'], verified_data['owner_name']),
+            owner=coowner,
             observations=verified_data.get('observations', '')
         )
 
@@ -233,11 +240,18 @@ class TaskExtraValuableRowEntry(DigitalizationTask):
     template_name = "tasks/owned_extra_valuable.html"
 
     def save_verified_data(self, verified_data):
+        receiver_of_goods, created = models.Person.objects.get_or_create(
+            name=verified_data['owner_name'],
+            previous_name=verified_data.get('previous_name', ''),
+            initials=verified_data['initials'],
+            surname=verified_data['owner_surname']
+        )
+
         owned_extra_valuable, created = models.OwnedExtraValuableTableEntry.objects.get_or_create(
             estrangement_goods_type=verified_data['estranged_goods_type'],
             estragement_goods_address="{}, {}, {}".format(verified_data['goods_county'], verified_data['goods_town'], verified_data['goods_commune']),
             estrangement_date=verified_data['estranged_date'],
-            receiver_of_goods="{} {}".format(verified_data['owner_name'], verified_data['owner_surname']),
+            receiver_of_goods=receiver_of_goods,
             goods_separation_type=verified_data['estranged_goods_separation'],
             value=verified_data['estimated_value'],
             currency=verified_data['currency']

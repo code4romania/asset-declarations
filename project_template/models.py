@@ -28,7 +28,7 @@ FIRST_2_TYPES = 2
 
 
 class Politician(models.Model):
-    __positions = []
+    all_positions = []
 
     name = models.CharField(_("Name"), max_length=128)
     surname = models.CharField(_("Surname"), max_length=128)
@@ -46,6 +46,9 @@ class Politician(models.Model):
         return "Name: {} {}\nPositions: {}\nCreated at: {}\nUpdated at {}".format(
             self.surname, self.name, self.all_positions, self.created_at, self.updated_at
         )
+
+    def add_position(self, position):
+        self.all_positions.append(position)
 
     @property
     def __full_name(self):
@@ -71,34 +74,23 @@ class Declaration(models.Model):
             self.url, self.date, str(self.politician)
         )
 
+
 class Person(models.Model):
     name = models.CharField("Nume persoana", max_length=128)
-    previous_name = models.CharField("Nume anterior", max_length=128)
-    intials = models.CharField("Initiale", max_length=10)
+    previous_name = models.CharField("Nume anterior", max_length=128, null=True, blank=True)
+    initials = models.CharField("Initiale", max_length=10, null=True, blank=True)
     surname = models.CharField("Prenume", max_length=128)
 
+
 class CommonInfo(models.Model):
-    county = models.CharField(
-        "Judet",
-        max_length=32,
-        choices=Counties.return_counties()
-    )
-    city = models.CharField(
-        "Localitate",
-        max_length=32,
-        null=True,
-        blank=True
-    )
-    commune = models.CharField(
-        "Comuna",
-        max_length=32,
-        null=True,
-        blank=True
-    )
-    address = models.CharField(
-        "Adresa",
-        max_length=64
-    )
+    county = models.CharField("Judet", max_length=32, choices=Counties.return_counties())
+    city = models.CharField("Localitate", max_length=32, null=True, blank=True)
+    commune = models.CharField("Comuna", max_length=32, null=True, blank=True)
+    address = models.CharField("Adresa",max_length=64)
+
+    class Meta:
+        abstract = True
+
 
 class CommonIncomeFields(CommonInfo):
     holder_relationship = models.CharField("Cine a realizat venitul", max_length=128, choices=HolderRelationship.return_as_iterable())
@@ -106,6 +98,10 @@ class CommonIncomeFields(CommonInfo):
     service = models.CharField("Serviciul prestat/Obiectul generator de venit", max_length=128, null=True, blank=True)
     annual_income = models.FloatField("Venitul anual incasat")
     currency = models.CharField("Valuta", max_length=16, choices=Currency.return_as_iterable())
+
+    class Meta:
+        abstract = True
+
 
 # Tabel Terenuri - row numbers
 class OwnedLandTable(models.Model):
