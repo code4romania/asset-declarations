@@ -55,16 +55,10 @@ class Politician(models.Model):
 class Declaration(models.Model):
     url = models.URLField(max_length=500)
     politician = models.ForeignKey(Politician, on_delete=models.CASCADE, null=True)
-    position = models.CharField(_("Functie"),
-                                max_length=128,
-                                choices=Position.return_as_iterable())
+    position = models.CharField(_("Functie"), max_length=128, choices=Position.return_as_iterable())
     date = models.DateField(_("Data completare"))
-    institution = models.CharField(_("Institutie"),
-                                   max_length=128,
-                                   choices=Institution.return_as_iterable())
-    declaration_type = models.CharField(_("Tip declaratie"),
-                                        max_length=128,
-                                        choices=Institution.return_as_iterable())
+    institution = models.CharField(_("Institutie"), max_length=128, choices=Institution.return_as_iterable())
+    declaration_type = models.CharField(_("Tip declaratie"), max_length=128, choices=Institution.return_as_iterable())
 
     def __str__(self):
         return "Income declaration, url: {}\ndate: {}\nfor politician:\n{}".format(
@@ -73,15 +67,15 @@ class Declaration(models.Model):
 
 class Person(models.Model):
     name = models.CharField("Nume persoana", max_length=128)
-    previous_name = models.CharField("Nume anterior", max_length=128)
-    initials = models.CharField("Initiale", max_length=10)
+    previous_name = models.CharField("Nume anterior", max_length=128, null=True, blank=True)
+    initials = models.CharField("Initiale", max_length=10, null=True, blank=True)
     surname = models.CharField("Prenume", max_length=128)
 
 class CommonInfo(models.Model):
     county = models.CharField("Judet", max_length=32, choices=Counties.return_counties())
     city = models.CharField("Localitate", max_length=32, null=True, blank=True)
     commune = models.CharField("Comuna", max_length=32, null=True, blank=True)
-    address = models.CharField("Adresa", max_length=64)
+    address = models.CharField("Adresa", max_length=64, null=True, blank=True)
 
 class CommonIncomeFields(CommonInfo):
     holder_relationship = models.CharField("Cine a realizat venitul", max_length=128, choices=HolderRelationship.return_as_iterable())
@@ -103,12 +97,9 @@ class OwnedLandTableEntry(CommonInfo):
     coowner = models.ForeignKey(Person, on_delete=models.CASCADE, null=True)
     category = models.CharField("Categorie", max_length=32, choices=RealEstateType.return_as_iterable())
     acquisition_year = models.IntegerField("Anul dobandirii")
-    surface = models.IntegerField("Suprafata mp")
+    surface = models.FloatField("Suprafata mp")
     share_ratio = models.DecimalField("Cota-parte", max_digits=5, decimal_places=2)
-    attainment_type = models.CharField("Modul de dobandire",
-                                       max_length=32,
-                                       choices=AttainmentType.return_as_iterable(),
-                                       blank=True)
+    attainment_type = models.CharField("Modul de dobandire", max_length=32, choices=AttainmentType.return_as_iterable(), blank=True)
     observations = models.CharField("Observatii", max_length=256, blank=True)
 
 # Tabel Cladiri - row numbers
@@ -121,7 +112,6 @@ class OwnedBuildingsTable(models.Model):
 class OwnedBuildingsTableEntry(CommonInfo):
     table = models.ForeignKey(OwnedBuildingsTable, on_delete=models.CASCADE, null=True)
     coowner = models.ForeignKey(Person, on_delete=models.CASCADE, null=True)
-
     category = models.IntegerField("Categorie", choices=BuildingType.return_as_iterable())
     acquisition_year = models.IntegerField("Anul dobandirii")
     surface = models.FloatField("Suprafata", blank=True)
@@ -169,13 +159,9 @@ class OwnedExtraValuableTable(models.Model):
 class OwnedExtraValuableTableEntry(CommonInfo):
     table = models.ForeignKey(OwnedExtraValuableTable, on_delete=models.CASCADE, null=True)
     receiver_of_goods = models.ForeignKey(Person, on_delete=models.CASCADE, null=True)
-    estrangement_goods_type = models.CharField("Natura bunului instrainat",
-                                               max_length=128,
-                                               choices=EstrangedGoodsType.return_as_iterable())
+    estrangement_goods_type = models.CharField("Natura bunului instrainat", max_length=128, choices=EstrangedGoodsType.return_as_iterable())
     estrangement_date = models.DateField("Data instrainarii")
-    goods_separation_type = models.CharField("Forma instrainarii",
-                                             max_length=64,
-                                             choices=GoodsSeparationType.return_as_iterable())
+    goods_separation_type = models.CharField("Forma instrainarii", max_length=64, choices=GoodsSeparationType.return_as_iterable())
     value = models.IntegerField("Valoare")
     currency = models.CharField("Valuta", max_length=16, choices=Currency.return_as_iterable())
 
@@ -188,18 +174,11 @@ class OwnedBankAccountsTable(models.Model):
 # Tabel Conturi - actual row information
 class OwnedBankAccountsTableEntry(models.Model):
     table = models.ForeignKey(OwnedBankAccountsTable, on_delete=models.CASCADE, null=True)
-    institution = models.CharField("Instituția",
-                                   max_length=128,
-                                   choices=FinancialInstitution.return_as_iterable())
-    account_type = models.IntegerField("Tipul",
-                                       choices=AccountType.return_as_iterable())
-    currency = models.CharField("Valuta",
-                                max_length=16,
-                                choices=Currency.return_as_iterable())
+    institution = models.CharField("Instituția", max_length=128, choices=FinancialInstitution.return_as_iterable())
+    account_type = models.CharField("Tipul", max_length=32, choices=AccountType.return_as_iterable())
+    currency = models.CharField("Valuta", max_length=16, choices=Currency.return_as_iterable())
     opening_year = models.IntegerField("Deschis in anul")
-    account_balance = models.DecimalField("Soldul",
-                                          decimal_places=2,
-                                          max_digits=10)
+    account_balance = models.DecimalField("Soldul", decimal_places=2, max_digits=10)
 
 # Tabel Plasamente, Investitii - row numbers
 class OwnedInvestmentsTable(models.Model):
@@ -212,14 +191,12 @@ class OwnedInvestmentsTableEntry(models.Model):
     table = models.ForeignKey(OwnedInvestmentsTable, on_delete=models.CASCADE, null=True)
     loan_beneficiary = models.ForeignKey(Person, on_delete=models.CASCADE, null=True)
     issue_title = models.CharField("Emitent titlu", max_length=128, null=True, blank=True)
-    shareholder_society = models.CharField("Societate in care persoana este actionar sau asociat", max_length=128,
-                                           null=True, blank=True)
-    
+    shareholder_society = models.CharField("Societate in care persoana este actionar sau asociat", max_length=128, null=True, blank=True)
     description = models.CharField("Descriere", max_length=128)
     type_of_investment = models.CharField("Tipul", max_length=128, choices=InvestmentType.return_as_iterable())
     number_of_stocks = models.IntegerField("Numar de titluri", null=True, blank=True)
     share_ratio = models.DecimalField("Cota de participare", max_digits=3, decimal_places=2, null=True, blank=True)
-    total_value = models.IntegerField("Valoare totala la zi")
+    total_value = models.FloatField("Valoare totala la zi")
     currency = models.CharField("Valuta", max_length=16, choices=Currency.return_as_iterable())
 
 # Tabel Alte active - row numbers
@@ -244,6 +221,7 @@ class OwnedDebtsTable(models.Model):
 # Tabel Datorii - actual row information
 class OwnedDebtsTableEntry(models.Model):
     table = models.ForeignKey(OwnedDebtsTable, on_delete=models.CASCADE, null=True)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)
     lender = models.CharField("Creditor", max_length=128, choices=FinancialInstitution.return_as_iterable(), blank=True)
     debt_type = models.CharField("Tip datorie", max_length=30, choices=DebtType.return_as_iterable())
     acquirement_year = models.IntegerField("Contractat in anul")
@@ -311,6 +289,7 @@ class OwnedIncomeFromPensionsTable(models.Model):
 # Tabel Venituri pensii - actual row information
 class OwnedIncomeFromPensionsTableEntry(CommonIncomeFields):
     table = models.ForeignKey(OwnedIncomeFromPensionsTable, on_delete=models.CASCADE, null=True)
+    ex_position = models.CharField("Pozitia detinuta", max_length=128)
 
 # Tabel Venituri activitati agricole - row number
 class OwnedIncomeFromAgriculturalActivitiesTable(models.Model):
