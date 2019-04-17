@@ -50,7 +50,6 @@ class TaskOwnedLandRowEntry(DigitalizationTask):
             attainment_type=verified_data['attainment_type'],
             surface=verified_data['surface_area'],
             share_ratio=verified_data['percent_of_ownership'],
-            owner=owner_person,
             observations=verified_data.get('observations', '')
         )
 
@@ -106,12 +105,10 @@ class TaskOwnedIncomeFromAgriculturalActivitiesRowEntry(DigitalizationTask):
     template_name = "tasks/agricultural_activity.html"
 
     def save_verified_data(self, verified_data):
-        # Check if option is person or institution
-        optiune=int(verified_data['optiune'])
 
         income_declaration, created = models.OwnedIncomeFromAgriculturalActivitiesTableEntry.objects.get_or_create(
-            name_source_of_goods=verified_data['sursa'],
-            holder_relationship=verified_data['relatie_titular'],
+            name_source_of_goods=verified_data['source'],
+            holder_relationship=verified_data['holder_relationship'],
             county=verified_data['county'],
             city=verified_data['city'],
             commune=verified_data['commune'],

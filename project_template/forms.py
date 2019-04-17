@@ -69,7 +69,7 @@ class TranscribeOwnedAutomobileSingleRowEntry(forms.Form):
     automobile_type = forms.CharField(label="Care este tipul autovehiculului?", widget=forms.Select(choices=MobileGoodsType.return_as_iterable()))
     manufacturer = forms.CharField(label="Care este marca autovehiculului?")
     num_of_automobiles = forms.IntegerField(label="Care este numarul de autovehicule detinute?")
-    year_of_manufacture = forms.ChoiceField(label="Care este anul de fabricatie al autovehiculului?", choices = YEAR_DICT_CHOICES)
+    year_of_manufacture = forms.ChoiceField(label="Care este anul de fabricatie al autovehiculului?", choices=YEAR_DICT_CHOICES)
     attainment_type = forms.CharField(label="Care este modul in care a fost dobandit autovehiculul?", widget=forms.Select(choices=AttainmentType.return_as_iterable()))
 
 class TranscribeOwnedJewelry(forms.Form):
@@ -134,7 +134,7 @@ class TranscribeOwnedDebtsSingleRowEntry(forms.Form):
     institution = forms.CharField(label="Care este numele institutiei creditoare?", widget=forms.Select(choices=FinancialInstitution.return_as_iterable()))
     type_of_debt = forms.CharField(label="Care este tipul de datorie?", widget=forms.Select(choices=DebtType.return_as_iterable()))
     loan_start_year = forms.ChoiceField(label="Care este anul contractarii imprumutului?", choices=YEAR_DICT_CHOICES)
-    loan_maturity = forms.DateField(label="Care este data scadentei?", widget=forms.SelectDateWidget(years=YEAR_CHOICES), input_formats=['%Y-%m-%d'])
+    loan_maturity = forms.ChoiceField(label="Care este data scadentei?", choices=YEAR_DICT_CHOICES)
     loan_amount = forms.FloatField(label="Care este valoarea imprumutului?")
     currency = forms.ChoiceField(label="Care este moneda in care s-a facut imprumutul?", choices=Currency.return_as_iterable())
 
@@ -202,13 +202,12 @@ class TranscribeOwnedIncomeFromAgriculturalActivitiesRowEntry(forms.Form):
     surname = forms.CharField(label="Care e numele persoanei?")
     name = forms.CharField(label="Care e prenumele persoanei?")
     source = forms.CharField(label="Care este sursa?")
-    county = forms.CharField(label="Care este judetul in care se gaseste terenul detinut?")
+    county = forms.ChoiceField(label="Care este judetul in care se gaseste terenul detinut?", choices=Counties.return_counties())
     city = forms.CharField(label="Care este localitatea in care se gaseste terenul detinut?")
     commune = forms.CharField(label="Care este comuna in care se gaseste terenul detinut?")
     # TODO - identify the reason for the form field below
     # foreign_residence_address = forms.CharField(label="Adresa strainatate?")
     offered_service = forms.CharField(label="Care e serviciul prestat?")
-    position = forms.ChoiceField(label="Care e poziția?", choices=Position.return_as_iterable())
     income_amount = forms.FloatField(label="Care este venitul anual incasat?", min_value=0.0)
     currency = forms.ChoiceField(label="Care este moneda venitului?", choices=Currency.return_as_iterable())
 
