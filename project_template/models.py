@@ -235,7 +235,7 @@ class OwnedDebtsTable(models.Model):
 class OwnedDebtsTableEntry(models.Model):
     table = models.ForeignKey(OwnedDebtsTable, on_delete=models.CASCADE, null=True)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)
-    lender = models.CharField("Creditor", max_length=128, choices=FinancialInstitution.return_as_iterable(), blank=True)
+    lender = models.CharField("Creditor", max_length=128, choices=FinancialInstitution.return_as_iterable(), null=True, blank=True)
     debt_type = models.CharField("Tip datorie", max_length=30, choices=DebtType.return_as_iterable())
     acquirement_year = models.IntegerField("Contractat in anul")
     due_date = models.IntegerField("Scadent la")

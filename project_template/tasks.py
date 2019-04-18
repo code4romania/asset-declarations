@@ -53,7 +53,8 @@ class TaskOwnedLandRowEntry(DigitalizationTask):
             observations=verified_data.get('observations', '')
         )
 
-# @register()
+
+@register()
 class TaskOwnedLandTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedLandTable
     storage_model = models.OwnedLandTable
@@ -262,7 +263,7 @@ class TaskExtraValuableRowEntry(DigitalizationTask):
             currency=verified_data['currency']
         )
 
-@register()
+
 class TaskExtraValuableTable(CountTableRowsTask):
     task_form = forms.TranscribeExtraValuable
     storage_model = models.OwnedExtraValuableTable
