@@ -53,7 +53,7 @@ class TaskOwnedLandRowEntry(DigitalizationTask):
             observations=verified_data.get('observations', '')
         )
 
-@register()
+# @register()
 class TaskOwnedLandTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedLandTable
     storage_model = models.OwnedLandTable
@@ -129,7 +129,7 @@ class TaskOwnedDebtsRowEntry(DigitalizationTask):
     template_name = "tasks/owned_debts.html"
 
     def save_verified_data(self, verified_data):
-        if verified_data['nume_creditor'] and verified_data['prenume_creditor']:
+        if verified_data['loaner_name'] and verified_data['loaner_surname']:
             loaner_person, created = models.Person.objects.get_or_create(
                 name=verified_data['loaner_name'],
                 surname=verified_data['loaner_surname']
@@ -152,7 +152,7 @@ class TaskOwnedDebtsRowEntry(DigitalizationTask):
                 currency=verified_data['currency']
                 )
 
-
+@register()
 class TaskOwnedDebtsTable(CountTableRowsTask):
     task_form = forms.TranscribeDebtsTableRowsCount
     storage_model = models.OwnedDebtsTable
