@@ -88,17 +88,17 @@ class TranscribeExtraValuable(forms.Form):
 
 
 class TranscribeExtraValuableRowEntry(forms.Form):
-    estranged_goods_type = forms.CharField(label="Care este natura bunului instrainat?",
+    estrangement_goods_type = forms.CharField(label="Care este natura bunului instrainat?",
                                             widget=forms.Select(choices=EstrangedGoodsType.return_as_iterable()))
-    goods_county = forms.CharField(label="Judetul in care se gaseste bunul instrainat(daca este cazul)")
-    goods_town = forms.CharField(label="Orasul in care se gaseste bunul instrainat(daca este cazul)")
-    goods_commune = forms.CharField(label="Comuna in care se gaseste bunul instrainat(daca este cazul)")
+    county = forms.ChoiceField(label="Judetul in care se gaseste bunul instrainat(daca este cazul)", choices=Counties.return_counties())
+    city = forms.CharField(label="Orasul in care se gaseste bunul instrainat(daca este cazul)")
+    commune = forms.CharField(label="Comuna in care se gaseste bunul instrainat(daca este cazul)")
     estranged_date = forms.DateField(label="Care este data instrainarii bunului?",
                                         widget=forms.SelectDateWidget(years=YEAR_CHOICES),
                                         input_formats=['%Y-%m-%d'])
     owner_name = forms.CharField(label="Care este numele persoanei catre care s-a instrainat bunul?")
     owner_surname = forms.CharField(label="Care este prenumele persoanei catre care s-a instrainat bunul?")
-    estranged_goods_separation = forms.CharField(label="Care este forma sub care s-a instrainat bunul?",
+    goods_separation_type = forms.CharField(label="Care este forma sub care s-a instrainat bunul?",
                                                     widget=forms.Select(choices=GoodsSeparationType.return_as_iterable()))
     estimated_value = forms.FloatField(label="Care este valoarea bunului instrainat?")
     currency = forms.ChoiceField(label="Care este valuta in care este exprimata valoarea bunului instrainat?",

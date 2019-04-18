@@ -152,7 +152,7 @@ class TaskOwnedDebtsRowEntry(DigitalizationTask):
                 currency=verified_data['currency']
                 )
 
-@register()
+
 class TaskOwnedDebtsTable(CountTableRowsTask):
     task_form = forms.TranscribeDebtsTableRowsCount
     storage_model = models.OwnedDebtsTable
@@ -252,17 +252,17 @@ class TaskExtraValuableRowEntry(DigitalizationTask):
 
         owned_extra_valuable, created = models.OwnedExtraValuableTableEntry.objects.get_or_create(
             receiver_of_goods=owner_person,
-            estrangement_goods_type=verified_data['estranged_goods_type'],
+            estrangement_goods_type=verified_data['estrangement_goods_type'],
             county=verified_data['county'],
             city=verified_data['city'],
             commune=verified_data['commune'],
             estrangement_date=verified_data['estranged_date'],
-            goods_separation_type=verified_data['estranged_goods_separation'],
+            goods_separation_type=verified_data['goods_separation_type'],
             value=verified_data['estimated_value'],
             currency=verified_data['currency']
         )
 
-
+@register()
 class TaskExtraValuableTable(CountTableRowsTask):
     task_form = forms.TranscribeExtraValuable
     storage_model = models.OwnedExtraValuableTable
