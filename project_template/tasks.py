@@ -8,7 +8,6 @@ import project_template.forms as forms
 from project_template.task_templates import DigitalizationTask, CountTableRowsTask
 
 
-@register()
 class TaskGetInitialInformation(DigitalizationTask):
     task_form = forms.TranscribeInitialInformation
     template_name = 'tasks/general_information_task.html'
@@ -37,18 +36,25 @@ class TaskOwnedLandRowEntry(DigitalizationTask):
     template_name = "tasks/owned_land.html"
 
     def save_verified_data(self, verified_data):
+        owner_person, created = models.Person.objects.get_or_create(
+            name=verified_data['owner_name'],
+            surname=verified_data['owner_surname'])
+
         owned_land, created = models.OwnedLandTableEntry.objects.get_or_create(
-            address="Judet: {}, Localitate: {}, Comuna: {}".format(verified_data['county'], verified_data['city'], verified_data['commune']),
+            coowner=owner_person,
+            county=verified_data['county'],
+            city=verified_data['city'],
+            commune=verified_data['commune'],
             category=verified_data['real_estate_type'],
             acquisition_year=verified_data['ownership_start_year'],
             attainment_type=verified_data['attainment_type'],
             surface=verified_data['surface_area'],
             share_ratio=verified_data['percent_of_ownership'],
-            owner="{} {}".format(verified_data['owner_surname'], verified_data['owner_name']),
             observations=verified_data.get('observations', '')
         )
 
 
+@register()
 class TaskOwnedLandTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedLandTable
     storage_model = models.OwnedLandTable
@@ -61,7 +67,7 @@ class TaskOwnedAutomobileRowEntry(DigitalizationTask):
 
     def save_verified_data(self, verified_data):
         owned_automobile, created = models.OwnedAutomobileTableEntry.objects.get_or_create(
-            car_type=verified_data['type'],
+            goods_type=verified_data['automobile_type'],
             brand=verified_data['manufacturer'],
             no_owned=verified_data['num_of_automobiles'],
             fabrication_year=verified_data['year_of_manufacture'],
@@ -100,13 +106,13 @@ class TaskOwnedIncomeFromAgriculturalActivitiesRowEntry(DigitalizationTask):
     template_name = "tasks/agricultural_activity.html"
 
     def save_verified_data(self, verified_data):
-        # Check if option is person or institution
-        optiune=int(verified_data['optiune'])
 
         income_declaration, created = models.OwnedIncomeFromAgriculturalActivitiesTableEntry.objects.get_or_create(
-            name_source_of_goods=verified_data['sursa'],
-            holder_relationship=verified_data['relatie_titular'],
-            address_source_of_goods="Judet: {}, Localitate: {}, Comuna: {}".format(verified_data['county'], verified_data['city'], verified_data['commune']),
+            name_source_of_goods=verified_data['source'],
+            holder_relationship=verified_data['holder_relationship'],
+            county=verified_data['county'],
+            city=verified_data['city'],
+            commune=verified_data['commune'],
             goods_name=verified_data['offered_service'],
             annual_income=verified_data['income_amount'],
             annual_income_currency=verified_data['currency']
@@ -124,13 +130,22 @@ class TaskOwnedDebtsRowEntry(DigitalizationTask):
     template_name = "tasks/owned_debts.html"
 
     def save_verified_data(self, verified_data):
-        if verified_data['nume_creditor'] and verified_data['prenume_creditor']:
-            lender_identity = "Nume: {}, Prenume: {}".format(verified_data['loaner_surname'], verified_data['loaner_name'])
-        else:
-            lender_identity = "Institutie: {}".format(verified_data['institution'])
-
-        owned_debts, created = models.OwnedDebtsTableEntry.objects.get_or_create(
-                lender=lender_identity,
+        if verified_data['loaner_name'] and verified_data['loaner_surname']:
+            loaner_person, created = models.Person.objects.get_or_create(
+                name=verified_data['loaner_name'],
+                surname=verified_data['loaner_surname']
+            )
+            owned_debts, created = models.OwnedDebtsTableEntry.objects.get_or_create(
+                person=loaner_person,
+                debt_type=verified_data['type_of_debt'],
+                acquirement_year=verified_data['loan_start_year'],
+                due_date=verified_data['loan_maturity'],
+                value=verified_data['loan_amount'],
+                currency=verified_data['currency']
+            )
+        elif verified_data['institution']:
+            owned_debts, created = models.OwnedDebtsTableEntry.objects.get_or_create(
+                lender=verified_data['institution'],
                 debt_type=verified_data['type_of_debt'],
                 acquirement_year=verified_data['loan_start_year'],
                 due_date=verified_data['loan_maturity'],
@@ -150,15 +165,20 @@ class TaskOwnedIncomeFromPensionsRowEntry(DigitalizationTask):
     template_name = "tasks/owned_income_from_pensions.html"
 
     def save_verified_data(self, verified_data):
+        owner_person, created = models.Person.objects.get_or_create(
+            surname=verified_data['beneficiary_surname'],
+            name=verified_data['beneficiary_name']
+        )
         owned_income_from_pensions, created = models.OwnedIncomeFromPensionsTableEntry.objects.get_or_create(
-            income_provider_type=verified_data['beneficiary_relationship'],
-            provider_name="Nume:{}, Prenume:{}".format(verified_data['beneficiary_surname'], verified_data['beneficiary_name']),
-            name_source_of_goods=verified_data['income_source'],
-            address_source_of_goods="Judet: {}, Localitate: {}, Comuna: {}, Strainatate: {}".format(verified_data['county'], verified_data['city'], verified_data['commune'], verified_data['country']),
-            goods_name=verified_data['offered_service'],
+            holder_relationship=verified_data['beneficiary_relationship'],
+            source_of_goods=verified_data['income_source'],
+            county=verified_data['county'],
+            city=verified_data['city'],
+            commune=verified_data['commune'],
+            service=verified_data['offered_service'],
             ex_position=verified_data['position'],
             annual_income=verified_data['income_amount'],
-            annual_income_currency=verified_data['currency'])
+            currency=verified_data['currency'])
 
 
 class TaskOwnedIncomeFromPensionsTable(CountTableRowsTask):
@@ -173,20 +193,13 @@ class TaskOwnedGoodsOrServicesRowEntry(DigitalizationTask):
 
     def save_verified_data(self, verified_data):
         owned_gifts_spouse, created = models.OwnedGoodsOrServicesTable.objects.get_or_create(
-            holder="Nume: {0}, Prenume: {1}".format(
-                verified_data['holder_surname'],
-                verified_data['holder_name']
-            ),
-            name_source_of_goods=verified_data['income_source'],
-            address_source_of_goods="Judet: {}, Localitate: {}, Comuna: {}"
-            .format(
-                verified_data['county'],
-                verified_data['city'],
-                verified_data['commune']
-            ),
-            goods_name=verified_data['goods_name'],
+            holder_relationship=verified_data['holder_relationship'],
+            source_of_goods=verified_data['income_source'],
+            county=verified_data['county'],
+            city=verified_data['city'],
+            service=verified_data['goods_name'],
             annual_income=verified_data['annual_income'],
-            annual_income_currency=verified_data['currency']
+            currency=verified_data['currency']
         )
 
 
@@ -233,12 +246,19 @@ class TaskExtraValuableRowEntry(DigitalizationTask):
     template_name = "tasks/owned_extra_valuable.html"
 
     def save_verified_data(self, verified_data):
+        owner_person, created = models.Person.objects.get_or_create(
+            name=verified_data['owner_name'],
+            surname=verified_data['owner_surname']
+        )
+
         owned_extra_valuable, created = models.OwnedExtraValuableTableEntry.objects.get_or_create(
-            estrangement_goods_type=verified_data['estranged_goods_type'],
-            estragement_goods_address="{}, {}, {}".format(verified_data['goods_county'], verified_data['goods_town'], verified_data['goods_commune']),
+            receiver_of_goods=owner_person,
+            estrangement_goods_type=verified_data['estrangement_goods_type'],
+            county=verified_data['county'],
+            city=verified_data['city'],
+            commune=verified_data['commune'],
             estrangement_date=verified_data['estranged_date'],
-            receiver_of_goods="{} {}".format(verified_data['owner_name'], verified_data['owner_surname']),
-            goods_separation_type=verified_data['estranged_goods_separation'],
+            goods_separation_type=verified_data['goods_separation_type'],
             value=verified_data['estimated_value'],
             currency=verified_data['currency']
         )
