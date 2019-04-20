@@ -159,6 +159,18 @@ class TranscribeOwnedGoodsOrServicesRowEntry(forms.Form):
 
 class TranscribeOwnedIncomeFromSalaries(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['salaries']))
+    surname = forms.CharField(label="Care e numele persoanei?")
+    name = forms.CharField(label="Care e prenumele persoanei?")
+    county = forms.ChoiceField(label="Care este judetul de domiciliu?", choices=Counties.return_counties())
+    city = forms.CharField(label="Care este localitatea de domiciliu?")
+    commune = forms.CharField(label="Care este comuna de domiciliu?")
+    address = forms.CharField(label="Care este adresa de domiciliu?")
+    holder_relationship = forms.ChoiceField(label="Cine este beneficiarul salariului?", choices=HolderRelationship.return_as_iterable())
+    source_of_goods = forms.CharField(label="Care este sursa de venit?")
+    service = forms.CharField(label="Care e serviciul prestat?")
+    annual_income = forms.FloatField(label="Care este venitul persoanei?")
+    currency = forms.ChoiceField(label="Care este valuta in care e incasat venitul?", choices=Currency.return_as_iterable())
+    position = forms.ChoiceField(label="Care a fost functia detinuta?", choices=Position.return_as_iterable())
 
 
 class TranscribeIndependentActivities(forms.Form):
