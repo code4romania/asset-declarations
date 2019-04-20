@@ -54,6 +54,7 @@ class TaskOwnedLandRowEntry(DigitalizationTask):
         )
 
 
+@register()
 class TaskOwnedLandTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedLandTable
     storage_model = models.OwnedLandTable
@@ -315,7 +316,6 @@ class TaskOwnedIncomeFromSalariesRowEntry(DigitalizationTask):
         )
 
 
-@register()
 class TaskOwnedIncomeFromSalariesTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromSalaries
     storage_model = models.OwnedIncomeFromSalariesTable
