@@ -300,7 +300,7 @@ class TaskOwnedIncomeFromDeferredUseOfGoodsRowEntry(DigitalizationTask):
             address=verified_data.get('address'),
             service=verified_data['service'],
             annual_income=verified_data['annual_income'],
-            currency=verified_data['annual_income']
+            currency=verified_data['currency']
         )
 
 @register()
