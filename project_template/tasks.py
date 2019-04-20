@@ -298,8 +298,30 @@ class TaskOwnedIncomeFromSalariesTable(CountTableRowsTask):
     child_class = None
 
 
+class TaskOwnedBuildingRowEntry(DigitalizationTask):
+    task_form = forms.TranscribeOwnedBuildingsSingleRowEntry
+    template_name = "tasks/owned_buildings.html"
+
+    def save_verified_data(self, verified_data):
+        owner_person, created = models.Person.objects.get_or_create(
+            name=verified_data['owner_name'],
+            surname=verified_data['owner_surname']
+        )
+
+        owned_building, created = models.OwnedBuildingsTableEntry.objects.get_or_create(
+            county=verified_data['county'],
+            city=verified_data['city'],
+            commune=verified_data['commune'],
+            category=verified_data['category'],
+            acquisition_year=verified_data['acquisition_year'],
+            surface=verified_data['surface'],
+            share_ratio=verified_data['share_ratio'],
+            attainment_type=verified_data['attainment_type'],
+            observations=""
+        )
+
+
 class TaskOwnedBuildingsTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedBuildingsTable
     storage_model = models.OwnedBuildingsTable
-    # TODO - add child_class
-    child_class = None
+    child_class = TaskOwnedBuildingRowEntry

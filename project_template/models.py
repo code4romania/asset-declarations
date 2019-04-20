@@ -115,23 +115,25 @@ class OwnedLandTableEntry(CommonInfo):
     attainment_type = models.CharField("Modul de dobandire", max_length=32, choices=AttainmentType.return_as_iterable(), blank=True)
     observations = models.CharField("Observatii", max_length=256, blank=True)
 
+
 # Tabel Cladiri - row numbers
 class OwnedBuildingsTable(models.Model):
     __full_name = DECLARATION_TABLES['buildings']
     declaration = models.ForeignKey(Declaration, on_delete=models.CASCADE, null=True)
     count = models.IntegerField("The number of rows")
 
+
 # Tabel Cladiri - actual row information
 class OwnedBuildingsTableEntry(CommonInfo):
     table = models.ForeignKey(OwnedBuildingsTable, on_delete=models.CASCADE, null=True)
-    coowner = models.ForeignKey(Person, on_delete=models.CASCADE, null=True)
+    owner_person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)
     category = models.IntegerField("Categorie", choices=BuildingType.return_as_iterable())
     acquisition_year = models.IntegerField("Anul dobandirii")
-    surface = models.FloatField("Suprafata", blank=True)
-    share_ratio = models.DecimalField("Cota-parte", max_digits=3, decimal_places=2, blank=True)
+    surface = models.FloatField("Suprafata", null=True, blank=True)
+    share_ratio = models.DecimalField("Cota-parte", max_digits=3, decimal_places=2, null=True, blank=True)
     attainment_type = models.CharField("Modul de dobandire", max_length=32,
-                                       choices=AttainmentType.return_as_iterable(), blank=True)
-    observations = models.CharField("Observatii", max_length=256, blank=True)
+                                       choices=AttainmentType.return_as_iterable(), null=True, blank=True)
+    observations = models.CharField("Observatii", max_length=256, null=True, blank=True)
 
 # Tabel Bunuri Mobile - row numbers
 class OwnedAutomobileTable(models.Model):

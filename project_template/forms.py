@@ -3,6 +3,7 @@ import datetime
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
+from project_template.datamodels.building_type import BuildingType
 from project_template import constants
 from project_template.datamodels.account_type import AccountType
 from project_template.datamodels.attainment_type import AttainmentType
@@ -41,6 +42,7 @@ class TranscribeInitialInformation(forms.Form):
                                         choices=Institution.return_as_iterable())
     declaration_type = forms.ChoiceField(label=_("Ce tip de declaratie este completata?"), choices=DeclarationType.return_as_iterable())
 
+
 class TranscribeOwnedLandTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['land']))
 
@@ -57,8 +59,27 @@ class TranscribeOwnedLandSingleRowEntry(forms.Form):
     owner_surname = forms.CharField(label="Care este numele proprietarului?")
     owner_name = forms.CharField(label="Care este prenumele proprietarului")
 
+
 class TranscribeOwnedBuildingsTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}".format(constants.DECLARATION_TABLES['buildings']))
+
+
+class TranscribeOwnedBuildingsSingleRowEntry(forms.Form):
+    county = forms.ChoiceField(label="Care este judetul in care se gaseste cladirea detinuta?",
+                               choices=Counties.return_counties())
+    city = forms.CharField(label="Care este localitatea in care se gaseste cladirea detinuta?")
+    commune = forms.CharField(label="Care este comuna in care se gaseste cladirea detinuta?")
+    category = forms.ChoiceField(label="Care este categoria cladirii?", choices=BuildingType.return_as_iterable())
+    acquisition_year = forms.ChoiceField(label="Care este anul cand cladirea a fost dobandita?",
+                                         choices=YEAR_DICT_CHOICES)
+    attainment_type = forms.ChoiceField(label="Care este modul in care cladirea a fost dobandita?",
+                                        choices=AttainmentType.return_as_iterable(), required=False)
+    surface = forms.IntegerField(label="Care este suprafata cladirii? (mp)", required=False)
+    share_ratio = forms.DecimalField(label="Care este cota parte din aceasta cladire? (in procente)", max_digits=3,
+                                     decimal_places=2, max_value=100, min_value=0, required=False)
+    owner_surname = forms.CharField(label="Care este numele proprietarului?", required=False)
+    owner_name = forms.CharField(label="Care este prenumele proprietarului", required=False)
+    observations = forms.CharField(label="Observatii?", required=False)
 
 
 class TranscribeOwnedAutomobile(forms.Form):
@@ -71,6 +92,7 @@ class TranscribeOwnedAutomobileSingleRowEntry(forms.Form):
     num_of_automobiles = forms.IntegerField(label="Care este numarul de autovehicule detinute?")
     year_of_manufacture = forms.ChoiceField(label="Care este anul de fabricatie al autovehiculului?", choices=YEAR_DICT_CHOICES)
     attainment_type = forms.CharField(label="Care este modul in care a fost dobandit autovehiculul?", widget=forms.Select(choices=AttainmentType.return_as_iterable()))
+
 
 class TranscribeOwnedJewelry(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['jewelry']))
