@@ -3,9 +3,11 @@ import datetime
 from moonsheep import verifiers
 from moonsheep.decorators import register
 
-import project_template.models as models
 import project_template.forms as forms
-from project_template.task_templates import DigitalizationTask, CountTableRowsTask
+import project_template.models as models
+from project_template.datamodels import holder_relationship
+from project_template.task_templates import (CountTableRowsTask,
+                                             DigitalizationTask)
 
 
 class TaskGetInitialInformation(DigitalizationTask):
@@ -54,7 +56,7 @@ class TaskOwnedLandRowEntry(DigitalizationTask):
         )
 
 
-@register()
+# @register()
 class TaskOwnedLandTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedLandTable
     storage_model = models.OwnedLandTable
@@ -270,11 +272,42 @@ class TaskExtraValuableTable(CountTableRowsTask):
     child_class = TaskExtraValuableRowEntry
 
 
+class TaskOwnedIncomeFromDeferredUseOfGoodsRowEntry(DigitalizationTask):
+    task_form = forms.TranscribeOwnedIncomeFromDeferredUseOfGoodsRowEntry
+    template_name = "tasks/owned_income_from_deferred_use_of_goods.html"
+
+    def save_verified_data(self, verified_data):
+        holder_person, _ = models.Person.objects.get_or_create(
+            name=verified_data['holder_name'],
+            surname=verified_data['holder_surname'])
+
+        source_of_goods_source_name = verified_data.get('source_of_goods_source_name')
+        source_of_goods_source_surname = verified_data.get('source_of_goods_source_surname')
+        source_person = None
+        if source_of_goods_source_name and source_of_goods_source_surname:
+            source_person, _ = models.Person.objects.get_or_create(
+            name=source_of_goods_source_name,
+            surname=source_of_goods_source_surname)
+
+        owned_deferred_use_of_goods, _ = models.OwnedIncomeFromDeferredUseOfGoodsTableEntry.objects.get_or_create(
+            holder_relationship=verified_data['holder_relationship'],
+            holder_person=holder_person,
+            source_person=source_person,
+            source_of_goods=verified_data.get('source_of_goods_source_institution'),
+            county=verified_data.get('county'),
+            city=verified_data.get('city'),
+            commune=verified_data.get('commune'),
+            address=verified_data.get('address'),
+            service=verified_data['service'],
+            annual_income=verified_data['annual_income'],
+            currency=verified_data['annual_income']
+        )
+
+@register()
 class TaskOwnedIncomeFromDeferredUseOfGoodsTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromDeferredUseOfGoods
     storage_model = models.OwnedIncomeFromDeferredUseOfGoodsTable
-    # TODO - add child_class
-    child_class = None
+    child_class = TaskOwnedIncomeFromDeferredUseOfGoodsRowEntry
 
 
 class TaskOwnedIncomeFromIndependentActivitiesTable(CountTableRowsTask):

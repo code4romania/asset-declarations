@@ -169,6 +169,42 @@ class TranscribeOwnedIncomeFromDeferredUseOfGoods(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['deferred_use']))
 
 
+class TranscribeOwnedIncomeFromDeferredUseOfGoodsRowEntry(forms.Form):
+    holder_relationship = forms.ChoiceField(label="Cine a realizat venitul?", choices=HolderRelationship.return_as_iterable())
+    holder_surname = forms.CharField(label="Care este numele persoanei care a realizat venitul?")
+    holder_name = forms.CharField(label="Care este prenumele persoanei care a realizat venitul?")
+    source_of_goods_source_surname = forms.CharField(label="Care este prenumele sursei de venit?")
+    source_of_goods_source_name = forms.CharField(label="Care este numele sursei de venit?")
+    source_of_goods_source_institution = forms.CharField(label="Care este numele instituiei ca sursa de venit?")
+    county = forms.CharField(label="Care este judetul de domiciliu a sursei de venit?")
+    city = forms.CharField(label="Care este localitatea de domiciliu a sursei de venit?")
+    commune = forms.CharField(label="Care este comuna de domiciliu a sursei de venit?")
+    address = forms.CharField(label="Care este adresa de domiciliu a sursei de venit?")
+    service = forms.CharField(label="Care este fost serviciul prestat?")
+    annual_income = forms.FloatField(label="Care este venitul persoanei?")
+    currency = forms.ChoiceField(label="Care este valuta in care e incasat venitul?", choices=Currency.return_as_iterable())
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        source_is_correct = False
+        if cleaned_data.get('source_of_goods_source_name') and cleaned_data.get('source_of_goods_source_surname'):
+            source_is_correct = True
+        elif cleaned_data.get('source_of_goods_source_institution') and cleaned_data.get('county'):
+            if cleaned_data.get('city') or cleaned_data.get('commune') or cleaned_data.get('address'):
+                source_is_correct = True
+        else:
+            message = 'Este necesar ca numele si prenumele sursei SAU numele institiei si adresa ei sa fie prezente'
+            self.add_error('source_of_goods_source_name', message)
+            self.add_error('source_of_goods_source_surname', message)
+            self.add_error('source_of_goods_source_institution', message)
+            address_error_message = 'Daca exista adresa, te rog sa completezi unul dintre campurile Judet/Oras/Comuna/Adresa'
+            self.add_error('county', address_error_message)
+            self.add_error('city', address_error_message)
+            self.add_error('commune', address_error_messagemessage)
+            self.add_error('address', address_error_message)
+
+
 class TranscribeOwnedIncomeFromInvestmentsTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['income_investments']))
 
