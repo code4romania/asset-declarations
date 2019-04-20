@@ -219,3 +219,17 @@ class TranscribeOwnedIncomeFromGamblingTable(forms.Form):
 class TranscribeOwnedIncomeFromOtherSourcesTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['other_sources']))
 
+
+class TranscribeOwnedIncomeFromOtherSourcesRowEntry(forms.Form): 
+    holder_relationship = forms.ChoiceField(label="Cine a realizat venitul?", choices=HolderRelationship.return_as_iterable())
+    surname = forms.CharField(label="Care este numele celui care a realizat venitul?")
+    name = forms.CharField(label="Care este prenumele celui care a realizat venitul?")
+    source_of_goods = forms.CharField(label="Care este sursa venitului?")
+    county = forms.ChoiceField(label="Care este judetul unde s-a realizat venitul?", choices=Counties.return_counties())
+    city = forms.CharField(label="Care este orasul unde s-a realizat venitul?")
+    commune = forms.CharField(label="Care este comuna unde s-a realizat venitul?")
+    address = forms.CharField(label="Care este adresa venitului realizat in strainatate?")
+    service = forms.CharField(label="Care este serviciul prestat/Obiectul generator de venit?")
+    annual_income = forms.FloatField(label="Care este venitul anual incasat?")
+    currency = forms.ChoiceField(label="Care este moneda in care s-a realizat venitul?", choices=Currency.return_as_iterable())
+    
