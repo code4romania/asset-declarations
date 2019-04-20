@@ -281,14 +281,38 @@ class TaskOwnedIncomeFromIndependentActivitiesTable(CountTableRowsTask):
     task_form = forms.TranscribeIndependentActivities
     storage_model = models.OwnedIncomeFromIndependentActivitiesTable
     # TODO - add child_class
-    child_class = None
+    child_class = None;
+
+
+class TaskOwnedIncomeFromGamblingRowEntry(DigitalizationTask):
+    task_form = forms.TranscribeOwnedIncomeFromGamblingRowEntry
+    template_name = "task/owned_income_from_gambling.html"
+
+    def save_verified_data(self, verified_data):
+        owner_person, created = models.Person.objects.get_or_create(
+            name=verified_data['owner_name'],
+            surname=verified_data['owner_surname'])
+
+        owned_income_from_gambling, created = models.OwnedIncomeFromGamblingTableEntry.objects.get_or_create(
+            holder_relationship=verified_data['holder_relationship'],
+            holder_name=verified_data['holder_name'],
+            holder_surname=verified_data['holder_surname'],
+            county=verified_data['county'],
+            city=verified_data['city'],
+            commune=verified_data['commune'],
+            foreign_address=verified_data['foreign_residence_address'],
+            source_goods=verified_data['source_of_goods'],
+            # Institutie (STRING) - nu exista in tabel si nici in descreierea forms
+            service=verified_data['service'],
+            income=verified_data['annual_income'],
+            currency=verified_data['currency'],
+        )
 
 
 class TaskOwnedIncomeFromGamblingTable(CountTableRowsTask):
-    task_form = forms.TranscribeOwnedIncomeFromGamblingTable
+    task_form = forms.TranscribeOwnedIncomeFromGamblingRowEntry
     storage_model = models.OwnedIncomeFromGamblingTable
-    # TODO - add child_class
-    child_class = None
+    child_class = TaskOwnedIncomeFromGamblingRowEntry
 
 
 class TaskOwnedIncomeFromSalariesTable(CountTableRowsTask):
