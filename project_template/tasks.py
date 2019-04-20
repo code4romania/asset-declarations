@@ -54,7 +54,6 @@ class TaskOwnedLandRowEntry(DigitalizationTask):
         )
 
 
-@register()
 class TaskOwnedLandTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedLandTable
     storage_model = models.OwnedLandTable
@@ -292,7 +291,7 @@ class TaskOwnedIncomeFromGamblingTable(CountTableRowsTask):
 
 
 class TaskOwnedIncomeFromSalariesRowEntry(DigitalizationTask):
-    task_form = forms.TranscribeOwnedIncomeFromSalaries
+    task_form = forms.TranscribeOwnedIncomeFromSalariesRowEntry
     template_name = "tasks/owned_income_from_salaries.html"
 
     def save_verified_data(self, verified_data):
@@ -316,6 +315,7 @@ class TaskOwnedIncomeFromSalariesRowEntry(DigitalizationTask):
         )
 
 
+@register()
 class TaskOwnedIncomeFromSalariesTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromSalaries
     storage_model = models.OwnedIncomeFromSalariesTable

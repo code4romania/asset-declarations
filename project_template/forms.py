@@ -159,6 +159,9 @@ class TranscribeOwnedGoodsOrServicesRowEntry(forms.Form):
 
 class TranscribeOwnedIncomeFromSalaries(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['salaries']))
+
+
+class TranscribeOwnedIncomeFromSalariesRowEntry(forms.Form):
     surname = forms.CharField(label="Care e numele persoanei?")
     name = forms.CharField(label="Care e prenumele persoanei?")
     county = forms.ChoiceField(label="Care este judetul de domiciliu?", choices=Counties.return_counties())
