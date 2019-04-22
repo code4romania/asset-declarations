@@ -335,7 +335,8 @@ class TaskOwnedIncomeFromInvestmentsRowEntry(DigitalizationTask):
             county=verified_data['county'],
             city=verified_data['city'],
             commune=verified_data['commune'],
-            service=verified_data['offered_service'],
+            service=verified_data['service'],
+            source_of_goods=verified_data['source_of_goods'],
             annual_income=verified_data['income_amount'],
             currency=verified_data['currency']
         )
