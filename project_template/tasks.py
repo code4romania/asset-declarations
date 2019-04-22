@@ -215,12 +215,30 @@ class TaskTranscribeOwnedInvestmentsTable(CountTableRowsTask):
     # TODO - add child_class
     child_class = None
 
+class TaskOwnedIncomeFromOtherSourcesRowEntry(DigitalizationTask):
+    task_form = forms.TranscribeOwnedIncomeFromOtherSourcesRowEntry
+    template_name = "tasks/owned_income_other_sources.html"
 
-class TaskTranscribeOwnedIncomeFromOtherSourcesTable(CountTableRowsTask):
+    def save_verified_data(self, verified_data):
+        owned_income_other_sources, created = models.OwnedIncomeFromOtherSourcesTable.objects.get_or_create(
+            holder_relationship = verified_data['holder_relationship'],
+            surname=verified_data['surname'],
+            name=verified_data['name'],
+            source_of_goods = verified_data['source_of_goods'],
+            county = verified_data['county'],
+            city = verified_data['city'],
+            commune = verified_data['commune'],
+            address = verified_data['address'],
+            service = verified_data['service'],
+            annual_income = verified_data['annual_income'],
+            currency = verified_data['currency'],    
+            )
+
+@register()           
+class TaskOwnedIncomeFromOtherSourcesTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromOtherSourcesTable
     storage_model = models.OwnedIncomeFromOtherSourcesTable
-    # TODO - add child_class
-    child_class = None
+    child_class = TaskOwnedIncomeFromOtherSourcesRowEntry
 
 
 class TaskOwnedJewelryRowEntry(DigitalizationTask):
