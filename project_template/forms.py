@@ -181,7 +181,8 @@ class TranscribeOwnedIncomeFromInvestmentsRowEntry(forms.Form):
     county = forms.ChoiceField(label="Care este judetul de unde provine sursa de venit?", choices=Counties.return_counties())
     city = forms.CharField(label="Care este localitatea de unde provine sursa de venit?")
     commune = forms.CharField(label="Care este comuna de unde provine sursa de venit?")
-    offered_service = forms.CharField(label="Care e serviciul prestat?")
+    source_of_goods  = forms.CharField(label="Care este numele sursei de venit?")
+    service = forms.CharField(label="Care e serviciul prestat?")
     income_amount = forms.FloatField(label="Care este venitul anual incasat?", min_value=0.0)
     currency = forms.ChoiceField(label="Care este moneda venitului?", choices=Currency.return_as_iterable())
 
