@@ -264,7 +264,6 @@ class OwnedIncomeFromSalariesTable(models.Model):
 class OwnedIncomeFromSalariesTableEntry(CommonIncomeFields):
     table = models.ForeignKey(OwnedIncomeFromSalariesTable, on_delete=models.CASCADE, null=True)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)
-    position = models.CharField(_("Functie"), max_length=128, choices=Position.return_as_iterable())
 
 
 # Tabel Venituri activitati independente - row number
