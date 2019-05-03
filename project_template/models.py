@@ -263,7 +263,6 @@ class OwnedIncomeFromSalariesTable(models.Model):
 # Tabel Venituri salarii - actual row information
 class OwnedIncomeFromSalariesTableEntry(CommonIncomeFields):
     table = models.ForeignKey(OwnedIncomeFromSalariesTable, on_delete=models.CASCADE, null=True)
-    person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)
 
 
 # Tabel Venituri activitati independente - row number
