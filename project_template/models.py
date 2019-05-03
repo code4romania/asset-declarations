@@ -126,7 +126,7 @@ class OwnedBuildingsTable(models.Model):
 # Tabel Cladiri - actual row information
 class OwnedBuildingsTableEntry(CommonInfo):
     table = models.ForeignKey(OwnedBuildingsTable, on_delete=models.CASCADE, null=True)
-    owner_person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)
+    coowner = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)
     category = models.IntegerField("Categorie", choices=BuildingType.return_as_iterable())
     acquisition_year = models.IntegerField("Anul dobandirii")
     surface = models.FloatField("Suprafata", null=True, blank=True)

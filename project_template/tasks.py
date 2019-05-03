@@ -312,12 +312,13 @@ class TaskOwnedBuildingRowEntry(DigitalizationTask):
             county=verified_data['county'],
             city=verified_data['city'],
             commune=verified_data['commune'],
+            coowner=owner_person,
             category=verified_data['category'],
             acquisition_year=verified_data['acquisition_year'],
             surface=verified_data['surface'],
             share_ratio=verified_data['share_ratio'],
             attainment_type=verified_data['attainment_type'],
-            observations=""
+            observations=verified_data.get('observations', '')
         )
 
 
