@@ -252,16 +252,18 @@ class OwnedGoodsOrServicesTable(models.Model):
 class OwnedGoodsOrServicesTableEntry(CommonIncomeFields):
     table = models.ForeignKey(OwnedGoodsOrServicesTable, on_delete=models.CASCADE, null=True)
 
+
 # Tabel Venituri salarii - row number
 class OwnedIncomeFromSalariesTable(models.Model):
     __full_name = DECLARATION_TABLES['salaries']
     declaration = models.ForeignKey(Declaration, on_delete=models.CASCADE, null=True)
     count = models.IntegerField(_("The number of rows"))
 
+
 # Tabel Venituri salarii - actual row information
 class OwnedIncomeFromSalariesTableEntry(CommonIncomeFields):
     table = models.ForeignKey(OwnedIncomeFromSalariesTable, on_delete=models.CASCADE, null=True)
-    
+
 
 # Tabel Venituri activitati independente - row number
 class OwnedIncomeFromIndependentActivitiesTable(models.Model):
@@ -272,7 +274,7 @@ class OwnedIncomeFromIndependentActivitiesTable(models.Model):
 # Tabel Venituri activitati independente - actual row information
 class OwnedIncomeFromIndependentActivitiesTableEntry(CommonIncomeFields):
     table = models.ForeignKey(OwnedIncomeFromIndependentActivitiesTable, on_delete=models.CASCADE, null=True)
-    
+
 # Tabel Venituri cedarea folosintei bunurilor - row number
 class OwnedIncomeFromDeferredUseOfGoodsTable(models.Model):
     __full_name = DECLARATION_TABLES['deferred_use']
@@ -313,7 +315,7 @@ class OwnedIncomeFromAgriculturalActivitiesTable(models.Model):
 # Tabel Venituri activitati agricole - actual row information
 class OwnedIncomeFromAgriculturalActivitiesTableEntry(CommonIncomeFields):
     table = models.ForeignKey(OwnedIncomeFromAgriculturalActivitiesTable, on_delete=models.CASCADE, null=True)
-    
+
 # Tabel Venituri premii jocuri noroc - row numbers
 class OwnedIncomeFromGamblingTable(models.Model):
     __full_name = DECLARATION_TABLES['gambling']
