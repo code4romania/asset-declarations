@@ -173,7 +173,6 @@ class TranscribeOwnedIncomeFromSalariesRowEntry(forms.Form):
     service = forms.CharField(label="Care e serviciul prestat?")
     annual_income = forms.FloatField(label="Care este venitul persoanei?")
     currency = forms.ChoiceField(label="Care este valuta in care e incasat venitul?", choices=Currency.return_as_iterable())
-    position = forms.ChoiceField(label="Care a fost functia detinuta?", choices=Position.return_as_iterable())
 
 
 class TranscribeIndependentActivities(forms.Form):
