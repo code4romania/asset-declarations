@@ -312,7 +312,6 @@ class TaskOwnedIncomeFromSalariesRowEntry(DigitalizationTask):
             service=verified_data['service'],
             annual_income=verified_data['annual_income'],
             currency=verified_data['currency'],
-            position=verified_data['position']
         )
 
 
