@@ -302,11 +302,34 @@ class TaskOwnedIncomeFromIndependentActivitiesTable(CountTableRowsTask):
     child_class = None
 
 
+class TaskOwnedIncomeFromGamblingRowEntry(DigitalizationTask):
+    task_form = forms.TranscribeOwnedIncomeFromSalariesRowEntry
+    template_name = "tasks/owned_income_from_gambling.html"
+
+    def save_verified_data(self, verified_data):
+        owner_person, created = models.Person.objects.get_or_create(
+            name=verified_data['name'],
+            surname=verified_data['surname']
+        )
+
+        owned_income_from_gambling, created = models.OwnedIncomeFromSalariesTableEntry.objects.get_or_create(
+            person=owner_person,
+            county=verified_data['county'],
+            city=verified_data['city'],
+            commune=verified_data['commune'],
+            address=verified_data['address'],
+            holder_relationship=verified_data['holder_relationship'],
+            source_of_goods=verified_data['source_of_goods'],
+            service=verified_data['service'],
+            annual_income=verified_data['annual_income'],
+            currency=verified_data['currency'],
+        )
+
+
 class TaskOwnedIncomeFromGamblingTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromGamblingTable
     storage_model = models.OwnedIncomeFromGamblingTable
-    # TODO - add child_class
-    child_class = None
+    child_class = TaskOwnedIncomeFromGamblingRowEntry
 
 
 class TaskOwnedIncomeFromSalariesRowEntry(DigitalizationTask):
@@ -354,7 +377,6 @@ class TaskOwnedIncomeFromInvestmentsRowEntry(DigitalizationTask):
     def save_verified_data(self, verified_data):
         income_declaration, created = models.OwnedIncomeFromInvestmentsTableEntry.objects.get_or_create(
             holder_relationship=verified_data['holder_relationship'],
-            source_of_goods=verified_data['source'],
             county=verified_data['county'],
             city=verified_data['city'],
             commune=verified_data['commune'],
