@@ -191,7 +191,6 @@ class TranscribeOwnedIncomeFromInvestmentsRowEntry(forms.Form):
     holder_relationship = forms.ChoiceField(label="Cine este beneficiarul venitului din investitii?", choices=HolderRelationship.return_as_iterable())
     surname = forms.CharField(label="Care e numele persoanei?")
     name = forms.CharField(label="Care e prenumele persoanei?")
-    source = forms.CharField(label="Care este sursa venitului?")
     county = forms.ChoiceField(label="Care este judetul de unde provine sursa de venit?", choices=Counties.return_counties())
     city = forms.CharField(label="Care este localitatea de unde provine sursa de venit?")
     commune = forms.CharField(label="Care este comuna de unde provine sursa de venit?")
