@@ -179,8 +179,22 @@ class TranscribeIndependentActivities(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['independent_activities']))
 
 
-class TranscribeOwnedIncomeFromDeferredUseOfGoods(forms.Form):
+class TranscribeOwnedIncomeFromDeferredUseOfGoodsTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['deferred_use']))
+
+
+class TranscribeOwnedIncomeFromDeferredUseOfGoodsRowEntry(forms.Form):
+    surname = forms.CharField(label="Care e numele persoanei care a realizat venitul?")
+    name = forms.CharField(label="Care e prenumele persoanei care a realizat venitul?")
+    county = forms.ChoiceField(label="Care este judetul de domiciliu?", choices=Counties.return_counties())
+    city = forms.CharField(label="Care este localitatea de domiciliu?")
+    commune = forms.CharField(label="Care este comuna de domiciliu?")
+    address = forms.CharField(label="Care este adresa de domiciliu?")
+    holder_relationship = forms.ChoiceField(label="Cine este beneficiarul venitului din cedarea folosirii bunurilor?", choices=HolderRelationship.return_as_iterable())
+    source_of_goods = forms.CharField(label="Care este sursa de venit?")
+    service = forms.CharField(label="Care e serviciul prestat?")
+    annual_income = forms.FloatField(label="Care este venitul persoanei?")
+    currency = forms.ChoiceField(label="Care este valuta in care e incasat venitul?", choices=Currency.return_as_iterable())
 
 
 class TranscribeOwnedIncomeFromInvestmentsTable(forms.Form):
@@ -244,13 +258,13 @@ class TranscribeOwnedIncomeFromGamblingTable(forms.Form):
 
 
 class TranscribeOwnedIncomeFromGamblingRowEntry(forms.Form):
-    surname = forms.CharField(label="Care e numele persoanei?")
-    name = forms.CharField(label="Care e prenumele persoanei?")
+    surname = forms.CharField(label="Care e numele persoanei care a realizat venitul?")
+    name = forms.CharField(label="Care e prenumele persoanei care a realizat venitul?")
     county = forms.ChoiceField(label="Care este judetul de domiciliu?", choices=Counties.return_counties())
     city = forms.CharField(label="Care este localitatea de domiciliu?")
     commune = forms.CharField(label="Care este comuna de domiciliu?")
     address = forms.CharField(label="Care este adresa de domiciliu?")
-    holder_relationship = forms.ChoiceField(label="Cine este beneficiarul salariului?", choices=HolderRelationship.return_as_iterable())
+    holder_relationship = forms.ChoiceField(label="Care este relatia cu persoana care a realizat venitul?", choices=HolderRelationship.return_as_iterable())
     source_of_goods = forms.CharField(label="Care este sursa de venit?")
     service = forms.CharField(label="Care e serviciul prestat?")
     annual_income = forms.FloatField(label="Care este venitul persoanei?")
