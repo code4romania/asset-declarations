@@ -20,6 +20,7 @@ from project_template.datamodels.institution import Institution
 from project_template.datamodels.mobile_goods_type import MobileGoodsType
 from project_template.datamodels.position import Position
 from project_template.datamodels.real_estate_type import RealEstateType
+from project_template.datamodels.building_type import BuildingType
 
 start_date = 1980
 end_date = datetime.datetime.now().year
@@ -59,6 +60,19 @@ class TranscribeOwnedLandSingleRowEntry(forms.Form):
 
 class TranscribeOwnedBuildingsTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}".format(constants.DECLARATION_TABLES['buildings']))
+
+
+class TranscribeOwnedBuildingsTableRowEntry(forms.Form):
+    county = forms.ChoiceField(label="Care este judetul in care se gaseste cladirea detinuta?", choices=Counties.return_counties())
+    city = forms.CharField(label="Care este localitatea in care se gaseste cladirea detinuta?")
+    commune = forms.CharField(label="Care este comuna in care se gaseste cladirea detinuta?")
+    building_type = forms.ChoiceField(label="Care este categoria de teren?", choices=BuildingType.return_as_iterable())
+    ownership_start_year = forms.ChoiceField(label="Care este anul cand cladirea a fost dobandita?", choices=YEAR_DICT_CHOICES)
+    attainment_type = forms.ChoiceField(label="Care este modul in care cladirea a fost dobandita?", choices=AttainmentType.return_as_iterable())
+    surface_area = forms.FloatField(label="Care este suprafata cladirii? (mp)")
+    percent_of_ownership = forms.IntegerField(label="Care este cota parte din acesta cladirea? (in procente)", max_value=100, min_value=0)
+    owner_surname = forms.CharField(label="Care este numele titularului?")
+    owner_name = forms.CharField(label="Care este prenumele titularului")
 
 
 class TranscribeOwnedAutomobile(forms.Form):
