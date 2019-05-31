@@ -189,17 +189,25 @@ class TaskOwnedIncomeFromPensionsTable(CountTableRowsTask):
 
 class TaskOwnedGoodsOrServicesRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedGoodsOrServicesRowEntry
-    template_name = "tasks/owned_gifts_spouse.html"
+    template_name = "tasks/owned_goods_or_services.html"
 
     def save_verified_data(self, verified_data):
-        owned_gifts_spouse, created = models.OwnedGoodsOrServicesTable.objects.get_or_create(
-            holder_relationship=verified_data['holder_relationship'],
-            source_of_goods=verified_data['income_source'],
+        owner_person, created = models.Person.objects.get_or_create(
+            name=verified_data['name'],
+            surname=verified_data['surname']
+        )
+
+        owned_goods_or_services, created = models.OwnedGoodsOrServicesTableEntry.objects.get_or_create(
+            person=owner_person,
             county=verified_data['county'],
             city=verified_data['city'],
-            service=verified_data['goods_name'],
+            commune=verified_data['commune'],
+            address=verified_data['address'],
+            holder_relationship=verified_data['holder_relationship'],
+            source_of_goods=verified_data['source_of_goods'],
+            service=verified_data['service'],
             annual_income=verified_data['annual_income'],
-            currency=verified_data['currency']
+            currency=verified_data['currency'],
         )
 
 
