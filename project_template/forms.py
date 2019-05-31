@@ -159,14 +159,14 @@ class TranscribeOwnedGoodsOrServicesTable(forms.Form):
 
 class TranscribeOwnedGoodsOrServicesRowEntry(forms.Form):
     holder_relationship = forms.ChoiceField(label="Cine este beneficiarul pensiei?", choices=HolderRelationship.return_as_iterable())
-    holder_surname = forms.CharField(label="Care este numele persoanei?")
-    holder_name = forms.CharField(label="Care este prenumele persoanei")
-    income_source = forms.CharField(label="Care este numele sursei de venit?")
+    surname = forms.CharField(label="Care este numele titularului?")
+    name = forms.CharField(label="Care este prenumele titularului")
+    source_of_goods = forms.CharField(label="Care este numele sursei de venit?")
     county = forms.ChoiceField(label="Care este judetul de domiciliu?", choices=Counties.return_counties())
-    # TODO tudoramariei change to ChoiceField with choices=cities of county
     city = forms.CharField(label="Care este localitatea de domiciliu?")
     commune = forms.CharField(label="Care este comuna de domiciliu?")
-    goods_name = forms.CharField(label="Care este fost serviciul prestat?")
+    address = forms.CharField(label="Care este adresa de domiciliu?")
+    service = forms.CharField(label="Care este fost serviciul prestat?")
     annual_income = forms.FloatField(label="Care este venitul persoanei?")
     currency = forms.ChoiceField(label="Care este valuta in care e incasat venitul?", choices=Currency.return_as_iterable())
 
