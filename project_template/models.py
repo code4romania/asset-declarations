@@ -307,6 +307,7 @@ class OwnedIncomeFromPensionsTable(models.Model):
 # Tabel Venituri pensii - actual row information
 class OwnedIncomeFromPensionsTableEntry(CommonIncomeFields):
     table = models.ForeignKey(OwnedIncomeFromPensionsTable, on_delete=models.CASCADE, null=True)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)
     ex_position = models.CharField("Pozitia detinuta", max_length=128)
 
 # Tabel Venituri activitati agricole - row number

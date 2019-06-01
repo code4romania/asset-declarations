@@ -172,6 +172,7 @@ class TaskOwnedIncomeFromPensionsRowEntry(DigitalizationTask):
             name=verified_data['beneficiary_name']
         )
         owned_income_from_pensions, created = models.OwnedIncomeFromPensionsTableEntry.objects.get_or_create(
+            person=owner_person,
             holder_relationship=verified_data['beneficiary_relationship'],
             source_of_goods=verified_data['income_source'],
             county=verified_data['county'],
@@ -244,7 +245,7 @@ class TaskOwnedIncomeFromOtherSourcesRowEntry(DigitalizationTask):
             currency = verified_data['currency'],
             )
 
-@register()           
+@register()
 class TaskOwnedIncomeFromOtherSourcesTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromOtherSourcesTable
     storage_model = models.OwnedIncomeFromOtherSourcesTable
