@@ -112,6 +112,8 @@ class OwnedLandTableEntry(CommonInfo):
     acquisition_year = models.IntegerField("Anul dobandirii")
     surface = models.FloatField("Suprafata mp")
     share_ratio = models.DecimalField("Cota-parte", max_digits=5, decimal_places=2)
+    taxable_value = models.FloatField('Valoarea de impozitare', blank=True)
+    taxable_value_currency = models.CharField("Valuta", max_length=16, choices=Currency.return_as_iterable())
     attainment_type = models.CharField("Modul de dobandire", max_length=32, choices=AttainmentType.return_as_iterable(), blank=True)
     observations = models.CharField("Observatii", max_length=256, blank=True)
 
@@ -129,8 +131,9 @@ class OwnedBuildingsTableEntry(CommonInfo):
     acquisition_year = models.IntegerField("Anul dobandirii")
     surface = models.FloatField("Suprafata", blank=True)
     share_ratio = models.DecimalField("Cota-parte", max_digits=3, decimal_places=2, blank=True)
-    attainment_type = models.CharField("Modul de dobandire", max_length=32,
-                                       choices=AttainmentType.return_as_iterable(), blank=True)
+    taxable_value = models.FloatField('Valoarea de impozitare', blank=True)
+    taxable_value_currency = models.CharField("Valuta", max_length=16, choices=Currency.return_as_iterable())
+    attainment_type = models.CharField("Modul de dobandire", max_length=32, choices=AttainmentType.return_as_iterable(), blank=True)
     observations = models.CharField("Observatii", max_length=256, blank=True)
 
 # Tabel Bunuri Mobile - row numbers
