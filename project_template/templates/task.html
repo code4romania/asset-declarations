@@ -37,6 +37,7 @@
                         </div>
                     </div>
                     {% endfor %}
+
                     {% if form.errors %}
                     <!-- Error messaging -->
                     <div id="errors">
@@ -48,11 +49,11 @@
                                     {% if field.errors %}
                                         <li>{{ field.label }}: {{ field.errors|striptags }}</li>
                                     {% endif %}
-				                    {% endfor %}
-                                </ul>
-                            </div>
+                                {% endfor %}
+                            </ul>
                         </div>
-                        <!-- /Error messaging -->
+                    </div>
+                    <!-- /Error messaging -->
                     {% endif %}
                 </div>
             </div>
