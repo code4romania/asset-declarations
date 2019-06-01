@@ -341,3 +341,4 @@ class OwnedIncomeFromOtherSourcesTable(models.Model):
 # Tabel Venituri din alte surse - actual row information
 class OwnedIncomeFromOtherSourcesTableEntry(CommonIncomeFields):
     table = models.ForeignKey(OwnedIncomeFromOtherSourcesTable, on_delete=models.CASCADE, null=True)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)

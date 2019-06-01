@@ -38,7 +38,8 @@ class TaskOwnedLandRowEntry(DigitalizationTask):
     def save_verified_data(self, verified_data):
         owner_person, created = models.Person.objects.get_or_create(
             name=verified_data['owner_name'],
-            surname=verified_data['owner_surname'])
+            surname=verified_data['owner_surname']
+        )
 
         owned_land, created = models.OwnedLandTableEntry.objects.get_or_create(
             coowner=owner_person,
@@ -110,7 +111,8 @@ class TaskOwnedIncomeFromAgriculturalActivitiesRowEntry(DigitalizationTask):
     def save_verified_data(self, verified_data):
         owner_person, created = models.Person.objects.get_or_create(
             name=verified_data['name'],
-            surname=verified_data['surname'])
+            surname=verified_data['surname']
+        )
 
         income_declaration, created = models.OwnedIncomeFromAgriculturalActivitiesTableEntry.objects.get_or_create(
             person=owner_person,
@@ -175,6 +177,7 @@ class TaskOwnedIncomeFromPensionsRowEntry(DigitalizationTask):
             surname=verified_data['beneficiary_surname'],
             name=verified_data['beneficiary_name']
         )
+
         owned_income_from_pensions, created = models.OwnedIncomeFromPensionsTableEntry.objects.get_or_create(
             person=owner_person,
             holder_relationship=verified_data['beneficiary_relationship'],
@@ -236,18 +239,22 @@ class TaskOwnedIncomeFromOtherSourcesRowEntry(DigitalizationTask):
     template_name = "tasks/owned_income_other_sources.html"
 
     def save_verified_data(self, verified_data):
-        owned_income_other_sources, created = models.OwnedIncomeFromOtherSourcesTable.objects.get_or_create(
-            holder_relationship = verified_data['holder_relationship'],
-            surname=verified_data['surname'],
+        owner_person, created = models.Person.objects.get_or_create(
             name=verified_data['name'],
-            source_of_goods = verified_data['source_of_goods'],
-            county = verified_data['county'],
-            city = verified_data['city'],
-            commune = verified_data['commune'],
-            address = verified_data['address'],
-            service = verified_data['service'],
-            annual_income = verified_data['annual_income'],
-            currency = verified_data['currency'],
+            surname=verified_data['surname']
+        )
+
+        owned_income_other_sources, created = models.OwnedIncomeFromOtherSourcesTableEntry.objects.get_or_create(
+            person=owner_person,
+            holder_relationship=verified_data['holder_relationship'],
+            source_of_goods=verified_data['source_of_goods'],
+            county=verified_data['county'],
+            city=verified_data['city'],
+            commune=verified_data['commune'],
+            address=verified_data['address'],
+            service=verified_data['service'],
+            annual_income=verified_data['annual_income'],
+            currency=verified_data['currency'],
             )
 
 @register()
