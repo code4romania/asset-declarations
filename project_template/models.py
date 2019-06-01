@@ -251,9 +251,10 @@ class OwnedGoodsOrServicesTable(models.Model):
     declaration = models.ForeignKey(Declaration, on_delete=models.CASCADE, null=True)
     count = models.IntegerField("The number of rows")
 
-# Tabel Cadouri Servicii - actual row number
+# Tabel Cadouri Servicii - actual row information
 class OwnedGoodsOrServicesTableEntry(CommonIncomeFields):
     table = models.ForeignKey(OwnedGoodsOrServicesTable, on_delete=models.CASCADE, null=True)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)
 
 
 # Tabel Venituri salarii - row number
