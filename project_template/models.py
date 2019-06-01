@@ -297,6 +297,7 @@ class OwnedIncomeFromInvestmentsTable(models.Model):
 # Tabel Venituri investitii - actual row information
 class OwnedIncomeFromInvestmentsTableEntry(CommonIncomeFields):
     table = models.ForeignKey(OwnedIncomeFromInvestmentsTable, on_delete=models.CASCADE, null=True)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)
 
 # Tabel Venituri pensii - row number
 class OwnedIncomeFromPensionsTable(models.Model):
