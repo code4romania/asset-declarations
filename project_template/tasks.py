@@ -108,16 +108,20 @@ class TaskOwnedIncomeFromAgriculturalActivitiesRowEntry(DigitalizationTask):
     template_name = "tasks/agricultural_activity.html"
 
     def save_verified_data(self, verified_data):
+        owner_person, created = models.Person.objects.get_or_create(
+            name=verified_data['name'],
+            surname=verified_data['surname'])
 
         income_declaration, created = models.OwnedIncomeFromAgriculturalActivitiesTableEntry.objects.get_or_create(
-            name_source_of_goods=verified_data['source'],
+            person=owner_person,
+            source_of_goods=verified_data['source'],
             holder_relationship=verified_data['holder_relationship'],
             county=verified_data['county'],
             city=verified_data['city'],
             commune=verified_data['commune'],
-            goods_name=verified_data['offered_service'],
+            service=verified_data['offered_service'],
             annual_income=verified_data['income_amount'],
-            annual_income_currency=verified_data['currency']
+            currency=verified_data['currency']
         )
 
 
