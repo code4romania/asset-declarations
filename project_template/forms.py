@@ -31,9 +31,24 @@ FIRST_2_TYPES = 2
 
 
 class ValidationChecks:
+    """
+    Reusable validation decorators for multiple forms
+    """
 
     @staticmethod
     def check_city_and_commune(method):
+        """
+        Dectorator for checking the field city and field commune of django.form to be mutually exclusive completed
+        Calls super().clean() method and inspects the values
+
+        Example:
+            @ValidationChecks.check_city_and_commune
+            def clean(self):
+                pass
+
+        :param method: clean method of form class
+        :return: decorated method
+        """
 
         def new_method(self, *args, **kwargs):
             cleaned_data = getattr(super(type(self), self), method.__name__)(*args, **kwargs)
