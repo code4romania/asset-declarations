@@ -52,9 +52,11 @@ class TranscribeOwnedLandSingleRowEntry(forms.Form):
     commune = forms.CharField(label="Care este comuna in care se gaseste terenul detinut?")
     real_estate_type = forms.ChoiceField(label="Care este categoria de teren?", choices=RealEstateType.return_as_iterable())
     ownership_start_year = forms.ChoiceField(label="Care este anul cand terenul a fost dobandit?", choices = YEAR_DICT_CHOICES)
-    attainment_type = forms.ChoiceField(label="Care este modul in care terenul a fost dobandit?", choices=AttainmentType.return_as_iterable())
     surface_area = forms.FloatField(label="Care este suprafata terenului? (mp)")
     percent_of_ownership = forms.IntegerField(label="Care este cota parte din acest teren? (in procente)", max_value=100, min_value=0)
+    taxable_value = forms.FloatField(label="Care este valoarea impozabilă a terenului? (dacă există)", required=False)
+    taxable_value_currency = forms.ChoiceField(label="Care este valuta in care este exprimata valoarea impozabilă a terenului?", choices=Currency.return_as_iterable())
+    attainment_type = forms.ChoiceField(label="Care este modul in care terenul a fost dobandit?", choices=AttainmentType.return_as_iterable())
     owner_surname = forms.CharField(label="Care este numele proprietarului?")
     owner_name = forms.CharField(label="Care este prenumele proprietarului")
 
@@ -68,9 +70,11 @@ class TranscribeOwnedBuildingsTableRowEntry(forms.Form):
     commune = forms.CharField(label="Care este comuna in care se gaseste cladirea detinuta?")
     building_type = forms.ChoiceField(label="Care este categoria de teren?", choices=BuildingType.return_as_iterable())
     ownership_start_year = forms.ChoiceField(label="Care este anul cand cladirea a fost dobandita?", choices=YEAR_DICT_CHOICES)
-    attainment_type = forms.ChoiceField(label="Care este modul in care cladirea a fost dobandita?", choices=AttainmentType.return_as_iterable())
     surface_area = forms.FloatField(label="Care este suprafata cladirii? (mp)")
-    percent_of_ownership = forms.IntegerField(label="Care este cota parte din acesta cladirea? (in procente)", max_value=100, min_value=0)
+    percent_of_ownership = forms.IntegerField(label="Care este cota parte din acestă clădire? (în procente)", max_value=100, min_value=0)
+    taxable_value = forms.FloatField(label="Care este valoarea impozabilă a clădirii? (dacă există)", required=False)
+    taxable_value_currency = forms.ChoiceField(label="Care este valuta in care este exprimata valoarea impozabilă a clădirii?", choices=Currency.return_as_iterable())
+    attainment_type = forms.ChoiceField(label="Care este modul in care cladirea a fost dobandita?", choices=AttainmentType.return_as_iterable())
     owner_surname = forms.CharField(label="Care este numele titularului?")
     owner_name = forms.CharField(label="Care este prenumele titularului")
 
@@ -289,7 +293,7 @@ class TranscribeOwnedIncomeFromOtherSourcesTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['other_sources']))
 
 
-class TranscribeOwnedIncomeFromOtherSourcesRowEntry(forms.Form): 
+class TranscribeOwnedIncomeFromOtherSourcesRowEntry(forms.Form):
     holder_relationship = forms.ChoiceField(label="Cine a realizat venitul?", choices=HolderRelationship.return_as_iterable())
     surname = forms.CharField(label="Care este numele celui care a realizat venitul?")
     name = forms.CharField(label="Care este prenumele celui care a realizat venitul?")

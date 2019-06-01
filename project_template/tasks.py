@@ -47,9 +47,11 @@ class TaskOwnedLandRowEntry(DigitalizationTask):
             commune=verified_data['commune'],
             category=verified_data['real_estate_type'],
             acquisition_year=verified_data['ownership_start_year'],
-            attainment_type=verified_data['attainment_type'],
             surface=verified_data['surface_area'],
             share_ratio=verified_data['percent_of_ownership'],
+            taxable_value=verified_data['taxable_value'],
+            taxable_value_currency=verified_data['taxable_value_currency'],
+            attainment_type=verified_data['attainment_type'],
             observations=verified_data.get('observations', '')
         )
 
@@ -239,7 +241,7 @@ class TaskOwnedIncomeFromOtherSourcesRowEntry(DigitalizationTask):
             address = verified_data['address'],
             service = verified_data['service'],
             annual_income = verified_data['annual_income'],
-            currency = verified_data['currency'],    
+            currency = verified_data['currency'],
             )
 
 @register()           
@@ -395,7 +397,7 @@ class TaskOwnedIncomeFromSalariesTable(CountTableRowsTask):
 
 class TaskOwnedBuildingsRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedBuildingsTableRowEntry
-    template_name = "tasks/owned_buildings_task.html.html"
+    template_name = "tasks/owned_buildings_task.html"
 
     def save_verified_data(self, verified_data):
         owner_person, created = models.Person.objects.get_or_create(
@@ -408,12 +410,14 @@ class TaskOwnedBuildingsRowEntry(DigitalizationTask):
             county=verified_data['county'],
             city=verified_data['city'],
             commune=verified_data['commune'],
-            address=verified_data['address'],
-            holder_relationship=verified_data['holder_relationship'],
-            source_of_goods=verified_data['source_of_goods'],
-            service=verified_data['service'],
-            annual_income=verified_data['annual_income'],
-            currency=verified_data['currency'],
+            category=verified_data['building_type'],
+            acquisition_year=verified_data['ownership_start_year'],
+            surface=verified_data['surface_area'],
+            share_ratio=verified_data['percent_of_ownership'],
+            taxable_value=verified_data['taxable_value'],
+            taxable_value_currency=verified_data['taxable_value_currency'],
+            attainment_type=verified_data['attainment_type'],
+            observations=verified_data.get('observations', '')
         )
 
 
