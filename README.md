@@ -66,6 +66,8 @@ This remains currently undecided.
 Installation process
 * Clone this repo: `git clone git@github.com:code4romania/catpol-declaratii.git`
 * Open the directory where you have cloned the repo (`cd catpol-declaratii`)
+* Create a virtual environment named "venv": `python3 -m venv venv`
+* Activate the virtual environment: `source venv/bin/activate`
 * `pip install -r requirements-dev.txt` 
 * `export DJANGO_SETTINGS_MODULE=project_template.settings.dev`
 * `python manage.py migrate`
