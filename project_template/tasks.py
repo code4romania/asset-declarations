@@ -7,7 +7,6 @@ import project_template.models as models
 import project_template.forms as forms
 from project_template.task_templates import DigitalizationTask, CountTableRowsTask
 
-
 class TaskGetInitialInformation(DigitalizationTask):
     task_form = forms.TranscribeInitialInformation
     template_name = 'tasks/general_information_task.html'
@@ -52,16 +51,15 @@ class TaskOwnedLandRowEntry(DigitalizationTask):
             taxable_value=verified_data['taxable_value'],
             taxable_value_currency=verified_data['taxable_value_currency'],
             attainment_type=verified_data['attainment_type'],
-            observations=verified_data.get('observations', '')
+            observations=verified_data.get('observations', ''),
+            row_number=self.row_number if hasattr(self, 'row_number') else -1
         )
 
 
-@register()
 class TaskOwnedLandTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedLandTable
     storage_model = models.OwnedLandTable
     child_class = TaskOwnedLandRowEntry
-
 
 class TaskOwnedAutomobileRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedAutomobileSingleRowEntry
@@ -74,14 +72,13 @@ class TaskOwnedAutomobileRowEntry(DigitalizationTask):
             no_owned=verified_data['num_of_automobiles'],
             fabrication_year=verified_data['year_of_manufacture'],
             attainment_type=verified_data['attainment_type'],
+            row_number=self.row_number if hasattr(self, 'row_number') else -1
         )
-
 
 class TaskOwnedAutomobileTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedAutomobile
     storage_model = models.OwnedAutomobileTable
     child_class = TaskOwnedAutomobileRowEntry
-
 
 class TaskOwnedBankAccountsRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedBankAccountsRowEntry
@@ -94,14 +91,13 @@ class TaskOwnedBankAccountsRowEntry(DigitalizationTask):
             currency=verified_data['currency'],
             opening_year=verified_data['account_start_date'],
             account_balance=verified_data['balance'],
+            row_number=self.row_number if hasattr(self, 'row_number') else -1
         )
-
 
 class TaskOwnedBankAccountsTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedBankAccountsTable
     storage_model = models.OwnedBankAccountsTable
     child_class = TaskOwnedBankAccountsRowEntry
-
 
 class TaskOwnedIncomeFromAgriculturalActivitiesRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedIncomeFromAgriculturalActivitiesRowEntry
@@ -117,15 +113,14 @@ class TaskOwnedIncomeFromAgriculturalActivitiesRowEntry(DigitalizationTask):
             commune=verified_data['commune'],
             goods_name=verified_data['offered_service'],
             annual_income=verified_data['income_amount'],
-            annual_income_currency=verified_data['currency']
+            annual_income_currency=verified_data['currency'],
+            row_number=self.row_number if hasattr(self, 'row_number') else -1
         )
-
 
 class TaskOwnedIncomeFromAgriculturalActivitiesTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromAgriculturalActivitiesTable
     storage_model = models.OwnedIncomeFromAgriculturalActivitiesTable
     child_class = TaskOwnedIncomeFromAgriculturalActivitiesRowEntry
-
 
 class TaskOwnedDebtsRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedDebtsSingleRowEntry
@@ -143,7 +138,8 @@ class TaskOwnedDebtsRowEntry(DigitalizationTask):
                 acquirement_year=verified_data['loan_start_year'],
                 due_date=verified_data['loan_maturity'],
                 value=verified_data['loan_amount'],
-                currency=verified_data['currency']
+                currency=verified_data['currency'],
+                row_number=self.row_number if hasattr(self, 'row_number') else -1
             )
         elif verified_data['institution']:
             owned_debts, created = models.OwnedDebtsTableEntry.objects.get_or_create(
@@ -152,15 +148,14 @@ class TaskOwnedDebtsRowEntry(DigitalizationTask):
                 acquirement_year=verified_data['loan_start_year'],
                 due_date=verified_data['loan_maturity'],
                 value=verified_data['loan_amount'],
-                currency=verified_data['currency']
+                currency=verified_data['currency'],
+                row_number=self.row_number if hasattr(self, 'row_number') else -1
                 )
-
 
 class TaskOwnedDebtsTable(CountTableRowsTask):
     task_form = forms.TranscribeDebtsTableRowsCount
     storage_model = models.OwnedDebtsTable
     child_class = TaskOwnedDebtsRowEntry
-
 
 class TaskOwnedIncomeFromPensionsRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedIncomeFromPensionsSingleRowEntry
@@ -180,14 +175,13 @@ class TaskOwnedIncomeFromPensionsRowEntry(DigitalizationTask):
             service=verified_data['offered_service'],
             ex_position=verified_data['position'],
             annual_income=verified_data['income_amount'],
-            currency=verified_data['currency'])
-
+            currency=verified_data['currency'],
+            row_number=self.row_number if hasattr(self, 'row_number') else -1)
 
 class TaskOwnedIncomeFromPensionsTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromPensionsTable
     storage_model = models.OwnedIncomeFromPensionsTable
     child_class = TaskOwnedIncomeFromPensionsRowEntry
-
 
 class TaskOwnedGoodsOrServicesRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedGoodsOrServicesRowEntry
@@ -210,14 +204,13 @@ class TaskOwnedGoodsOrServicesRowEntry(DigitalizationTask):
             service=verified_data['service'],
             annual_income=verified_data['annual_income'],
             currency=verified_data['currency'],
+            row_number=self.row_number if hasattr(self, 'row_number') else -1
         )
-
 
 class TaskOwnedGoodsOrServicesPerSpouseTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedGoodsOrServicesTable
     storage_model = models.OwnedGoodsOrServicesTable
     child_class = TaskOwnedGoodsOrServicesRowEntry
-
 
 class TaskTranscribeOwnedInvestmentsTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedInvestmentsTable
@@ -242,14 +235,13 @@ class TaskOwnedIncomeFromOtherSourcesRowEntry(DigitalizationTask):
             service = verified_data['service'],
             annual_income = verified_data['annual_income'],
             currency = verified_data['currency'],
+            row_number=self.row_number if hasattr(self, 'row_number') else -1
             )
 
-@register()           
 class TaskOwnedIncomeFromOtherSourcesTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromOtherSourcesTable
     storage_model = models.OwnedIncomeFromOtherSourcesTable
     child_class = TaskOwnedIncomeFromOtherSourcesRowEntry
-
 
 class TaskOwnedJewelryRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedJewelrySingleRowEntry
@@ -260,14 +252,13 @@ class TaskOwnedJewelryRowEntry(DigitalizationTask):
             summary_description=verified_data['description'],
             acquisition_year=verified_data['ownership_start_year'],
             goods_value=verified_data['estimated_value'],
-            currency=verified_data['currency'])
-
+            currency=verified_data['currency'],
+            row_number=self.row_number if hasattr(self, 'row_number') else -1)
 
 class TaskOwnedJewelryTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedJewelry
     storage_model = models.OwnedJewelryTable
     child_class = TaskOwnedJewelryRowEntry
-
 
 class TaskExtraValuableRowEntry(DigitalizationTask):
     task_form = forms.TranscribeExtraValuableRowEntry
@@ -288,15 +279,14 @@ class TaskExtraValuableRowEntry(DigitalizationTask):
             estrangement_date=verified_data['estranged_date'],
             goods_separation_type=verified_data['goods_separation_type'],
             value=verified_data['estimated_value'],
-            currency=verified_data['currency']
+            currency=verified_data['currency'],
+            row_number=self.row_number if hasattr(self, 'row_number') else -1
         )
-
 
 class TaskExtraValuableTable(CountTableRowsTask):
     task_form = forms.TranscribeExtraValuable
     storage_model = models.OwnedExtraValuableTable
     child_class = TaskExtraValuableRowEntry
-
 
 class TaskOwnedIncomeFromDeferredUseOfGoodsRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedIncomeFromDeferredUseOfGoodsRowEntry
@@ -319,6 +309,7 @@ class TaskOwnedIncomeFromDeferredUseOfGoodsRowEntry(DigitalizationTask):
             service=verified_data['service'],
             annual_income=verified_data['annual_income'],
             currency=verified_data['currency'],
+            row_number=self.row_number if hasattr(self, 'row_number') else -1
         )
 
 
@@ -327,13 +318,11 @@ class TaskOwnedIncomeFromDeferredUseOfGoodsTable(CountTableRowsTask):
     storage_model = models.OwnedIncomeFromDeferredUseOfGoodsTable
     child_class = TaskOwnedIncomeFromDeferredUseOfGoodsRowEntry
 
-
 class TaskOwnedIncomeFromIndependentActivitiesTable(CountTableRowsTask):
     task_form = forms.TranscribeIndependentActivities
     storage_model = models.OwnedIncomeFromIndependentActivitiesTable
     # TODO - add child_class
     child_class = None
-
 
 class TaskOwnedIncomeFromGamblingRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedIncomeFromGamblingRowEntry
@@ -356,14 +345,13 @@ class TaskOwnedIncomeFromGamblingRowEntry(DigitalizationTask):
             service=verified_data['service'],
             annual_income=verified_data['annual_income'],
             currency=verified_data['currency'],
+            row_number=self.row_number if hasattr(self, 'row_number') else -1
         )
-
 
 class TaskOwnedIncomeFromGamblingTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromGamblingTable
     storage_model = models.OwnedIncomeFromGamblingTable
     child_class = TaskOwnedIncomeFromGamblingRowEntry
-
 
 class TaskOwnedIncomeFromSalariesRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedIncomeFromSalariesRowEntry
@@ -386,14 +374,13 @@ class TaskOwnedIncomeFromSalariesRowEntry(DigitalizationTask):
             service=verified_data['service'],
             annual_income=verified_data['annual_income'],
             currency=verified_data['currency'],
+            row_number=self.row_number if hasattr(self, 'row_number') else -1
         )
-
 
 class TaskOwnedIncomeFromSalariesTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromSalaries
     storage_model = models.OwnedIncomeFromSalariesTable
     child_class = TaskOwnedIncomeFromSalariesRowEntry
-
 
 class TaskOwnedBuildingsRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedBuildingsTableRowEntry
@@ -417,7 +404,8 @@ class TaskOwnedBuildingsRowEntry(DigitalizationTask):
             taxable_value=verified_data['taxable_value'],
             taxable_value_currency=verified_data['taxable_value_currency'],
             attainment_type=verified_data['attainment_type'],
-            observations=verified_data.get('observations', '')
+            observations=verified_data.get('observations', ''),
+            row_number=self.row_number if hasattr(self, 'row_number') else -1
         )
 
 
@@ -427,6 +415,7 @@ class TaskOwnedBuildingsTable(CountTableRowsTask):
     child_class = TaskOwnedBuildingsRowEntry
 
 
+@register()
 class TaskOwnedIncomeFromInvestmentsRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedIncomeFromInvestmentsRowEntry
     template_name = "tasks/owned_investments.html"
@@ -440,9 +429,9 @@ class TaskOwnedIncomeFromInvestmentsRowEntry(DigitalizationTask):
             service=verified_data['service'],
             source_of_goods=verified_data['source_of_goods'],
             annual_income=verified_data['income_amount'],
-            currency=verified_data['currency']
+            currency=verified_data['currency'],
+            row_number=self.row_number if hasattr(self, 'row_number') else -1
         )
-
 
 @register()
 class TaskOwnedIncomeFromInvestmentsTable(CountTableRowsTask):
