@@ -2,4 +2,3 @@
 
 django-debug-toolbar
 django-extensions
-psycopg2
