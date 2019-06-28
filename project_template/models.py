@@ -251,9 +251,10 @@ class OwnedGoodsOrServicesTable(models.Model):
     declaration = models.ForeignKey(Declaration, on_delete=models.CASCADE, null=True)
     count = models.IntegerField("The number of rows")
 
-# Tabel Cadouri Servicii - actual row number
+# Tabel Cadouri Servicii - actual row information
 class OwnedGoodsOrServicesTableEntry(CommonIncomeFields):
     table = models.ForeignKey(OwnedGoodsOrServicesTable, on_delete=models.CASCADE, null=True)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)
 
 
 # Tabel Venituri salarii - row number
@@ -297,6 +298,7 @@ class OwnedIncomeFromInvestmentsTable(models.Model):
 # Tabel Venituri investitii - actual row information
 class OwnedIncomeFromInvestmentsTableEntry(CommonIncomeFields):
     table = models.ForeignKey(OwnedIncomeFromInvestmentsTable, on_delete=models.CASCADE, null=True)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)
 
 # Tabel Venituri pensii - row number
 class OwnedIncomeFromPensionsTable(models.Model):
@@ -307,6 +309,7 @@ class OwnedIncomeFromPensionsTable(models.Model):
 # Tabel Venituri pensii - actual row information
 class OwnedIncomeFromPensionsTableEntry(CommonIncomeFields):
     table = models.ForeignKey(OwnedIncomeFromPensionsTable, on_delete=models.CASCADE, null=True)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)
     ex_position = models.CharField("Pozitia detinuta", max_length=128)
 
 # Tabel Venituri activitati agricole - row number
@@ -318,6 +321,7 @@ class OwnedIncomeFromAgriculturalActivitiesTable(models.Model):
 # Tabel Venituri activitati agricole - actual row information
 class OwnedIncomeFromAgriculturalActivitiesTableEntry(CommonIncomeFields):
     table = models.ForeignKey(OwnedIncomeFromAgriculturalActivitiesTable, on_delete=models.CASCADE, null=True)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)
 
 # Tabel Venituri premii jocuri noroc - row numbers
 class OwnedIncomeFromGamblingTable(models.Model):
@@ -338,3 +342,4 @@ class OwnedIncomeFromOtherSourcesTable(models.Model):
 # Tabel Venituri din alte surse - actual row information
 class OwnedIncomeFromOtherSourcesTableEntry(CommonIncomeFields):
     table = models.ForeignKey(OwnedIncomeFromOtherSourcesTable, on_delete=models.CASCADE, null=True)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)
