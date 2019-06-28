@@ -46,7 +46,7 @@ class TranscribeOwnedLandTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['land']))
 
 
-class TranscribeOwnedLandSingleRowEntry(forms.Form):
+class TranscribeOwnedLandRowEntry(forms.Form):
     county = forms.ChoiceField(label="Care este judetul in care se gaseste terenul detinut?", choices=Counties.return_counties())
     city = forms.CharField(label="Care este localitatea in care se gaseste terenul detinut?")
     commune = forms.CharField(label="Care este comuna in care se gaseste terenul detinut?")
@@ -83,7 +83,7 @@ class TranscribeOwnedAutomobile(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['automobiles']))
 
 
-class TranscribeOwnedAutomobileSingleRowEntry(forms.Form):
+class TranscribeOwnedAutomobileRowEntry(forms.Form):
     automobile_type = forms.CharField(label="Care este tipul autovehiculului?", widget=forms.Select(choices=MobileGoodsType.return_as_iterable()))
     manufacturer = forms.CharField(label="Care este marca autovehiculului?")
     num_of_automobiles = forms.IntegerField(label="Care este numarul de autovehicule detinute?")
@@ -94,7 +94,7 @@ class TranscribeOwnedJewelry(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['jewelry']))
 
 
-class TranscribeOwnedJewelrySingleRowEntry(forms.Form):
+class TranscribeOwnedJewelryRowEntry(forms.Form):
     description = forms.CharField(label="Care este descrierea bunului?")
     ownership_start_year = forms.ChoiceField(label="Care este anul dobandirii bunului?", choices=YEAR_DICT_CHOICES)
     estimated_value = forms.FloatField(label="Care este valoarea estimata a bunului?")
@@ -146,7 +146,7 @@ class TranscribeDebtsTableRowsCount(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['debts']))
 
 
-class TranscribeOwnedDebtsSingleRowEntry(forms.Form):
+class TranscribeOwnedDebtsRowEntry(forms.Form):
     loaner_surname = forms.CharField(label="Care este numele creditorului?")
     loaner_name = forms.CharField(label="Care este prenumele creditorului?")
     institution = forms.CharField(label="Care este numele institutiei creditoare?", widget=forms.Select(choices=FinancialInstitution.return_as_iterable()))
@@ -236,7 +236,7 @@ class TranscribeOwnedIncomeFromPensionsTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['pensions']))
 
 
-class TranscribeOwnedIncomeFromPensionsSingleRowEntry(forms.Form):
+class TranscribeOwnedIncomeFromPensionsRowEntry(forms.Form):
     beneficiary_relationship = forms.ChoiceField(label="Cine este beneficiarul pensiei?", choices=HolderRelationship.return_as_iterable())
     beneficiary_surname = forms.CharField(label="Care este numele beneficiarului?")
     beneficiary_name = forms.CharField(label="Care este prenumele beneficiarului?")

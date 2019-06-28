@@ -32,7 +32,7 @@ class TaskGetInitialInformation(DigitalizationTask):
 
 
 class TaskOwnedLandRowEntry(DigitalizationTask):
-    task_form = forms.TranscribeOwnedLandSingleRowEntry
+    task_form = forms.TranscribeOwnedLandRowEntry
     template_name = "tasks/owned_land.html"
 
     def save_verified_data(self, verified_data):
@@ -65,7 +65,7 @@ class TaskOwnedLandTable(CountTableRowsTask):
 
 
 class TaskOwnedAutomobileRowEntry(DigitalizationTask):
-    task_form = forms.TranscribeOwnedAutomobileSingleRowEntry
+    task_form = forms.TranscribeOwnedAutomobileRowEntry
     template_name = "tasks/owned_automobile.html"
 
     def save_verified_data(self, verified_data):
@@ -134,7 +134,7 @@ class TaskOwnedIncomeFromAgriculturalActivitiesTable(CountTableRowsTask):
 
 
 class TaskOwnedDebtsRowEntry(DigitalizationTask):
-    task_form = forms.TranscribeOwnedDebtsSingleRowEntry
+    task_form = forms.TranscribeOwnedDebtsRowEntry
     template_name = "tasks/owned_debts.html"
 
     def save_verified_data(self, verified_data):
@@ -169,7 +169,7 @@ class TaskOwnedDebtsTable(CountTableRowsTask):
 
 
 class TaskOwnedIncomeFromPensionsRowEntry(DigitalizationTask):
-    task_form = forms.TranscribeOwnedIncomeFromPensionsSingleRowEntry
+    task_form = forms.TranscribeOwnedIncomeFromPensionsRowEntry
     template_name = "tasks/owned_income_from_pensions.html"
 
     def save_verified_data(self, verified_data):
@@ -265,7 +265,7 @@ class TaskOwnedIncomeFromOtherSourcesTable(CountTableRowsTask):
 
 
 class TaskOwnedJewelryRowEntry(DigitalizationTask):
-    task_form = forms.TranscribeOwnedJewelrySingleRowEntry
+    task_form = forms.TranscribeOwnedJewelryRowEntry
     template_name = "tasks/owned_jewelry.html"
 
     def save_verified_data(self, verified_data):
