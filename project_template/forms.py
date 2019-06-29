@@ -49,7 +49,7 @@ class TranscribeInitialInformation(forms.Form):
 
 
 class TranscribeOwnedLandTable(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['land']))
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['land']), min_value=0)
 
 
 class TranscribeOwnedLandRowEntry(forms.Form):
@@ -68,7 +68,7 @@ class TranscribeOwnedLandRowEntry(forms.Form):
 
 
 class TranscribeOwnedBuildingsTable(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}".format(constants.DECLARATION_TABLES['buildings']))
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}".format(constants.DECLARATION_TABLES['buildings']), min_value=0)
 
 
 class TranscribeOwnedBuildingsTableRowEntry(forms.Form):
@@ -87,7 +87,7 @@ class TranscribeOwnedBuildingsTableRowEntry(forms.Form):
 
 
 class TranscribeOwnedAutomobile(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['automobiles']))
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['automobiles']), min_value=0)
 
 
 class TranscribeOwnedAutomobileRowEntry(forms.Form):
@@ -99,7 +99,7 @@ class TranscribeOwnedAutomobileRowEntry(forms.Form):
 
 
 class TranscribeOwnedJewelry(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['jewelry']))
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['jewelry']), min_value=0)
 
 
 class TranscribeOwnedJewelryRowEntry(forms.Form):
@@ -110,7 +110,7 @@ class TranscribeOwnedJewelryRowEntry(forms.Form):
 
 
 class TranscribeExtraValuable(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['extra_valuable']))
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['extra_valuable']), min_value=0)
 
 
 class TranscribeExtraValuableRowEntry(forms.Form):
@@ -132,7 +132,7 @@ class TranscribeExtraValuableRowEntry(forms.Form):
 
 
 class TranscribeOwnedBankAccountsTable(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['bank_accounts']))
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['bank_accounts']), min_value=0)
 
 
 class TranscribeOwnedBankAccountsRowEntry(forms.Form):
@@ -144,7 +144,7 @@ class TranscribeOwnedBankAccountsRowEntry(forms.Form):
 
 
 class TranscribeOwnedInvestmentsOver5KTable(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['investments']))
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['investments']), min_value=0)
 
 
 class TranscribeOwnedInvestmentsOver5KRowEntry(forms.Form):
@@ -160,7 +160,7 @@ class TranscribeOwnedInvestmentsOver5KRowEntry(forms.Form):
 
 
 class TranscribeDebtsTableRowsCount(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['debts']))
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['debts']), min_value=0)
 
 
 class TranscribeOwnedDebtsRowEntry(forms.Form):
@@ -175,7 +175,7 @@ class TranscribeOwnedDebtsRowEntry(forms.Form):
 
 
 class TranscribeOwnedGoodsOrServicesTable(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['goods']))
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['goods']), min_value=0)
 
 
 class TranscribeOwnedGoodsOrServicesRowEntry(forms.Form):
@@ -193,7 +193,7 @@ class TranscribeOwnedGoodsOrServicesRowEntry(forms.Form):
 
 
 class TranscribeOwnedIncomeFromSalaries(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['salaries']))
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['salaries']), min_value=0)
 
 
 class TranscribeOwnedIncomeFromSalariesRowEntry(forms.Form):
@@ -211,11 +211,11 @@ class TranscribeOwnedIncomeFromSalariesRowEntry(forms.Form):
 
 
 class TranscribeIndependentActivities(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['independent_activities']))
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['independent_activities']), min_value=0)
 
 
 class TranscribeOwnedIncomeFromDeferredUseOfGoodsTable(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['deferred_use']))
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['deferred_use']), min_value=0)
 
 
 class TranscribeOwnedIncomeFromDeferredUseOfGoodsRowEntry(forms.Form):
@@ -233,7 +233,7 @@ class TranscribeOwnedIncomeFromDeferredUseOfGoodsRowEntry(forms.Form):
 
 
 class TranscribeOwnedIncomeFromInvestmentsTable(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['income_investments']))
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['income_investments']), min_value=0)
 
 
 class TranscribeOwnedIncomeFromInvestmentsRowEntry(forms.Form):
@@ -250,7 +250,7 @@ class TranscribeOwnedIncomeFromInvestmentsRowEntry(forms.Form):
 
 
 class TranscribeOwnedIncomeFromPensionsTable(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['pensions']))
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['pensions']), min_value=0)
 
 
 class TranscribeOwnedIncomeFromPensionsRowEntry(forms.Form):
@@ -269,7 +269,7 @@ class TranscribeOwnedIncomeFromPensionsRowEntry(forms.Form):
 
 
 class TranscribeOwnedIncomeFromAgriculturalActivitiesTable(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['agriculture']))
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['agriculture']), min_value=0)
 
 
 class TranscribeOwnedIncomeFromAgriculturalActivitiesRowEntry(forms.Form):
@@ -289,7 +289,7 @@ class TranscribeOwnedIncomeFromAgriculturalActivitiesRowEntry(forms.Form):
 
 
 class TranscribeOwnedIncomeFromGamblingTable(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['gambling']))
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['gambling']), min_value=0)
 
 
 class TranscribeOwnedIncomeFromGamblingRowEntry(forms.Form):
@@ -307,7 +307,7 @@ class TranscribeOwnedIncomeFromGamblingRowEntry(forms.Form):
 
 
 class TranscribeOwnedIncomeFromOtherSourcesTable(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['other_sources']))
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['other_sources']), min_value=0)
 
 
 class TranscribeOwnedIncomeFromOtherSourcesRowEntry(forms.Form):
