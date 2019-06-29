@@ -6,6 +6,7 @@ from project_template.datamodels.building_type import BuildingType
 from project_template.datamodels.currency import Currency
 from project_template.datamodels.financial_institution import FinancialInstitution
 from project_template.datamodels.holder_relationship import HolderRelationship
+from project_template.datamodels.holder_type import HolderType
 from project_template.datamodels.investment_type import InvestmentType
 from project_template.datamodels.real_estate_type import RealEstateType
 from project_template.datamodels.mobile_goods_type import MobileGoodsType
@@ -351,6 +352,7 @@ class OwnedIncomeFromAgriculturalActivitiesTable(models.Model):
 class OwnedIncomeFromAgriculturalActivitiesTableEntry(CommonIncomeFields):
     table = models.ForeignKey(OwnedIncomeFromAgriculturalActivitiesTable, on_delete=models.CASCADE, null=True)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)
+    holder_type = models.CharField("Tipul detinatorului", max_length=120, choices=HolderType.return_as_iterable())
 
 
 # Tabel Venituri premii jocuri noroc - row numbers
