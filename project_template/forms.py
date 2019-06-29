@@ -161,7 +161,7 @@ class TranscribeOwnedDebtsSingleRowEntry(forms.Form):
 
 
 class TranscribeOwnedGoodsOrServicesTable(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['goods']))
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['goods']), min_value=0)
 
 
 class TranscribeOwnedGoodsOrServicesRowEntry(forms.Form):
