@@ -41,22 +41,18 @@ class TaskOwnedLandRowEntry(DigitalizationTask):
             surname=verified_data['owner_surname']
         )
 
+        # Remove the separate owner name fields, because the TableEntry
+        # requires an owner Person
+        del verified_data['owner_name']
+        del verified_data['owner_surname']
+
         owned_land, created = models.OwnedLandTableEntry.objects.get_or_create(
             coowner=owner_person,
-            county=verified_data['county'],
-            city=verified_data['city'],
-            commune=verified_data['commune'],
-            category=verified_data['real_estate_type'],
-            acquisition_year=verified_data['ownership_start_year'],
-            surface=verified_data['surface_area'],
-            share_ratio=verified_data['percent_of_ownership'],
-            taxable_value=verified_data['taxable_value'],
-            taxable_value_currency=verified_data['taxable_value_currency'],
-            attainment_type=verified_data['attainment_type'],
-            observations=verified_data.get('observations', '')
+            **verified_data,
         )
 
 
+@register()
 class TaskOwnedLandTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedLandTable
     storage_model = models.OwnedLandTable
@@ -507,7 +503,6 @@ class TaskOwnedIncomeFromInvestmentsRowEntry(DigitalizationTask):
         )
 
 
-@register()
 class TaskOwnedIncomeFromInvestmentsTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromInvestmentsTable
     storage_model = models.OwnedIncomeFromInvestmentsTable
