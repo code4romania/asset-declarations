@@ -208,19 +208,18 @@ class OwnedBankAccountsTableEntry(models.Model):
 
 
 # Tabel Plasamente, Investitii - row numbers
-class OwnedInvestmentsTable(models.Model):
+class OwnedInvestmentsOver5KTable(models.Model):
     __full_name = DECLARATION_TABLES['investments']
     declaration = models.ForeignKey(Declaration, on_delete=models.CASCADE, null=True)
     count = models.IntegerField(_("The number of rows"))
 
 
 # Tabel Plasamente, Investitii - actual row information
-class OwnedInvestmentsTableEntry(models.Model):
-    table = models.ForeignKey(OwnedInvestmentsTable, on_delete=models.CASCADE, null=True)
+class OwnedInvestmentsOver5KTableEntry(models.Model):
+    table = models.ForeignKey(OwnedInvestmentsOver5KTable, on_delete=models.CASCADE, null=True)
     loan_beneficiary = models.ForeignKey(Person, on_delete=models.CASCADE, null=True)
     issue_title = models.CharField("Emitent titlu", max_length=128, null=True, blank=True)
     shareholder_society = models.CharField("Societate in care persoana este actionar sau asociat", max_length=128, null=True, blank=True)
-    description = models.CharField("Descriere", max_length=128)
     type_of_investment = models.CharField("Tipul", max_length=128, choices=InvestmentType.return_as_iterable())
     number_of_stocks = models.IntegerField("Numar de titluri", null=True, blank=True)
     share_ratio = models.DecimalField("Cota de participare", max_digits=3, decimal_places=2, null=True, blank=True)
