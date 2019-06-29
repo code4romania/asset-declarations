@@ -221,7 +221,7 @@ class TaskOwnedGoodsOrServicesRowEntry(DigitalizationTask):
         )
 
 
-class TaskOwnedGoodsOrServicesPerSpouseTable(CountTableRowsTask):
+class TaskOwnedGoodsOrServicesTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedGoodsOrServicesTable
     storage_model = models.OwnedGoodsOrServicesTable
     child_class = TaskOwnedGoodsOrServicesRowEntry
