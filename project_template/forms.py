@@ -23,6 +23,8 @@ from project_template.datamodels.real_estate_type import RealEstateType
 from project_template.datamodels.building_type import BuildingType
 from project_template.datamodels.investment_type import InvestmentType
 
+from project_template.models import OwnedLandTableEntry
+
 
 def calculate_year_choices():
     start_date = 1980
@@ -52,19 +54,18 @@ class TranscribeOwnedLandTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['land']))
 
 
-class TranscribeOwnedLandRowEntry(forms.Form):
-    county = forms.ChoiceField(label="Care este judetul in care se gaseste terenul detinut?", choices=Counties.return_counties())
-    city = forms.CharField(label="Care este localitatea in care se gaseste terenul detinut?")
-    commune = forms.CharField(label="Care este comuna in care se gaseste terenul detinut?")
-    real_estate_type = forms.ChoiceField(label="Care este categoria de teren?", choices=RealEstateType.return_as_iterable())
-    ownership_start_year = forms.ChoiceField(label="Care este anul cand terenul a fost dobandit?", choices=get_dict_year_choices)
-    surface_area = forms.FloatField(label="Care este suprafata terenului? (mp)")
-    percent_of_ownership = forms.IntegerField(label="Care este cota parte din acest teren? (in procente)", max_value=100, min_value=0)
-    taxable_value = forms.FloatField(label="Care este valoarea impozabilă a terenului? (dacă există)", required=False)
-    taxable_value_currency = forms.ChoiceField(label="Care este valuta in care este exprimata valoarea impozabilă a terenului?", choices=Currency.return_as_iterable())
-    attainment_type = forms.ChoiceField(label="Care este modul in care terenul a fost dobandit?", choices=AttainmentType.return_as_iterable())
+class PartialModelForm(forms.ModelForm):
+    def save(self, *args, **kwargs):
+        raise NotImplemented
+
+
+class TranscribeOwnedLandRowEntry(PartialModelForm):
     owner_surname = forms.CharField(label="Care este numele proprietarului?")
     owner_name = forms.CharField(label="Care este prenumele proprietarului")
+
+    class Meta:
+        model = OwnedLandTableEntry
+        exclude = ['table', 'coowner']
 
 
 class TranscribeOwnedBuildingsTable(forms.Form):
