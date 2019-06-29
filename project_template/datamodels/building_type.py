@@ -1,4 +1,3 @@
-from enum import Enum
 from project_template.datamodels import common_utils
 
 
@@ -8,10 +7,3 @@ class BuildingType(common_utils.IterableEnum):
     VACATION_HOUSE = (3, "Casa de vacanta")
     COMMERCIAL_SPACE = (4, "Spatii comerciale")
     OTHER = (5, "Alta categorie")
-
-    # @staticmethod
-    # def return_as_iterable():
-    #     enum_info_as_list = [member for name, member in BuildingType.__members__.items()]
-    #     values = [member.value for member in enum_info_as_list]
-    #
-    #     return values

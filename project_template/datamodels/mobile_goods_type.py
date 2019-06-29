@@ -1,15 +1,10 @@
-from enum import Enum
 from project_template.datamodels import common_utils
 
 
-class MobileGoodsType(Enum):
+class MobileGoodsType(common_utils.IterableEnum):
     AUTOVEHICLE = "Autovehicule/Autoturisme"
     TRACTOR = "Tractor"
     AGRICULTURAL_VEHICLE = "Masini agricole"
     BOATS = "Salupe"
     YACHTS = "Iahturi"
     OTHER = "Altele"
-
-    @staticmethod
-    def return_as_iterable():
-        return common_utils.return_enum_as_iterable(MobileGoodsType)

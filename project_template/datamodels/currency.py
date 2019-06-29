@@ -1,8 +1,7 @@
-from enum import Enum
 from project_template.datamodels import common_utils
 
 
-class Currency(Enum):
+class Currency(common_utils.IterableEnum):
     EUR = "EUR"
     RON = "RON"
     USD = "USD"
@@ -10,7 +9,3 @@ class Currency(Enum):
     CAD = "CAD"
     CHF = "CHF"
     ALTELE = "OTHER"
-
-    @staticmethod
-    def return_as_iterable():
-        return common_utils.return_enum_as_iterable(Currency)
