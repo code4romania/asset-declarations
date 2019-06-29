@@ -41,13 +41,18 @@ class TaskOwnedLandRowEntry(DigitalizationTask):
             surname=verified_data['owner_surname']
         )
 
-        map(verified_data.pop, ['name', 'surname'])
+        # Remove the separate owner name fields, because the TableEntry
+        # requires an owner Person
+        del verified_data['owner_name']
+        del verified_data['owner_surname']
+
         owned_land, created = models.OwnedLandTableEntry.objects.get_or_create(
             coowner=owner_person,
             **verified_data,
         )
 
 
+@register()
 class TaskOwnedLandTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedLandTable
     storage_model = models.OwnedLandTable
@@ -474,7 +479,6 @@ class TaskOwnedIncomeFromInvestmentsRowEntry(DigitalizationTask):
         )
 
 
-@register()
 class TaskOwnedIncomeFromInvestmentsTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromInvestmentsTable
     storage_model = models.OwnedIncomeFromInvestmentsTable

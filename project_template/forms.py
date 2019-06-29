@@ -36,6 +36,14 @@ def get_dict_year_choices():
     return [(date, date) for date in calculate_year_choices()]
 
 
+class PartialModelForm(forms.ModelForm):
+    """
+    A standard Django ModelForm but with no save action
+    """
+    def save(self, *args, **kwargs):
+        raise NotImplemented
+
+
 class TranscribeInitialInformation(forms.Form):
     # Form fields for identifying the politician
     name = forms.CharField(label=_("Care este numele politicianului?"))
@@ -54,17 +62,15 @@ class TranscribeOwnedLandTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['land']), min_value=0)
 
 
-class PartialModelForm(forms.ModelForm):
-    def save(self, *args, **kwargs):
-        raise NotImplemented
-
-
 class TranscribeOwnedLandRowEntry(PartialModelForm):
-    owner_surname = forms.CharField(label="Care este numele proprietarului?")
-    owner_name = forms.CharField(label="Care este prenumele proprietarului")
+    # custom form fields not found in the Model
+    owner_surname = forms.CharField(label=_("Care este numele proprietarului?"))
+    owner_name = forms.CharField(label=_("Care este prenumele proprietarului"))
 
     class Meta:
         model = OwnedLandTableEntry
+        # exclude the Model's table and coowner fields because
+        # they will be handled separately by the Task
         exclude = ['table', 'coowner']
 
 
