@@ -357,11 +357,34 @@ class TaskOwnedIncomeFromDeferredUseOfGoodsTable(CountTableRowsTask):
     child_class = TaskOwnedIncomeFromDeferredUseOfGoodsRowEntry
 
 
+class TaskOwnedIncomeFromIndependentActivitiesRowEntry(DigitalizationTask):
+    task_form = forms.TranscribeIndependentActivitiesRowEntry
+    template_name = "tasks/owned_income_from_independent_activities.html"
+
+    def save_verified_data(self, verified_data):
+        owner_person, created = models.Person.objects.get_or_create(
+            name=verified_data['name'],
+            surname=verified_data['surname']
+        )
+
+        owned_income_from_independent_activities, created = models.OwnedIncomeFromIndependentActivitiesTableEntry.objects.get_or_create(
+            person=owner_person,
+            county=verified_data['county'],
+            city=verified_data['city'],
+            commune=verified_data['commune'],
+            address=verified_data['address'],
+            holder_relationship=verified_data['holder_relationship'],
+            source_of_goods=verified_data['source_of_goods'],
+            service=verified_data['service'],
+            annual_income=verified_data['annual_income'],
+            currency=verified_data['currency'],
+        )
+
+
 class TaskOwnedIncomeFromIndependentActivitiesTable(CountTableRowsTask):
-    task_form = forms.TranscribeIndependentActivities
+    task_form = forms.TranscribeIndependentActivitiesTable
     storage_model = models.OwnedIncomeFromIndependentActivitiesTable
-    # TODO - add child_class
-    child_class = None
+    child_class = TaskOwnedIncomeFromIndependentActivitiesRowEntry
 
 
 class TaskOwnedIncomeFromGamblingRowEntry(DigitalizationTask):

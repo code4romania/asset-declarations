@@ -284,6 +284,7 @@ class OwnedIncomeFromSalariesTable(models.Model):
 # Tabel Venituri salarii - actual row information
 class OwnedIncomeFromSalariesTableEntry(CommonIncomeFields):
     table = models.ForeignKey(OwnedIncomeFromSalariesTable, on_delete=models.CASCADE, null=True)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)
 
 
 # Tabel Venituri activitati independente - row number
@@ -296,6 +297,7 @@ class OwnedIncomeFromIndependentActivitiesTable(models.Model):
 # Tabel Venituri activitati independente - actual row information
 class OwnedIncomeFromIndependentActivitiesTableEntry(CommonIncomeFields):
     table = models.ForeignKey(OwnedIncomeFromIndependentActivitiesTable, on_delete=models.CASCADE, null=True)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)
 
 
 # Tabel Venituri cedarea folosintei bunurilor - row number
@@ -308,6 +310,7 @@ class OwnedIncomeFromDeferredUseOfGoodsTable(models.Model):
 # Tabel Venituri cedarea folosintei bunurilor - actual row information
 class OwnedIncomeFromDeferredUseOfGoodsTableEntry(CommonIncomeFields):
     table = models.ForeignKey(OwnedIncomeFromDeferredUseOfGoodsTable, on_delete=models.CASCADE, null=True)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)
 
 
 # Tabel Venituri investitii - row number
@@ -360,6 +363,7 @@ class OwnedIncomeFromGamblingTable(models.Model):
 # Tabel Venituri premii jocuri noroc - actual row information
 class OwnedIncomeFromGamblingTableEntry(CommonIncomeFields):
     table = models.ForeignKey(OwnedIncomeFromGamblingTable, on_delete=models.CASCADE, null=True)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)
 
 
 # Tabel Venituri din alte surse - row numbers
