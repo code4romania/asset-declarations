@@ -4,8 +4,8 @@
 
 <!-- display the social media buttons in your README -->
 
-[![alt text][1.1]][1]
-[![alt text][2.1]][2]
+[![code for romania twitter][1.1]][1]
+[![code for romania facebook][2.1]][2]
 
 <!-- links to social media icons -->
 <!-- no need to change these -->
