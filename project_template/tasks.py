@@ -78,7 +78,7 @@ class TaskOwnedAutomobileRowEntry(DigitalizationTask):
 
 
 class TaskOwnedAutomobileTable(CountTableRowsTask):
-    task_form = forms.TranscribeOwnedAutomobile
+    task_form = forms.TranscribeOwnedAutomobileTable
     storage_model = models.OwnedAutomobileTable
     child_class = TaskOwnedAutomobileRowEntry
 
@@ -163,7 +163,7 @@ class TaskOwnedDebtsRowEntry(DigitalizationTask):
 
 
 class TaskOwnedDebtsTable(CountTableRowsTask):
-    task_form = forms.TranscribeDebtsTableRowsCount
+    task_form = forms.TranscribeOwnedDebtsTable
     storage_model = models.OwnedDebtsTable
     child_class = TaskOwnedDebtsRowEntry
 
@@ -221,7 +221,7 @@ class TaskOwnedGoodsOrServicesRowEntry(DigitalizationTask):
         )
 
 
-class TaskOwnedGoodsOrServicesPerSpouseTable(CountTableRowsTask):
+class TaskOwnedGoodsOrServicesTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedGoodsOrServicesTable
     storage_model = models.OwnedGoodsOrServicesTable
     child_class = TaskOwnedGoodsOrServicesRowEntry
@@ -298,7 +298,7 @@ class TaskOwnedJewelryRowEntry(DigitalizationTask):
 
 
 class TaskOwnedJewelryTable(CountTableRowsTask):
-    task_form = forms.TranscribeOwnedJewelry
+    task_form = forms.TranscribeOwnedJewelryTable
     storage_model = models.OwnedJewelryTable
     child_class = TaskOwnedJewelryRowEntry
 
@@ -327,7 +327,7 @@ class TaskExtraValuableRowEntry(DigitalizationTask):
 
 
 class TaskExtraValuableTable(CountTableRowsTask):
-    task_form = forms.TranscribeExtraValuable
+    task_form = forms.TranscribeExtraValuableTable
     storage_model = models.OwnedExtraValuableTable
     child_class = TaskExtraValuableRowEntry
 
@@ -447,13 +447,13 @@ class TaskOwnedIncomeFromSalariesRowEntry(DigitalizationTask):
 
 
 class TaskOwnedIncomeFromSalariesTable(CountTableRowsTask):
-    task_form = forms.TranscribeOwnedIncomeFromSalaries
+    task_form = forms.TranscribeOwnedIncomeFromSalariesTable
     storage_model = models.OwnedIncomeFromSalariesTable
     child_class = TaskOwnedIncomeFromSalariesRowEntry
 
 
 class TaskOwnedBuildingsRowEntry(DigitalizationTask):
-    task_form = forms.TranscribeOwnedBuildingsTableRowEntry
+    task_form = forms.TranscribeOwnedBuildingsRowEntry
     template_name = "tasks/owned_buildings_task.html"
 
     def save_verified_data(self, verified_data):

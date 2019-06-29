@@ -72,7 +72,7 @@ class TranscribeOwnedBuildingsTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}".format(constants.DECLARATION_TABLES['buildings']), min_value=0)
 
 
-class TranscribeOwnedBuildingsTableRowEntry(forms.Form):
+class TranscribeOwnedBuildingsRowEntry(forms.Form):
     county = forms.ChoiceField(label="Care este judetul in care se gaseste cladirea detinuta?", choices=Counties.return_counties())
     city = forms.CharField(label="Care este localitatea in care se gaseste cladirea detinuta?")
     commune = forms.CharField(label="Care este comuna in care se gaseste cladirea detinuta?")
@@ -87,7 +87,7 @@ class TranscribeOwnedBuildingsTableRowEntry(forms.Form):
     owner_name = forms.CharField(label="Care este prenumele titularului")
 
 
-class TranscribeOwnedAutomobile(forms.Form):
+class TranscribeOwnedAutomobileTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['automobiles']), min_value=0)
 
 
@@ -99,7 +99,7 @@ class TranscribeOwnedAutomobileRowEntry(forms.Form):
     attainment_type = forms.CharField(label="Care este modul in care a fost dobandit autovehiculul?", widget=forms.Select(choices=AttainmentType.return_as_iterable()))
 
 
-class TranscribeOwnedJewelry(forms.Form):
+class TranscribeOwnedJewelryTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['jewelry']), min_value=0)
 
 
@@ -110,7 +110,7 @@ class TranscribeOwnedJewelryRowEntry(forms.Form):
     currency = forms.ChoiceField(label="Care este moneda in care este estimata valoarea bunului?", choices=Currency.return_as_iterable())
 
 
-class TranscribeExtraValuable(forms.Form):
+class TranscribeExtraValuableTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['extra_valuable']), min_value=0)
 
 
@@ -160,7 +160,7 @@ class TranscribeOwnedInvestmentsOver5KRowEntry(forms.Form):
     currency = forms.ChoiceField(label="Care este moneda?", choices=Currency.return_as_iterable())
 
 
-class TranscribeDebtsTableRowsCount(forms.Form):
+class TranscribeOwnedDebtsTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['debts']), min_value=0)
 
 
@@ -193,7 +193,7 @@ class TranscribeOwnedGoodsOrServicesRowEntry(forms.Form):
     currency = forms.ChoiceField(label="Care este valuta in care e incasat venitul?", choices=Currency.return_as_iterable())
 
 
-class TranscribeOwnedIncomeFromSalaries(forms.Form):
+class TranscribeOwnedIncomeFromSalariesTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['salaries']), min_value=0)
 
 
