@@ -117,6 +117,7 @@ class TaskOwnedIncomeFromAgriculturalActivitiesRowEntry(DigitalizationTask):
             person=owner_person,
             source_of_goods=verified_data['source'],
             holder_relationship=verified_data['holder_relationship'],
+            holder_type=verified_data['holder_type'],
             county=verified_data['county'],
             city=verified_data['city'],
             commune=verified_data['commune'],
