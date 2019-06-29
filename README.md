@@ -1,5 +1,25 @@
 # Catalog politic  - Declaratii de avere [![GitHub contributors](https://img.shields.io/github/contributors/code4romania/catpol-declaratii.svg)](https://github.com/code4romania/catpol-declaratii/graphs/contributors) [![GitHub last commit](https://img.shields.io/github/last-commit/code4romania/catpol-declaratii.svg)](https://github.com/code4romania/catpol-declaratii/commits/master) [![License: MPL 2.0](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 
+<!-- Please don't remove this: Grab your social icons from https://github.com/carlsednaoui/gitsocial -->
+
+<!-- display the social media buttons in your README -->
+
+[![alt text][1.1]][1]
+[![alt text][2.1]][2]
+
+<!-- links to social media icons -->
+<!-- no need to change these -->
+
+<!-- icons with padding -->
+
+[1.1]: http://i.imgur.com/tXSoThF.png (twitter icon with padding)
+[2.1]: http://i.imgur.com/P3YfQoD.png (facebook icon with padding)
+
+[1]: https://twitter.com/Code4Romania
+[2]: https://www.facebook.com/code4romania/
+
+<!-- Please don't remove this: Grab your social icons from https://github.com/carlsednaoui/gitsocial -->
+
 * MAKING PUBLIC INFORMATION TRULY PUBLIC 
 * aggregate data on the higher echelons of elected officials
 * data on activity while serving in each of the elected positions held
