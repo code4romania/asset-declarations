@@ -1,0 +1,58 @@
+version: "2"
+services:
+    catpol:
+      build: .
+      depends_on:
+        - postgres
+        - pybossa
+      ports:
+        - "8000:8000"
+    redis-master:
+        image: 'redis:3.0-alpine'
+    redis-sentinel:
+        image: 'jvstein/redis-sentinel:latest'
+        depends_on:
+            - redis-master
+        links:
+            - redis-master
+    postgres:
+        image: 'postgres:9.6-alpine'
+        environment:
+            - POSTGRES_USER=pybossa
+            - POSTGRES_PASSWORD=bestpassword
+    # initializes the database
+    db-init:
+        image: 'jvstein/pybossa:latest'
+        depends_on:
+            - postgres
+        environment:
+            - POSTGRES_URL=postgresql://pybossa:bestpassword@db/pybossa
+        links:
+            - postgres:db
+        command: sh -c "sleep 5 && python cli.py db_create"
+    # background worker process
+    pybossa-bgworker:
+        image: 'jvstein/pybossa:latest'
+        depends_on:
+            - db-init
+        environment:
+            - POSTGRES_URL=postgresql://pybossa:bestpassword@db/pybossa
+        links:
+            - redis-master
+            - redis-sentinel
+            - postgres:db
+        command: rqscheduler --host redis-master
+    # web server
+    pybossa:
+        image: 'jvstein/pybossa:latest'
+        container_name: pybossa
+        depends_on:
+            - db-init
+        environment:
+            - POSTGRES_URL=postgresql://pybossa:bestpassword@db/pybossa
+        links:
+            - redis-master
+            - redis-sentinel
+            - postgres:db
+        ports:
+            - "8080:8080"
