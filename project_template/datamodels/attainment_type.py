@@ -1,8 +1,7 @@
-from enum import Enum
 from project_template.datamodels import common_utils
 
 
-class AttainmentType(Enum):
+class AttainmentType(common_utils.IterableEnum):
     PURCHASE = "Cumparare/Contract Vanzare Cumparare"
     CONSTRUCTION = "Construire"
     DONATION = "Donatie"
@@ -11,7 +10,3 @@ class AttainmentType(Enum):
     INHERITANCE = "Mostenire"
     LEASING = "Leasing"
     OTHER = "Alt mod"
-
-    @staticmethod
-    def return_as_iterable():
-        return common_utils.return_enum_as_iterable(AttainmentType)

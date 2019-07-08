@@ -1,8 +1,7 @@
-from enum import Enum
-from project_template.datamodels import  common_utils
+from project_template.datamodels import common_utils
 
 
-class FinancialInstitution(Enum):
+class FinancialInstitution(common_utils.IterableEnum):
 
     ALPHA_BANK = "ALPHA BANK"
     BCR = "BANCA COMERCIALĂ ROMÂNĂ (OF THE ERSTE GROUP)"
@@ -31,9 +30,3 @@ class FinancialInstitution(Enum):
     EXIMBANK = "EXIMBANK (EXPORT-IMPORT BANK OF ROMANIA)"
     ING = "ING BANK N.V. (OF ING GROUP)"
     PARIBAS = "BNP PARIBAS PERSONAL FINANCE"
-
-    @staticmethod
-    def return_as_iterable():
-        return common_utils.return_enum_as_iterable(FinancialInstitution)
-
-

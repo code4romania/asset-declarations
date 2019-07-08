@@ -1,8 +1,7 @@
-from enum import Enum
-
 from project_template.datamodels import common_utils
 
-class Institution(Enum):
+
+class Institution(common_utils.IterableEnum):
     GOVERNMENT = "Guvernul Romaniei"
     PARLIAMENT = "Parlamentul Romaniei "
     SENATE = "Senat"
@@ -33,7 +32,3 @@ class Institution(Enum):
     EVERYWHERE_MINISTRY = "Ministerul pentru Romanii de Pretutindeni"
     PARLIAMENT_MINISTRY = "Ministerul pentru Relatia cu Parlamentul"
     OTHER = "Alta Valoare"
-
-    @staticmethod
-    def return_as_iterable():
-        return common_utils.return_enum_as_iterable(Institution)
