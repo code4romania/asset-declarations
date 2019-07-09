@@ -99,8 +99,8 @@ Using Dockerfile:
 * Run the following command to create a Docker image for the project `docker build -t catpol`
 * Run the following command to run the Docker image `docker run -p 8000 catpol`
 * Show the container id running the `catpol` image `docker ps`
-* Inspect the container to get the host port `docker inspect <container_id>`, you should something like:
-            ```json
+* Inspect the container to get the host port `docker inspect <container_id>`, you should see something like:
+```json
             "Ports": {
                 "8000/tcp": [
                     {
@@ -109,7 +109,7 @@ Using Dockerfile:
                     }
                 ]
             },
-            ```
+ ```
  * Connect to specified port on localhost and enjoy the solution
 
 
