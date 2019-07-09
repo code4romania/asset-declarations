@@ -92,6 +92,27 @@ Installation process
 * `python manage.py migrate`
 * `python manage.py runserver`
 
+Using Dockerfile:
+* Install docker
+* Clone this repo: `git clone git@github.com:code4romania/catpol-declaratii.git`
+* Open the directory where you have cloned the repo (`cd catpol-declaratii`)
+* Run the following command to create a Docker image for the project `docker build -t catpol`
+* Run the following command to run the Docker image `docker run -p 8000 catpol`
+* Show the container id running the `catpol` image `docker ps`
+* Inspect the container to get the host port `docker inspect <container_id>`, you should see something like:
+```json
+            "Ports": {
+                "8000/tcp": [
+                    {
+                        "HostIp": "0.0.0.0",
+                        "HostPort": "32769"
+                    }
+                ]
+            },
+ ```
+ * Connect to specified port on localhost and enjoy the solution
+
+
 ## Contributing 
 
 If you would like to contribute to one of our repositories, first identify the scale of what you would like to contribute. If it is small (grammar/spelling or a bug fix) feel free to start working on a fix. If you are submitting a feature or substantial code contribution, please discuss it with the team and ensure it follows the product roadmap. 
