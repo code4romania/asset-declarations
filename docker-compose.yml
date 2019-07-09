@@ -19,14 +19,14 @@ services:
         image: 'postgres:9.6-alpine'
         environment:
             - POSTGRES_USER=pybossa
-            - POSTGRES_PASSWORD=bestpassword
+            - POSTGRES_PASSWORD=XXXXXXXXXXXXXX
     # initializes the database
     db-init:
         image: 'jvstein/pybossa:latest'
         depends_on:
             - postgres
         environment:
-            - POSTGRES_URL=postgresql://pybossa:bestpassword@db/pybossa
+            - POSTGRES_URL=postgresql://pybossa:XXXXXXXXXXXXXX@db/pybossa
         links:
             - postgres:db
         command: sh -c "sleep 5 && python cli.py db_create"
@@ -36,7 +36,7 @@ services:
         depends_on:
             - db-init
         environment:
-            - POSTGRES_URL=postgresql://pybossa:bestpassword@db/pybossa
+            - POSTGRES_URL=postgresql://pybossa:XXXXXXXXXXXXXX@db/pybossa
         links:
             - redis-master
             - redis-sentinel
@@ -49,7 +49,7 @@ services:
         depends_on:
             - db-init
         environment:
-            - POSTGRES_URL=postgresql://pybossa:bestpassword@db/pybossa
+            - POSTGRES_URL=postgresql://pybossa:XXXXXXXXXXXXXX@db/pybossa
         links:
             - redis-master
             - redis-sentinel
