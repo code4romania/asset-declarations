@@ -94,12 +94,13 @@ class TranscribeOwnedAutomobileTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['automobiles']), min_value=0)
 
 
-class TranscribeOwnedAutomobileRowEntry(forms.Form):
-    automobile_type = forms.CharField(label="Care este tipul autovehiculului?", widget=forms.Select(choices=MobileGoodsType.return_as_iterable()))
-    manufacturer = forms.CharField(label="Care este marca autovehiculului?")
-    num_of_automobiles = forms.IntegerField(label="Care este numarul de autovehicule detinute?")
-    year_of_manufacture = forms.ChoiceField(label="Care este anul de fabricatie al autovehiculului?", choices=get_dict_year_choices)
-    attainment_type = forms.CharField(label="Care este modul in care a fost dobandit autovehiculul?", widget=forms.Select(choices=AttainmentType.return_as_iterable()))
+class TranscribeOwnedAutomobileRowEntry(PartialModelForm):
+    # No custom form fields
+
+    class Meta:
+        model = models.OwnedAutomobileTableEntry
+        # Exclude the Model's table field because they will be handled separately by the Task
+        exclude = ['table', ]
 
 
 class TranscribeOwnedJewelryTable(forms.Form):

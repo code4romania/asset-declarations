@@ -173,7 +173,7 @@ class OwnedAutomobileTable(models.Model):
 # Tabel Bunuri Mobile - actual row information
 class OwnedAutomobileTableEntry(models.Model):
     table = models.ForeignKey(OwnedAutomobileTable, on_delete=models.CASCADE, null=True)
-    goods_type = models.CharField("Natura", max_length=32, choices=MobileGoodsType.return_as_iterable())
+    goods_type = models.CharField("Tipul vehiculului", max_length=32, choices=MobileGoodsType.return_as_iterable())
     brand = models.CharField("Marca", max_length=128)
     no_owned = models.PositiveSmallIntegerField("Numar de bucati")
     fabrication_year = models.IntegerField("Anul de fabricatie")
