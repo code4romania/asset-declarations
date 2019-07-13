@@ -31,12 +31,12 @@ FIRST_2_TYPES = 2
 
 def validate_percentage(value):
     """
-    Validates that a percentage value, if not null, is between 0 and 100
+    Validates that a percentage value, if given, is between 0 and 100
 
-    :param value: Input value to be checked
+    :param value: Percentage value to be checked
     :return:
     """
-    if value is None:
+    if not value:
         return
 
     if value > 100:
