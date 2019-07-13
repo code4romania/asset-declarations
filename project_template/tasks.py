@@ -31,29 +31,25 @@ class TaskGetInitialInformation(DigitalizationTask):
         )
 
 
+@register()
 class TaskOwnedLandRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedLandRowEntry
     template_name = "tasks/owned_land.html"
 
     def save_verified_data(self, verified_data):
+        # Use the custom form fields
         owner_person, created = models.Person.objects.get_or_create(
-            name=verified_data['owner_name'],
-            surname=verified_data['owner_surname']
+            name=verified_data.get('owner_name'),
+            surname=verified_data.get('owner_name')
         )
+
+        # Remove the custom form fields before saving the table entry
+        del verified_data['owner_name']
+        del verified_data['owner_surname']
 
         owned_land, created = models.OwnedLandTableEntry.objects.get_or_create(
             coowner=owner_person,
-            county=verified_data['county'],
-            city=verified_data['city'],
-            commune=verified_data['commune'],
-            category=verified_data['real_estate_type'],
-            acquisition_year=verified_data['ownership_start_year'],
-            surface=verified_data['surface_area'],
-            share_ratio=verified_data['percent_of_ownership'],
-            taxable_value=verified_data['taxable_value'],
-            taxable_value_currency=verified_data['taxable_value_currency'],
-            attainment_type=verified_data['attainment_type'],
-            observations=verified_data.get('observations', '')
+            **verified_data,
         )
 
 
@@ -478,7 +474,6 @@ class TaskOwnedBuildingsRowEntry(DigitalizationTask):
         )
 
 
-@register()
 class TaskOwnedBuildingsTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedBuildingsTable
     storage_model = models.OwnedBuildingsTable
