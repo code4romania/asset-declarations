@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 
 from project_template.datamodels.account_type import AccountType
@@ -26,6 +27,28 @@ FIRST_2_TYPES = 2
 
 # TODO remove null=True from all ForeignKey fields. Temporary fix for Django dev mode.
 # Reference: https://stackoverflow.com/questions/46088488/django-db-utils-integrityerror-not-null-constraint-failed-app-area-id
+
+
+def validate_percentage(value):
+    """
+    Validates that a percentage value, if not null, is between 0 and 100
+
+    :param value: Input value to be checked
+    :return:
+    """
+    if value is None:
+        return
+
+    if value > 100:
+        raise ValidationError(
+            _('%(value)s is greater than 100%'),
+            params={'value': value},
+        )
+    elif value < 0:
+        raise ValidationError(
+            _('%(value)s is lower than 0%'),
+            params={'value': value},
+        )
 
 
 class Politician(models.Model):
@@ -112,7 +135,7 @@ class OwnedLandTableEntry(CommonInfo):
     category = models.CharField("Categorie", max_length=32, choices=RealEstateType.return_as_iterable())
     acquisition_year = models.IntegerField("Anul dobandirii")
     surface = models.FloatField("Suprafata mp")
-    share_ratio = models.DecimalField("Cota-parte", max_digits=5, decimal_places=2)
+    share_ratio = models.DecimalField("Cota-parte", max_digits=5, decimal_places=2, validators=[validate_percentage])
     taxable_value = models.FloatField('Valoarea de impozitare', blank=True)
     taxable_value_currency = models.CharField("Valuta", max_length=16, choices=Currency.return_as_iterable())
     attainment_type = models.CharField("Modul de dobandire", max_length=32, choices=AttainmentType.return_as_iterable(), blank=True)
@@ -133,7 +156,7 @@ class OwnedBuildingsTableEntry(CommonInfo):
     category = models.IntegerField("Categorie", choices=BuildingType.return_as_iterable())
     acquisition_year = models.IntegerField("Anul dobandirii")
     surface = models.FloatField("Suprafata", blank=True)
-    share_ratio = models.DecimalField("Cota-parte", max_digits=3, decimal_places=2, blank=True)
+    share_ratio = models.DecimalField("Cota-parte", max_digits=5, decimal_places=2, blank=True, validators=[validate_percentage])
     taxable_value = models.FloatField('Valoarea de impozitare', blank=True)
     taxable_value_currency = models.CharField("Valuta", max_length=16, choices=Currency.return_as_iterable())
     attainment_type = models.CharField("Modul de dobandire", max_length=32, choices=AttainmentType.return_as_iterable(), blank=True)
@@ -223,7 +246,7 @@ class OwnedInvestmentsOver5KTableEntry(models.Model):
     shareholder_society = models.CharField("Societate in care persoana este actionar sau asociat", max_length=128, null=True, blank=True)
     type_of_investment = models.CharField("Tipul", max_length=128, choices=InvestmentType.return_as_iterable())
     number_of_stocks = models.IntegerField("Numar de titluri", null=True, blank=True)
-    share_ratio = models.DecimalField("Cota de participare", max_digits=3, decimal_places=2, null=True, blank=True)
+    share_ratio = models.DecimalField("Cota de participare", max_digits=5, decimal_places=2, null=True, blank=True, validators=[validate_percentage])
     total_value = models.FloatField("Valoare totala la zi")
     currency = models.CharField("Valuta", max_length=16, choices=Currency.return_as_iterable())
 
