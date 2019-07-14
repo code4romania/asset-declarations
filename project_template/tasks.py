@@ -1,6 +1,3 @@
-import datetime
-
-from moonsheep import verifiers
 from moonsheep.decorators import register
 
 import project_template.models as models

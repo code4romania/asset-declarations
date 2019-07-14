@@ -4,25 +4,9 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from project_template import constants
-from project_template.datamodels.account_type import AccountType
-from project_template.datamodels.attainment_type import AttainmentType
-from project_template.datamodels.cities import Cities
-from project_template.datamodels.counties import Counties
-from project_template.datamodels.currency import Currency
-from project_template.datamodels.debt_type import DebtType
 from project_template.datamodels.declaration_type import DeclarationType
-from project_template.datamodels.estranged_goods_type import EstrangedGoodsType
-from project_template.datamodels.financial_institution import FinancialInstitution
-from project_template.datamodels.goods_separation_type import GoodsSeparationType
-from project_template.datamodels.holder_relationship import HolderRelationship
-from project_template.datamodels.holder_type import HolderType
-from project_template.datamodels.income_provider_type import IncomeProviderType
 from project_template.datamodels.institution import Institution
-from project_template.datamodels.mobile_goods_type import MobileGoodsType
 from project_template.datamodels.position import Position
-from project_template.datamodels.real_estate_type import RealEstateType
-from project_template.datamodels.building_type import BuildingType
-from project_template.datamodels.investment_type import InvestmentType
 from project_template import models
 
 
