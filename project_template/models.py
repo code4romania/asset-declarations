@@ -57,7 +57,7 @@ class Politician(models.Model):
     name = models.CharField(_("Name"), max_length=128)
     surname = models.CharField(_("Surname"), max_length=128)
     initials = models.CharField(_("Initials"), max_length=20)
-    previous_name = models.CharField(_("PreviousName"), max_length=128)
+    previous_name = models.CharField(_("Previous Name"), max_length=128, blank=True)
 
     # Automatically set the field to now every time the object is saved. Useful for “last-modified” timestamps.
     # Note that the current date is always used; it’s not just a default value that you can override.
