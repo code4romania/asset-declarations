@@ -52,7 +52,7 @@ def validate_percentage(value):
 
 
 class Politician(models.Model):
-    all_positions = []
+    all_positions = None
 
     name = models.CharField(_("Name"), max_length=128)
     surname = models.CharField(_("Surname"), max_length=128)
@@ -72,6 +72,8 @@ class Politician(models.Model):
         )
 
     def add_position(self, position):
+        if self.all_positions is None:
+            self.all_positions = []
         self.all_positions.append(position)
 
     @property
