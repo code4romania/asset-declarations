@@ -342,25 +342,23 @@ class TaskOwnedIncomeFromIndependentActivitiesRowEntry(DigitalizationTask):
     template_name = "tasks/owned_income_from_independent_activities.html"
 
     def save_verified_data(self, verified_data):
+        # Use the custom form fields
         owner_person, created = models.Person.objects.get_or_create(
-            name=verified_data['name'],
-            surname=verified_data['surname']
+            name=verified_data.get('name'),
+            surname=verified_data.get('surname')
         )
+
+        # Remove the custom form fields before saving the table entry
+        del verified_data['name']
+        del verified_data['surname']
 
         owned_income_from_independent_activities, created = models.OwnedIncomeFromIndependentActivitiesTableEntry.objects.get_or_create(
             person=owner_person,
-            county=verified_data['county'],
-            city=verified_data['city'],
-            commune=verified_data['commune'],
-            address=verified_data['address'],
-            holder_relationship=verified_data['holder_relationship'],
-            source_of_goods=verified_data['source_of_goods'],
-            service=verified_data['service'],
-            annual_income=verified_data['annual_income'],
-            currency=verified_data['currency'],
+            **verified_data
         )
 
 
+@register()
 class TaskOwnedIncomeFromIndependentActivitiesTable(CountTableRowsTask):
     task_form = forms.TranscribeIndependentActivitiesTable
     storage_model = models.OwnedIncomeFromIndependentActivitiesTable
@@ -418,7 +416,6 @@ class TaskOwnedIncomeFromSalariesRowEntry(DigitalizationTask):
         )
 
 
-@register()
 class TaskOwnedIncomeFromSalariesTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromSalariesTable
     storage_model = models.OwnedIncomeFromSalariesTable
