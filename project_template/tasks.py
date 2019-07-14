@@ -95,22 +95,19 @@ class TaskOwnedIncomeFromAgriculturalActivitiesRowEntry(DigitalizationTask):
     template_name = "tasks/agricultural_activity.html"
 
     def save_verified_data(self, verified_data):
+        # Use the custom form fields
         owner_person, created = models.Person.objects.get_or_create(
-            name=verified_data['name'],
-            surname=verified_data['surname']
+            name=verified_data.get('name'),
+            surname=verified_data.get('surname')
         )
 
-        income_declaration, created = models.OwnedIncomeFromAgriculturalActivitiesTableEntry.objects.get_or_create(
+        # Remove the custom form fields before saving the table entry
+        del verified_data['name']
+        del verified_data['surname']
+
+        owned_income_from_agriculture, created = models.OwnedIncomeFromAgriculturalActivitiesTableEntry.objects.get_or_create(
             person=owner_person,
-            source_of_goods=verified_data['source'],
-            holder_relationship=verified_data['holder_relationship'],
-            holder_type=verified_data['holder_type'],
-            county=verified_data['county'],
-            city=verified_data['city'],
-            commune=verified_data['commune'],
-            service=verified_data['offered_service'],
-            annual_income=verified_data['income_amount'],
-            currency=verified_data['currency']
+            **verified_data
         )
 
 
@@ -158,22 +155,18 @@ class TaskOwnedIncomeFromPensionsRowEntry(DigitalizationTask):
 
     def save_verified_data(self, verified_data):
         owner_person, created = models.Person.objects.get_or_create(
-            surname=verified_data['beneficiary_surname'],
-            name=verified_data['beneficiary_name']
+            name=verified_data.get('beneficiary_name'),
+            surname=verified_data.get('beneficiary_surname')
         )
+
+        # Remove the custom form fields before saving the table entry
+        del verified_data['beneficiary_name']
+        del verified_data['beneficiary_surname']
 
         owned_income_from_pensions, created = models.OwnedIncomeFromPensionsTableEntry.objects.get_or_create(
             person=owner_person,
-            holder_relationship=verified_data['beneficiary_relationship'],
-            source_of_goods=verified_data['income_source'],
-            county=verified_data['county'],
-            city=verified_data['city'],
-            commune=verified_data['commune'],
-            service=verified_data['offered_service'],
-            ex_position=verified_data['position'],
-            annual_income=verified_data['income_amount'],
-            currency=verified_data['currency'])
-
+            **verified_data,
+        )
 
 class TaskOwnedIncomeFromPensionsTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromPensionsTable
@@ -239,25 +232,22 @@ class TaskOwnedIncomeFromOtherSourcesRowEntry(DigitalizationTask):
     template_name = "tasks/owned_income_other_sources.html"
 
     def save_verified_data(self, verified_data):
+        # Use the custom form fields
         owner_person, created = models.Person.objects.get_or_create(
-            name=verified_data['name'],
-            surname=verified_data['surname']
+            name=verified_data.get('name'),
+            surname=verified_data.get('surname')
         )
+
+        # Remove the custom form fields before saving the table entry
+        del verified_data['name']
+        del verified_data['surname']
 
         owned_income_other_sources, created = models.OwnedIncomeFromOtherSourcesTableEntry.objects.get_or_create(
             person=owner_person,
-            holder_relationship=verified_data['holder_relationship'],
-            source_of_goods=verified_data['source_of_goods'],
-            county=verified_data['county'],
-            city=verified_data['city'],
-            commune=verified_data['commune'],
-            address=verified_data['address'],
-            service=verified_data['service'],
-            annual_income=verified_data['annual_income'],
-            currency=verified_data['currency'],
-            )
+            **verified_data
+        )
 
-
+@register()
 class TaskOwnedIncomeFromOtherSourcesTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromOtherSourcesTable
     storage_model = models.OwnedIncomeFromOtherSourcesTable
@@ -295,7 +285,7 @@ class TaskExtraValuableRowEntry(DigitalizationTask):
         del verified_data['owner_name']
         del verified_data['owner_surname']
 
-        owned_land, created = models.OwnedExtraValuableTableEntry.objects.get_or_create(
+        owned_extra_valuable, created = models.OwnedExtraValuableTableEntry.objects.get_or_create(
             receiver_of_goods=owner_person,
             **verified_data,
         )
@@ -312,22 +302,19 @@ class TaskOwnedIncomeFromDeferredUseOfGoodsRowEntry(DigitalizationTask):
     template_name = "tasks/owned_income_from_deferred_use_of_goods.html"
 
     def save_verified_data(self, verified_data):
+        # Use the custom form fields
         owner_person, created = models.Person.objects.get_or_create(
-            name=verified_data['name'],
-            surname=verified_data['surname']
+            name=verified_data.get('name'),
+            surname=verified_data.get('surname')
         )
+
+        # Remove the custom form fields before saving the table entry
+        del verified_data['name']
+        del verified_data['surname']
 
         owned_income_from_deferred_use, created = models.OwnedIncomeFromDeferredUseOfGoodsTableEntry.objects.get_or_create(
             person=owner_person,
-            county=verified_data['county'],
-            city=verified_data['city'],
-            commune=verified_data['commune'],
-            address=verified_data['address'],
-            holder_relationship=verified_data['holder_relationship'],
-            source_of_goods=verified_data['source_of_goods'],
-            service=verified_data['service'],
-            annual_income=verified_data['annual_income'],
-            currency=verified_data['currency'],
+            **verified_data,
         )
 
 
@@ -358,7 +345,6 @@ class TaskOwnedIncomeFromIndependentActivitiesRowEntry(DigitalizationTask):
         )
 
 
-@register()
 class TaskOwnedIncomeFromIndependentActivitiesTable(CountTableRowsTask):
     task_form = forms.TranscribeIndependentActivitiesTable
     storage_model = models.OwnedIncomeFromIndependentActivitiesTable
@@ -370,22 +356,19 @@ class TaskOwnedIncomeFromGamblingRowEntry(DigitalizationTask):
     template_name = "tasks/owned_income_from_gambling.html"
 
     def save_verified_data(self, verified_data):
+        # Use the custom form fields
         owner_person, created = models.Person.objects.get_or_create(
-            name=verified_data['name'],
-            surname=verified_data['surname']
+            name=verified_data.get('name'),
+            surname=verified_data.get('surname')
         )
+
+        # Remove the custom form fields before saving the table entry
+        del verified_data['name']
+        del verified_data['surname']
 
         owned_income_from_gambling, created = models.OwnedIncomeFromGamblingTableEntry.objects.get_or_create(
             person=owner_person,
-            county=verified_data['county'],
-            city=verified_data['city'],
-            commune=verified_data['commune'],
-            address=verified_data['address'],
-            holder_relationship=verified_data['holder_relationship'],
-            source_of_goods=verified_data['source_of_goods'],
-            service=verified_data['service'],
-            annual_income=verified_data['annual_income'],
-            currency=verified_data['currency'],
+            **verified_data
         )
 
 
@@ -454,23 +437,20 @@ class TaskOwnedIncomeFromInvestmentsRowEntry(DigitalizationTask):
     template_name = "tasks/owned_investments.html"
 
     def save_verified_data(self, verified_data):
+        # Use the custom form fields
         owner_person, created = models.Person.objects.get_or_create(
-            name=verified_data['name'],
-            surname=verified_data['surname']
+            name=verified_data.get('name'),
+            surname=verified_data.get('surname')
         )
 
-        income_declaration, created = models.OwnedIncomeFromInvestmentsTableEntry.objects.get_or_create(
+        # Remove the custom form fields before saving the table entry
+        del verified_data['name']
+        del verified_data['surname']
+
+        income_from_investments, created = models.OwnedIncomeFromInvestmentsTableEntry.objects.get_or_create(
             person=owner_person,
-            holder_relationship=verified_data['holder_relationship'],
-            county=verified_data['county'],
-            city=verified_data['city'],
-            commune=verified_data['commune'],
-            service=verified_data['service'],
-            source_of_goods=verified_data['source_of_goods'],
-            annual_income=verified_data['income_amount'],
-            currency=verified_data['currency']
+            **verified_data,
         )
-
 
 
 class TaskOwnedIncomeFromInvestmentsTable(CountTableRowsTask):

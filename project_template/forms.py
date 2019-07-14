@@ -278,105 +278,82 @@ class TranscribeOwnedIncomeFromDeferredUseOfGoodsTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['deferred_use']), min_value=0)
 
 
-class TranscribeOwnedIncomeFromDeferredUseOfGoodsRowEntry(forms.Form):
-    surname = forms.CharField(label="Care e numele persoanei care a realizat venitul?")
-    name = forms.CharField(label="Care e prenumele persoanei care a realizat venitul?")
-    county = forms.ChoiceField(label="Care este judetul de domiciliu?", choices=Counties.return_counties())
-    city = forms.CharField(label="Care este localitatea de domiciliu?")
-    commune = forms.CharField(label="Care este comuna de domiciliu?")
-    address = forms.CharField(label="Care este adresa de domiciliu?")
-    holder_relationship = forms.ChoiceField(label="Cine este beneficiarul venitului din cedarea folosirii bunurilor?", choices=HolderRelationship.return_as_iterable())
-    source_of_goods = forms.CharField(label="Care este sursa de venit?")
-    service = forms.CharField(label="Care e serviciul prestat?")
-    annual_income = forms.FloatField(label="Care este venitul persoanei?")
-    currency = forms.ChoiceField(label="Care este valuta in care e incasat venitul?", choices=Currency.return_as_iterable())
+class TranscribeOwnedIncomeFromDeferredUseOfGoodsRowEntry(PartialModelForm):
+    surname = forms.CharField(label=_("Care e numele persoanei care a realizat venitul?"))
+    name = forms.CharField(label=_("Care e prenumele persoanei care a realizat venitul?"))
+
+    class Meta:
+        model = models.OwnedIncomeFromDeferredUseOfGoodsTableEntry
+        # Exclude the Model's table and person fields because they will be handled separately by the Task
+        exclude = ['table', 'person']
 
 
 class TranscribeOwnedIncomeFromInvestmentsTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['income_investments']), min_value=0)
 
 
-class TranscribeOwnedIncomeFromInvestmentsRowEntry(forms.Form):
-    holder_relationship = forms.ChoiceField(label="Cine este beneficiarul venitului din investitii?", choices=HolderRelationship.return_as_iterable())
-    surname = forms.CharField(label="Care e numele persoanei?")
-    name = forms.CharField(label="Care e prenumele persoanei?")
-    county = forms.ChoiceField(label="Care este judetul de unde provine sursa de venit?", choices=Counties.return_counties())
-    city = forms.CharField(label="Care este localitatea de unde provine sursa de venit?")
-    commune = forms.CharField(label="Care este comuna de unde provine sursa de venit?")
-    source_of_goods = forms.CharField(label="Care este numele sursei de venit?")
-    service = forms.CharField(label="Care e serviciul prestat?")
-    income_amount = forms.FloatField(label="Care este venitul anual incasat?", min_value=0.0)
-    currency = forms.ChoiceField(label="Care este moneda venitului?", choices=Currency.return_as_iterable())
+class TranscribeOwnedIncomeFromInvestmentsRowEntry(PartialModelForm):
+    surname = forms.CharField(label=_("Care e numele persoanei care a realizat venitul?"))
+    name = forms.CharField(label=_("Care e prenumele persoanei care a realizat venitul?"))
+
+    class Meta:
+        model = models.OwnedIncomeFromInvestmentsTableEntry
+        # Exclude the Model's table and person fields because they will be handled separately by the Task
+        exclude = ['table', 'person']
 
 
 class TranscribeOwnedIncomeFromPensionsTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['pensions']), min_value=0)
 
 
-class TranscribeOwnedIncomeFromPensionsRowEntry(forms.Form):
-    beneficiary_relationship = forms.ChoiceField(label="Cine este beneficiarul pensiei?", choices=HolderRelationship.return_as_iterable())
-    beneficiary_surname = forms.CharField(label="Care este numele beneficiarului?")
-    beneficiary_name = forms.CharField(label="Care este prenumele beneficiarului?")
-    income_source = forms.CharField(label="Care este numele sursei de venit?")
-    county = forms.CharField(label="Care este judetul de unde provine sursa de venit?")
-    city = forms.CharField(label="Care este localitatea de unde provine sursa de venit?")
-    commune = forms.CharField(label="Care este comuna de unde provine sursa de venit?")
-    country = forms.CharField(label="Care este tara din care provine sursa de venit?")
-    offered_service = forms.CharField(label="Care a fost serviciul prestat?")
-    position = forms.ChoiceField(label="Care a fost functia detinuta?", choices=Position.return_as_iterable())
-    income_amount = forms.FloatField(label="Care este valoarea venitului?")
-    currency = forms.ChoiceField(label="Care este moneda venitului?", choices=Currency.return_as_iterable())
+class TranscribeOwnedIncomeFromPensionsRowEntry(PartialModelForm):
+    beneficiary_surname = forms.CharField(label=_("Care este numele beneficiarului?"))
+    beneficiary_name = forms.CharField(label=_("Care este prenumele beneficiarului?"))
+
+    class Meta:
+        model = models.OwnedIncomeFromPensionsTableEntry
+        # Exclude the Model's table and person fields because they will be handled separately by the Task
+        exclude = ['table', 'person']
 
 
 class TranscribeOwnedIncomeFromAgriculturalActivitiesTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['agriculture']), min_value=0)
 
 
-class TranscribeOwnedIncomeFromAgriculturalActivitiesRowEntry(forms.Form):
-    holder_relationship = forms.ChoiceField(label="Cine este beneficiarul venitului din activități agricole?", choices=HolderRelationship.return_as_iterable())
-    holder_type = forms.ChoiceField(label="Tipul detinatorului", choices=HolderType.return_as_iterable(), widget=forms.RadioSelect)
-    surname = forms.CharField(label="Care e numele persoanei?")
-    name = forms.CharField(label="Care e prenumele persoanei?")
-    source = forms.CharField(label="Care este sursa?")
-    county = forms.ChoiceField(label="Care este judetul in care se gaseste terenul detinut?", choices=Counties.return_counties())
-    city = forms.CharField(label="Care este localitatea in care se gaseste terenul detinut?")
-    commune = forms.CharField(label="Care este comuna in care se gaseste terenul detinut?")
-    offered_service = forms.CharField(label="Care e serviciul prestat?")
-    income_amount = forms.FloatField(label="Care este venitul anual incasat?", min_value=0.0)
-    currency = forms.ChoiceField(label="Care este moneda venitului?", choices=Currency.return_as_iterable())
+class TranscribeOwnedIncomeFromAgriculturalActivitiesRowEntry(PartialModelForm):
+    surname = forms.CharField(label=_("Care e numele persoanei?"))
+    name = forms.CharField(label=_("Care e prenumele persoanei?"))
+
+    class Meta:
+        model = models.OwnedIncomeFromAgriculturalActivitiesTableEntry
+        # Exclude the Model's table and person fields because they will be handled separately by the Task
+        exclude = ['table', 'person']
 
 
 class TranscribeOwnedIncomeFromGamblingTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['gambling']), min_value=0)
 
 
-class TranscribeOwnedIncomeFromGamblingRowEntry(forms.Form):
-    surname = forms.CharField(label="Care e numele persoanei care a realizat venitul?")
-    name = forms.CharField(label="Care e prenumele persoanei care a realizat venitul?")
-    county = forms.ChoiceField(label="Care este judetul de domiciliu?", choices=Counties.return_counties())
-    city = forms.CharField(label="Care este localitatea de domiciliu?")
-    commune = forms.CharField(label="Care este comuna de domiciliu?")
-    address = forms.CharField(label="Care este adresa de domiciliu?")
-    holder_relationship = forms.ChoiceField(label="Care este relatia cu persoana care a realizat venitul?", choices=HolderRelationship.return_as_iterable())
-    source_of_goods = forms.CharField(label="Care este sursa de venit?")
-    service = forms.CharField(label="Care e serviciul prestat?")
-    annual_income = forms.FloatField(label="Care este venitul persoanei?")
-    currency = forms.ChoiceField(label="Care este valuta in care e incasat venitul?", choices=Currency.return_as_iterable())
+class TranscribeOwnedIncomeFromGamblingRowEntry(PartialModelForm):
+    surname = forms.CharField(label=_("Care e numele persoanei care a realizat venitul?"))
+    name = forms.CharField(label=_("Care e prenumele persoanei care a realizat venitul?"))
+
+    class Meta:
+        model = models.OwnedIncomeFromGamblingTableEntry
+        # Exclude the Model's table and person fields because they will be handled separately by the Task
+        exclude = ['table', 'person']
 
 
 class TranscribeOwnedIncomeFromOtherSourcesTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['other_sources']), min_value=0)
 
 
-class TranscribeOwnedIncomeFromOtherSourcesRowEntry(forms.Form):
-    holder_relationship = forms.ChoiceField(label="Cine a realizat venitul?", choices=HolderRelationship.return_as_iterable())
-    surname = forms.CharField(label="Care este numele celui care a realizat venitul?")
-    name = forms.CharField(label="Care este prenumele celui care a realizat venitul?")
-    source_of_goods = forms.CharField(label="Care este sursa venitului?")
-    county = forms.ChoiceField(label="Care este judetul unde s-a realizat venitul?", choices=Counties.return_counties())
-    city = forms.CharField(label="Care este orasul unde s-a realizat venitul?")
-    commune = forms.CharField(label="Care este comuna unde s-a realizat venitul?")
-    address = forms.CharField(label="Care este adresa venitului realizat in strainatate?")
-    service = forms.CharField(label="Care este serviciul prestat/Obiectul generator de venit?")
-    annual_income = forms.FloatField(label="Care este venitul anual incasat?")
-    currency = forms.ChoiceField(label="Care este moneda in care s-a realizat venitul?", choices=Currency.return_as_iterable())
+class TranscribeOwnedIncomeFromOtherSourcesRowEntry(PartialModelForm):
+    surname = forms.CharField(label=_("Care e numele persoanei care a realizat venitul?"))
+    name = forms.CharField(label=_("Care e prenumele persoanei care a realizat venitul?"))
+
+    class Meta:
+        model = models.OwnedIncomeFromOtherSourcesTableEntry
+        # Exclude the Model's table and person fields because they will be handled separately by the Task
+        exclude = ['table', 'person']
+
