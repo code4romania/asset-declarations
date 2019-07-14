@@ -39,7 +39,7 @@ class TaskOwnedLandRowEntry(DigitalizationTask):
         # Use the custom form fields
         owner_person, created = models.Person.objects.get_or_create(
             name=verified_data.get('owner_name'),
-            surname=verified_data.get('owner_name')
+            surname=verified_data.get('owner_surname')
         )
 
         # Remove the custom form fields before saving the table entry
@@ -295,7 +295,7 @@ class TaskExtraValuableRowEntry(DigitalizationTask):
         # Use the custom form fields
         owner_person, created = models.Person.objects.get_or_create(
             name=verified_data.get('owner_name'),
-            surname=verified_data.get('owner_name')
+            surname=verified_data.get('owner_surname')
         )
 
         # Remove the custom form fields before saving the table entry
@@ -442,7 +442,7 @@ class TaskOwnedBuildingsRowEntry(DigitalizationTask):
         # Use the custom form fields
         owner_person, created = models.Person.objects.get_or_create(
             name=verified_data.get('owner_name'),
-            surname=verified_data.get('owner_name')
+            surname=verified_data.get('owner_surname')
         )
 
         # Remove the custom form fields before saving the table entry
