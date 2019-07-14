@@ -67,6 +67,11 @@ class TranscribeOwnedLandRowEntry(PartialModelForm):
     owner_surname = forms.CharField(label=_("Care este numele proprietarului?"))
     owner_name = forms.CharField(label=_("Care este prenumele proprietarului?"))
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Set a specific form field for a model field
+        self.fields['acquisition_year'] = forms.ChoiceField(choices=get_dict_year_choices)
+
     class Meta:
         model = models.OwnedLandTableEntry
         # Exclude the Model's table and coowner fields because they will be handled separately by the Task
@@ -82,6 +87,11 @@ class TranscribeOwnedBuildingsRowEntry(PartialModelForm):
     owner_surname = forms.CharField(label=_("Care este numele proprietarului?"))
     owner_name = forms.CharField(label=_("Care este prenumele proprietarului?"))
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Set a specific form field for a model field
+        self.fields['acquisition_year'] = forms.ChoiceField(choices=get_dict_year_choices)
+
     class Meta:
         model = models.OwnedBuildingsTableEntry
         # Exclude the Model's table and coowner fields because they will be handled separately by the Task
@@ -96,6 +106,12 @@ class TranscribeOwnedAutomobileTable(forms.Form):
 
 class TranscribeOwnedAutomobileRowEntry(PartialModelForm):
     # No custom form fields
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Set a specific form field for a model field
+        # TODO: A fabrication_year can be much older than the current acquisition_year dropdown allows
+        self.fields['fabrication_year'] = forms.ChoiceField(choices=get_dict_year_choices)
 
     class Meta:
         model = models.OwnedAutomobileTableEntry
