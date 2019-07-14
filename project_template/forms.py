@@ -175,12 +175,19 @@ class TranscribeOwnedBankAccountsTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['bank_accounts']), min_value=0)
 
 
-class TranscribeOwnedBankAccountsRowEntry(forms.Form):
-    financial_institution = forms.ChoiceField(label="Care este institutia financiara?", choices=FinancialInstitution.return_as_iterable())
-    account_type = forms.ChoiceField(label="Care este tipul contului?", choices=AccountType.return_as_iterable())
-    currency = forms.ChoiceField(label="Care este valuta?", choices=Currency.return_as_iterable())
-    account_start_date = forms.ChoiceField(label="Care este anul deschiderii contului?", choices=get_dict_year_choices)
-    balance = forms.FloatField(label="Care este valoarea soldului?")
+class TranscribeOwnedBankAccountsRowEntry(PartialModelForm):
+    # No custom form fields
+
+    class Meta:
+        model = models.OwnedBankAccountsTableEntry
+        exclude = ['table', ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Customise a Model form field widget
+        self.fields['opening_year'] = forms.ChoiceField(
+            label=self.fields['opening_year'].label,
+            choices=get_dict_year_choices)
 
 
 class TranscribeOwnedInvestmentsOver5KTable(forms.Form):

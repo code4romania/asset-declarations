@@ -225,7 +225,7 @@ class OwnedBankAccountsTable(models.Model):
 class OwnedBankAccountsTableEntry(models.Model):
     table = models.ForeignKey(OwnedBankAccountsTable, on_delete=models.CASCADE, null=True)
     institution = models.CharField("Instituția", max_length=128, choices=FinancialInstitution.return_as_iterable())
-    account_type = models.CharField("Tipul", max_length=32, choices=AccountType.return_as_iterable())
+    account_type = models.IntegerField("Tipul", choices=AccountType.return_as_iterable())
     currency = models.CharField("Valuta", max_length=16, choices=Currency.return_as_iterable())
     opening_year = models.IntegerField("Deschis in anul")
     account_balance = models.DecimalField("Soldul", decimal_places=2, max_digits=10)

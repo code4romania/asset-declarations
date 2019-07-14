@@ -80,14 +80,11 @@ class TaskOwnedBankAccountsRowEntry(DigitalizationTask):
 
     def save_verified_data(self, verified_data):
         owned_bank_accounts, created = models.OwnedBankAccountsTableEntry.objects.get_or_create(
-            institution=verified_data['financial_institution'],
-            account_type=verified_data['account_type'],
-            currency=verified_data['currency'],
-            opening_year=verified_data['account_start_date'],
-            account_balance=verified_data['balance'],
+            **verified_data,
         )
 
 
+@register()
 class TaskOwnedBankAccountsTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedBankAccountsTable
     storage_model = models.OwnedBankAccountsTable
@@ -285,6 +282,7 @@ class TaskOwnedJewelryRowEntry(DigitalizationTask):
             **verified_data
         )
 
+
 class TaskOwnedJewelryTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedJewelryTable
     storage_model = models.OwnedJewelryTable
@@ -312,7 +310,6 @@ class TaskExtraValuableRowEntry(DigitalizationTask):
         )
 
 
-@register()
 class TaskExtraValuableTable(CountTableRowsTask):
     task_form = forms.TranscribeExtraValuableTable
     storage_model = models.OwnedExtraValuableTable
