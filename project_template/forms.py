@@ -236,18 +236,14 @@ class TranscribeOwnedGoodsOrServicesTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['goods']), min_value=0)
 
 
-class TranscribeOwnedGoodsOrServicesRowEntry(forms.Form):
-    holder_relationship = forms.ChoiceField(label="Cine este beneficiarul pensiei?", choices=HolderRelationship.return_as_iterable())
-    surname = forms.CharField(label="Care este numele titularului?")
-    name = forms.CharField(label="Care este prenumele titularului")
-    source_of_goods = forms.CharField(label="Care este numele sursei de venit?")
-    county = forms.ChoiceField(label="Care este judetul de domiciliu?", choices=Counties.return_counties())
-    city = forms.CharField(label="Care este localitatea de domiciliu?")
-    commune = forms.CharField(label="Care este comuna de domiciliu?")
-    address = forms.CharField(label="Care este adresa de domiciliu?")
-    service = forms.CharField(label="Care este fost serviciul prestat?")
-    annual_income = forms.FloatField(label="Care este venitul persoanei?")
-    currency = forms.ChoiceField(label="Care este valuta in care e incasat venitul?", choices=Currency.return_as_iterable())
+class TranscribeOwnedGoodsOrServicesRowEntry(PartialModelForm):
+    surname = forms.CharField(label=_("Care este numele titularului?"))
+    name = forms.CharField(label=_("Care este prenumele titularului?"))
+
+    class Meta:
+        model = models.OwnedGoodsOrServicesTableEntry
+        # Exclude the Model's table and person fields because they will be handled separately by the Task
+        exclude = ['table', 'person']
 
 
 class TranscribeOwnedIncomeFromSalariesTable(forms.Form):

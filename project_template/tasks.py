@@ -146,7 +146,6 @@ class TaskOwnedDebtsRowEntry(DigitalizationTask):
             )
 
 
-@register()
 class TaskOwnedDebtsTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedDebtsTable
     storage_model = models.OwnedDebtsTable
@@ -187,25 +186,23 @@ class TaskOwnedGoodsOrServicesRowEntry(DigitalizationTask):
     template_name = "tasks/owned_goods_or_services.html"
 
     def save_verified_data(self, verified_data):
+        # Use the custom form fields
         owner_person, created = models.Person.objects.get_or_create(
-            name=verified_data['name'],
-            surname=verified_data['surname']
+            name=verified_data.get('name'),
+            surname=verified_data.get('surname')
         )
+
+        # Remove the custom form fields before saving the table entry
+        del verified_data['name']
+        del verified_data['surname']
 
         owned_goods_or_services, created = models.OwnedGoodsOrServicesTableEntry.objects.get_or_create(
             person=owner_person,
-            county=verified_data['county'],
-            city=verified_data['city'],
-            commune=verified_data['commune'],
-            address=verified_data['address'],
-            holder_relationship=verified_data['holder_relationship'],
-            source_of_goods=verified_data['source_of_goods'],
-            service=verified_data['service'],
-            annual_income=verified_data['annual_income'],
-            currency=verified_data['currency'],
+            **verified_data
         )
 
 
+@register()
 class TaskOwnedGoodsOrServicesTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedGoodsOrServicesTable
     storage_model = models.OwnedGoodsOrServicesTable
