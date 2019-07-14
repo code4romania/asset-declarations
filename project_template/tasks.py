@@ -84,7 +84,6 @@ class TaskOwnedBankAccountsRowEntry(DigitalizationTask):
         )
 
 
-@register()
 class TaskOwnedBankAccountsTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedBankAccountsTable
     storage_model = models.OwnedBankAccountsTable
@@ -221,22 +220,21 @@ class TaskOwnedInvestmentsOver5KRowEntry(DigitalizationTask):
 
     def save_verified_data(self, verified_data):
         loan_beneficiary, created = models.Person.objects.get_or_create(
-            name=verified_data['name'],
-            surname=verified_data['surname']
+            name=verified_data.get('beneficiary_name'),
+            surname=verified_data.get('beneficiary_surname')
         )
+
+        # Remove the custom form fields before saving the table entry
+        del verified_data['beneficiary_name']
+        del verified_data['beneficiary_surname']
 
         owned_investments_over_5k, created = models.OwnedInvestmentsOver5KTableEntry.objects.get_or_create(
             loan_beneficiary=loan_beneficiary,
-            issue_title=verified_data['issue_title'],
-            shareholder_society=verified_data['shareholder_society'],
-            type_of_investment=verified_data['type_of_investment'],
-            number_of_stocks=verified_data['number_of_stocks'],
-            share_ratio=verified_data['share_ratio'],
-            total_value=verified_data['total_value'],
-            currency=verified_data['currency']
+            **verified_data,
         )
 
 
+@register()
 class TaskOwnedInvestmentsOver5KTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedInvestmentsOver5KTable
     storage_model = models.OwnedInvestmentsOver5KTable

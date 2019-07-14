@@ -194,16 +194,15 @@ class TranscribeOwnedInvestmentsOver5KTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['investments']), min_value=0)
 
 
-class TranscribeOwnedInvestmentsOver5KRowEntry(forms.Form):
-    beneficiary_surname = forms.CharField(label="Care este numele beneficiarului?")
-    beneficiary_name = forms.CharField(label="Care este prenumele beneficiarului?")
-    issue_title = forms.CharField(label="Care este titlul emitentului?")
-    shareholder_society = forms.CharField(label="Care este societatea in care persoana este actionar sau asociat?")
-    type_of_investment = forms.ChoiceField(label="Care este tipul?", choices=InvestmentType.return_as_iterable())
-    number_of_stocks = forms.IntegerField(label="Care este numarul de titluri?")
-    share_ratio = forms.FloatField(label="Care este cota de participare?")
-    total_value = forms.FloatField(label="Care este valoarea totala la zi?")
-    currency = forms.ChoiceField(label="Care este moneda?", choices=Currency.return_as_iterable())
+class TranscribeOwnedInvestmentsOver5KRowEntry(PartialModelForm):
+    # Custom form fields not found in the Model
+    beneficiary_surname = forms.CharField(label=_("Care este numele beneficiarului?"))
+    beneficiary_name = forms.CharField(label=_("Care este prenumele beneficiarului?"))
+
+    class Meta:
+        model = models.OwnedInvestmentsOver5KTableEntry
+        # Exclude the Model's table and loan_beneficiary fields because they will be handled separately by the Task
+        exclude = ['table', 'loan_beneficiary']
 
 
 class TranscribeOwnedDebtsTable(forms.Form):
