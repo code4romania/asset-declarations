@@ -255,7 +255,7 @@ class TranscribeOwnedIncomeFromSalariesRowEntry(PartialModelForm):
     name = forms.CharField(label=_("Care e prenumele persoanei?"))
 
     class Meta:
-        model = models.OwnedGoodsOrServicesTableEntry
+        model = models.OwnedIncomeFromSalariesTableEntry
         # Exclude the Model's table and person fields because they will be handled separately by the Task
         exclude = ['table', 'person']
 
