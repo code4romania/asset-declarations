@@ -70,7 +70,9 @@ class TranscribeOwnedLandRowEntry(PartialModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # Set a specific form field for a model field
-        self.fields['acquisition_year'] = forms.ChoiceField(choices=get_dict_year_choices)
+        self.fields['acquisition_year'] = forms.ChoiceField(
+            label=self.fields['acquisition_year'].label,
+            choices=get_dict_year_choices)
 
     class Meta:
         model = models.OwnedLandTableEntry
@@ -90,7 +92,9 @@ class TranscribeOwnedBuildingsRowEntry(PartialModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # Set a specific form field for a model field
-        self.fields['acquisition_year'] = forms.ChoiceField(choices=get_dict_year_choices)
+        self.fields['acquisition_year'] = forms.ChoiceField(
+            label=self.fields['acquisition_year'].label,
+            choices=get_dict_year_choices)
 
     class Meta:
         model = models.OwnedBuildingsTableEntry
@@ -111,7 +115,9 @@ class TranscribeOwnedAutomobileRowEntry(PartialModelForm):
         super().__init__(*args, **kwargs)
         # Set a specific form field for a model field
         # TODO: A fabrication_year can be much older than the current acquisition_year dropdown allows
-        self.fields['fabrication_year'] = forms.ChoiceField(choices=get_dict_year_choices)
+        self.fields['fabrication_year'] = forms.ChoiceField(
+            label=self.fields['fabrication_year'].label,
+            choices=get_dict_year_choices)
 
     class Meta:
         model = models.OwnedAutomobileTableEntry
@@ -129,7 +135,9 @@ class TranscribeOwnedJewelryRowEntry(PartialModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # Set a specific form field for a model field
-        self.fields['acquisition_year'] = forms.ChoiceField(choices=get_dict_year_choices)
+        self.fields['acquisition_year'] = forms.ChoiceField(
+            label=self.fields['acquisition_year'].label,
+            choices=get_dict_year_choices)
 
     class Meta:
         model = models.OwnedJewelryTableEntry
@@ -152,7 +160,7 @@ class TranscribeExtraValuableRowEntry(PartialModelForm):
         # Customise some field widgets
         self.fields['estrangement_date'] = forms.DateField(
             label=self.fields['estrangement_date'].label,
-            widget=forms.SelectDateWidget(years=calculate_year_choices()),
+            widget=forms.SelectDateWidget(years=calculate_year_choices()),  # cannot use a callable for 'years'
             input_formats=['%Y-%m-%d'])
 
     class Meta:
