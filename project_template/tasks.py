@@ -125,30 +125,28 @@ class TaskOwnedDebtsRowEntry(DigitalizationTask):
     template_name = "tasks/owned_debts.html"
 
     def save_verified_data(self, verified_data):
-        if verified_data['loaner_name'] and verified_data['loaner_surname']:
+        if verified_data.get('loaner_name') and verified_data.get('loaner_surname'):
+            # Use the custom form fields
             loaner_person, created = models.Person.objects.get_or_create(
-                name=verified_data['loaner_name'],
-                surname=verified_data['loaner_surname']
+                name=verified_data.get('loaner_name'),
+                surname=verified_data.get('loaner_surname')
             )
+
+            # Remove the custom form fields before saving the table entry
+            del verified_data['loaner_name']
+            del verified_data['loaner_surname']
+
             owned_debts, created = models.OwnedDebtsTableEntry.objects.get_or_create(
                 person=loaner_person,
-                debt_type=verified_data['type_of_debt'],
-                acquirement_year=verified_data['loan_start_year'],
-                due_date=verified_data['loan_maturity'],
-                value=verified_data['loan_amount'],
-                currency=verified_data['currency']
+                **verified_data,
             )
-        elif verified_data['institution']:
+        elif verified_data.get('institution'):
             owned_debts, created = models.OwnedDebtsTableEntry.objects.get_or_create(
-                lender=verified_data['institution'],
-                debt_type=verified_data['type_of_debt'],
-                acquirement_year=verified_data['loan_start_year'],
-                due_date=verified_data['loan_maturity'],
-                value=verified_data['loan_amount'],
-                currency=verified_data['currency']
-                )
+                **verified_data,
+            )
 
 
+@register()
 class TaskOwnedDebtsTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedDebtsTable
     storage_model = models.OwnedDebtsTable
@@ -234,7 +232,6 @@ class TaskOwnedInvestmentsOver5KRowEntry(DigitalizationTask):
         )
 
 
-@register()
 class TaskOwnedInvestmentsOver5KTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedInvestmentsOver5KTable
     storage_model = models.OwnedInvestmentsOver5KTable

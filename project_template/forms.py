@@ -209,15 +209,27 @@ class TranscribeOwnedDebtsTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['debts']), min_value=0)
 
 
-class TranscribeOwnedDebtsRowEntry(forms.Form):
-    loaner_surname = forms.CharField(label="Care este numele creditorului?")
-    loaner_name = forms.CharField(label="Care este prenumele creditorului?")
-    institution = forms.CharField(label="Care este numele institutiei creditoare?", widget=forms.Select(choices=FinancialInstitution.return_as_iterable()))
-    type_of_debt = forms.CharField(label="Care este tipul de datorie?", widget=forms.Select(choices=DebtType.return_as_iterable()))
-    loan_start_year = forms.ChoiceField(label="Care este anul contractarii imprumutului?", choices=get_dict_year_choices)
-    loan_maturity = forms.ChoiceField(label="Care este data scadentei?", choices=get_dict_year_choices)
-    loan_amount = forms.FloatField(label="Care este valoarea imprumutului?")
-    currency = forms.ChoiceField(label="Care este moneda in care s-a facut imprumutul?", choices=Currency.return_as_iterable())
+class TranscribeOwnedDebtsRowEntry(PartialModelForm):
+    # Custom form fields not found in the Model
+    loaner_surname = forms.CharField(label="Care este numele creditorului?", required=False)
+    loaner_name = forms.CharField(label="Care este prenumele creditorului?", required=False)
+
+    class Meta:
+        model = models.OwnedDebtsTableEntry
+        # Exclude the Model's table and person fields because they will be handled separately by the Task
+        exclude = ['table', 'person']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Customise some Model form field widgets
+        self.fields['acquirement_year'] = forms.ChoiceField(
+            label=self.fields['acquirement_year'].label,
+            choices=get_dict_year_choices)
+        # TODO: due_date can also be in the future
+        self.fields['due_date'] = forms.ChoiceField(
+            label=self.fields['due_date'].label,
+            choices=get_dict_year_choices)
 
 
 class TranscribeOwnedGoodsOrServicesTable(forms.Form):
