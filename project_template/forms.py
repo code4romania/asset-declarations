@@ -141,22 +141,26 @@ class TranscribeExtraValuableTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['extra_valuable']), min_value=0)
 
 
-class TranscribeExtraValuableRowEntry(forms.Form):
-    estrangement_goods_type = forms.CharField(label="Care este natura bunului instrainat?",
-                                            widget=forms.Select(choices=EstrangedGoodsType.return_as_iterable()))
-    county = forms.ChoiceField(label="Judetul in care se gaseste bunul instrainat(daca este cazul)", choices=Counties.return_counties())
-    city = forms.CharField(label="Orasul in care se gaseste bunul instrainat(daca este cazul)")
-    commune = forms.CharField(label="Comuna in care se gaseste bunul instrainat(daca este cazul)")
-    estranged_date = forms.DateField(label="Care este data instrainarii bunului?",
-                                        widget=forms.SelectDateWidget(years=calculate_year_choices()),
-                                        input_formats=['%Y-%m-%d'])
-    owner_name = forms.CharField(label="Care este numele persoanei catre care s-a instrainat bunul?")
-    owner_surname = forms.CharField(label="Care este prenumele persoanei catre care s-a instrainat bunul?")
-    goods_separation_type = forms.CharField(label="Care este forma sub care s-a instrainat bunul?",
-                                                    widget=forms.Select(choices=GoodsSeparationType.return_as_iterable()))
-    estimated_value = forms.FloatField(label="Care este valoarea bunului instrainat?")
-    currency = forms.ChoiceField(label="Care este valuta in care este exprimata valoarea bunului instrainat?",
-                                    choices=Currency.return_as_iterable())
+class TranscribeExtraValuableRowEntry(PartialModelForm):
+    # Custom form fields not found in the Model
+    owner_surname = forms.CharField(label=_("Care este numele persoanei catre care s-a instrainat bunul?"))
+    owner_name = forms.CharField(label=_("Care este prenumele persoanei catre care s-a instrainat bunul?"))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Customise some field widgets
+        self.fields['estrangement_date'] = forms.DateField(
+            label=self.fields['estrangement_date'].label,
+            widget=forms.SelectDateWidget(years=calculate_year_choices()),
+            input_formats=['%Y-%m-%d'])
+
+    class Meta:
+        model = models.OwnedExtraValuableTableEntry
+        # Exclude the Model's table and receiver_of_goods fields because they will be handled separately by the Task
+        exclude = ['table', 'receiver_of_goods']
+        # TODO: The 'address' model field doesn't seem to be used by the old form. Is it an overlook?
+        exclude += ['address']
 
 
 class TranscribeOwnedBankAccountsTable(forms.Form):

@@ -276,7 +276,6 @@ class TaskOwnedIncomeFromOtherSourcesTable(CountTableRowsTask):
     child_class = TaskOwnedIncomeFromOtherSourcesRowEntry
 
 
-@register()
 class TaskOwnedJewelryRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedJewelryRowEntry
     template_name = "tasks/owned_jewelry.html"
@@ -285,7 +284,6 @@ class TaskOwnedJewelryRowEntry(DigitalizationTask):
         owned_jewelry, created = models.OwnedJewelryTableEntry.objects.get_or_create(
             **verified_data
         )
-
 
 class TaskOwnedJewelryTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedJewelryTable
@@ -298,24 +296,23 @@ class TaskExtraValuableRowEntry(DigitalizationTask):
     template_name = "tasks/owned_extra_valuable.html"
 
     def save_verified_data(self, verified_data):
+        # Use the custom form fields
         owner_person, created = models.Person.objects.get_or_create(
-            name=verified_data['owner_name'],
-            surname=verified_data['owner_surname']
+            name=verified_data.get('owner_name'),
+            surname=verified_data.get('owner_name')
         )
 
-        owned_extra_valuable, created = models.OwnedExtraValuableTableEntry.objects.get_or_create(
+        # Remove the custom form fields before saving the table entry
+        del verified_data['owner_name']
+        del verified_data['owner_surname']
+
+        owned_land, created = models.OwnedExtraValuableTableEntry.objects.get_or_create(
             receiver_of_goods=owner_person,
-            estrangement_goods_type=verified_data['estrangement_goods_type'],
-            county=verified_data['county'],
-            city=verified_data['city'],
-            commune=verified_data['commune'],
-            estrangement_date=verified_data['estranged_date'],
-            goods_separation_type=verified_data['goods_separation_type'],
-            value=verified_data['estimated_value'],
-            currency=verified_data['currency']
+            **verified_data,
         )
 
 
+@register()
 class TaskExtraValuableTable(CountTableRowsTask):
     task_form = forms.TranscribeExtraValuableTable
     storage_model = models.OwnedExtraValuableTable
