@@ -58,7 +58,6 @@ class TaskOwnedLandTable(CountTableRowsTask):
     child_class = TaskOwnedLandRowEntry
 
 
-@register()
 class TaskOwnedAutomobileRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedAutomobileRowEntry
     template_name = "tasks/owned_automobile.html"
@@ -277,16 +276,15 @@ class TaskOwnedIncomeFromOtherSourcesTable(CountTableRowsTask):
     child_class = TaskOwnedIncomeFromOtherSourcesRowEntry
 
 
+@register()
 class TaskOwnedJewelryRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedJewelryRowEntry
     template_name = "tasks/owned_jewelry.html"
 
     def save_verified_data(self, verified_data):
         owned_jewelry, created = models.OwnedJewelryTableEntry.objects.get_or_create(
-            summary_description=verified_data['description'],
-            acquisition_year=verified_data['ownership_start_year'],
-            goods_value=verified_data['estimated_value'],
-            currency=verified_data['currency'])
+            **verified_data
+        )
 
 
 class TaskOwnedJewelryTable(CountTableRowsTask):

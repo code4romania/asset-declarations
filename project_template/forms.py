@@ -107,11 +107,18 @@ class TranscribeOwnedJewelryTable(forms.Form):
     count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['jewelry']), min_value=0)
 
 
-class TranscribeOwnedJewelryRowEntry(forms.Form):
-    description = forms.CharField(label="Care este descrierea bunului?")
-    ownership_start_year = forms.ChoiceField(label="Care este anul dobandirii bunului?", choices=get_dict_year_choices)
-    estimated_value = forms.FloatField(label="Care este valoarea estimata a bunului?")
-    currency = forms.ChoiceField(label="Care este moneda in care este estimata valoarea bunului?", choices=Currency.return_as_iterable())
+class TranscribeOwnedJewelryRowEntry(PartialModelForm):
+    # No custom form fields
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Set a specific form field for a model field
+        self.fields['acquisition_year'] = forms.ChoiceField(choices=get_dict_year_choices)
+
+    class Meta:
+        model = models.OwnedJewelryTableEntry
+        # Exclude the Model's table field because they will be handled separately by the Task
+        exclude = ['table', ]
 
 
 class TranscribeExtraValuableTable(forms.Form):
