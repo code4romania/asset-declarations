@@ -72,7 +72,7 @@ class Politician(models.Model):
         )
 
     def add_position(self, position):
-        if self.all_positions is None:
+        if not self.all_positions:
             self.all_positions = []
         self.all_positions.append(position)
 
