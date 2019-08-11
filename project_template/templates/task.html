@@ -23,7 +23,9 @@
             <div class="row-fluid">
                 {# Provide additional context for non-native speakers #}
                 {% if "en" in request.LANGUAGE_CODE %}
+                {% with row_num=task.row_number %}
                     {% block explanation %}{% endblock %}
+                {% endwith %}
                 {% endif %}
                 {# Forms incoming! #}
                 <div class="col">

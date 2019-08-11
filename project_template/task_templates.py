@@ -12,6 +12,8 @@ class DigitalizationTask(AbstractTask):
 	
 	def create_new_task(self, task, info):
 		from moonsheep.register import base_task
+		for k in info:
+			setattr(task, k, info[k])
 		base_task.register(task)
 
 	def create_mocked_task(self, task_data):
@@ -38,5 +40,5 @@ class CountTableRowsTask(DigitalizationTask):
 	def after_save(self, verified_data):
 		# Create a new task for each table, asking the user to transcribe the number of rows
 		number_rows = int(verified_data['count'])
-		for row_number in list(range(1, number_rows)):
+		for row_number in range(1, number_rows + 1):
 			self.create_new_task(self.child_class, {'row_number': row_number})
