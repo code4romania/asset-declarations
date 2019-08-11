@@ -7,6 +7,7 @@ import project_template.models as models
 import project_template.forms as forms
 from project_template.task_templates import DigitalizationTask, CountTableRowsTask
 
+
 class TaskGetInitialInformation(DigitalizationTask):
     task_form = forms.TranscribeInitialInformation
     template_name = 'tasks/general_information_task.html'
@@ -62,6 +63,7 @@ class TaskOwnedLandTable(CountTableRowsTask):
     storage_model = models.OwnedLandTable
     child_class = TaskOwnedLandRowEntry
 
+
 class TaskOwnedAutomobileRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedAutomobileRowEntry
     template_name = "tasks/owned_automobile.html"
@@ -76,10 +78,12 @@ class TaskOwnedAutomobileRowEntry(DigitalizationTask):
             row_number=self.row_number if hasattr(self, 'row_number') else -1
         )
 
+
 class TaskOwnedAutomobileTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedAutomobileTable
     storage_model = models.OwnedAutomobileTable
     child_class = TaskOwnedAutomobileRowEntry
+
 
 class TaskOwnedBankAccountsRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedBankAccountsRowEntry
@@ -95,10 +99,12 @@ class TaskOwnedBankAccountsRowEntry(DigitalizationTask):
             row_number=self.row_number if hasattr(self, 'row_number') else -1
         )
 
+
 class TaskOwnedBankAccountsTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedBankAccountsTable
     storage_model = models.OwnedBankAccountsTable
     child_class = TaskOwnedBankAccountsRowEntry
+
 
 class TaskOwnedIncomeFromAgriculturalActivitiesRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedIncomeFromAgriculturalActivitiesRowEntry
@@ -124,10 +130,12 @@ class TaskOwnedIncomeFromAgriculturalActivitiesRowEntry(DigitalizationTask):
             currency=verified_data['currency']
         )
 
+
 class TaskOwnedIncomeFromAgriculturalActivitiesTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromAgriculturalActivitiesTable
     storage_model = models.OwnedIncomeFromAgriculturalActivitiesTable
     child_class = TaskOwnedIncomeFromAgriculturalActivitiesRowEntry
+
 
 class TaskOwnedDebtsRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedDebtsRowEntry
@@ -157,12 +165,14 @@ class TaskOwnedDebtsRowEntry(DigitalizationTask):
                 value=verified_data['loan_amount'],
                 currency=verified_data['currency'],
                 row_number=self.row_number if hasattr(self, 'row_number') else -1
-                )
+            )
+
 
 class TaskOwnedDebtsTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedDebtsTable
     storage_model = models.OwnedDebtsTable
     child_class = TaskOwnedDebtsRowEntry
+
 
 class TaskOwnedIncomeFromPensionsRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedIncomeFromPensionsRowEntry
@@ -187,10 +197,12 @@ class TaskOwnedIncomeFromPensionsRowEntry(DigitalizationTask):
             currency=verified_data['currency'],
             row_number=self.row_number if hasattr(self, 'row_number') else -1)
 
+
 class TaskOwnedIncomeFromPensionsTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromPensionsTable
     storage_model = models.OwnedIncomeFromPensionsTable
     child_class = TaskOwnedIncomeFromPensionsRowEntry
+
 
 class TaskOwnedGoodsOrServicesRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedGoodsOrServicesRowEntry
@@ -222,14 +234,15 @@ class TaskOwnedGoodsOrServicesTable(CountTableRowsTask):
     storage_model = models.OwnedGoodsOrServicesTable
     child_class = TaskOwnedGoodsOrServicesRowEntry
 
+
 class TaskOwnedInvestmentsOver5KRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedInvestmentsOver5KRowEntry
     template_name = "tasks/owned_investments_over_5k.html"
 
     def save_verified_data(self, verified_data):
         loan_beneficiary, created = models.Person.objects.get_or_create(
-            name=verified_data['name'],
-            surname=verified_data['surname']
+            name=verified_data['beneficiary_name'],
+            surname=verified_data['beneficiary_surname']
         )
 
         owned_investments_over_5k, created = models.OwnedInvestmentsOver5KTableEntry.objects.get_or_create(
@@ -240,7 +253,8 @@ class TaskOwnedInvestmentsOver5KRowEntry(DigitalizationTask):
             number_of_stocks=verified_data['number_of_stocks'],
             share_ratio=verified_data['share_ratio'],
             total_value=verified_data['total_value'],
-            currency=verified_data['currency']
+            currency=verified_data['currency'],
+            row_number=self.row_number if hasattr(self, 'row_number') else -1
         )
 
 
@@ -248,6 +262,7 @@ class TaskOwnedInvestmentsOver5KTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedInvestmentsOver5KTable
     storage_model = models.OwnedInvestmentsOver5KTable
     child_class = TaskOwnedInvestmentsOver5KRowEntry
+
 
 class TaskOwnedIncomeFromOtherSourcesRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedIncomeFromOtherSourcesRowEntry
@@ -270,12 +285,15 @@ class TaskOwnedIncomeFromOtherSourcesRowEntry(DigitalizationTask):
             service=verified_data['service'],
             annual_income=verified_data['annual_income'],
             currency=verified_data['currency'],
-            )
+            row_number=self.row_number if hasattr(self, 'row_number') else -1
+        )
+
 
 class TaskOwnedIncomeFromOtherSourcesTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromOtherSourcesTable
     storage_model = models.OwnedIncomeFromOtherSourcesTable
     child_class = TaskOwnedIncomeFromOtherSourcesRowEntry
+
 
 class TaskOwnedJewelryRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedJewelryRowEntry
@@ -289,10 +307,12 @@ class TaskOwnedJewelryRowEntry(DigitalizationTask):
             currency=verified_data['currency'],
             row_number=self.row_number if hasattr(self, 'row_number') else -1)
 
+
 class TaskOwnedJewelryTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedJewelryTable
     storage_model = models.OwnedJewelryTable
     child_class = TaskOwnedJewelryRowEntry
+
 
 class TaskExtraValuableRowEntry(DigitalizationTask):
     task_form = forms.TranscribeExtraValuableRowEntry
@@ -317,10 +337,12 @@ class TaskExtraValuableRowEntry(DigitalizationTask):
             row_number=self.row_number if hasattr(self, 'row_number') else -1
         )
 
+
 class TaskExtraValuableTable(CountTableRowsTask):
     task_form = forms.TranscribeExtraValuableTable
     storage_model = models.OwnedExtraValuableTable
     child_class = TaskExtraValuableRowEntry
+
 
 class TaskOwnedIncomeFromDeferredUseOfGoodsRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedIncomeFromDeferredUseOfGoodsRowEntry
@@ -352,6 +374,7 @@ class TaskOwnedIncomeFromDeferredUseOfGoodsTable(CountTableRowsTask):
     storage_model = models.OwnedIncomeFromDeferredUseOfGoodsTable
     child_class = TaskOwnedIncomeFromDeferredUseOfGoodsRowEntry
 
+
 class TaskOwnedIncomeFromIndependentActivitiesRowEntry(DigitalizationTask):
     task_form = forms.TranscribeIndependentActivitiesRowEntry
     template_name = "tasks/owned_income_from_independent_activities.html"
@@ -373,12 +396,15 @@ class TaskOwnedIncomeFromIndependentActivitiesRowEntry(DigitalizationTask):
             service=verified_data['service'],
             annual_income=verified_data['annual_income'],
             currency=verified_data['currency'],
+            row_number=self.row_number if hasattr(self, 'row_number') else -1
         )
+
 
 class TaskOwnedIncomeFromIndependentActivitiesTable(CountTableRowsTask):
     task_form = forms.TranscribeIndependentActivitiesTable
     storage_model = models.OwnedIncomeFromIndependentActivitiesTable
     child_class = TaskOwnedIncomeFromIndependentActivitiesRowEntry
+
 
 class TaskOwnedIncomeFromGamblingRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedIncomeFromGamblingRowEntry
@@ -404,10 +430,12 @@ class TaskOwnedIncomeFromGamblingRowEntry(DigitalizationTask):
             row_number=self.row_number if hasattr(self, 'row_number') else -1
         )
 
+
 class TaskOwnedIncomeFromGamblingTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromGamblingTable
     storage_model = models.OwnedIncomeFromGamblingTable
     child_class = TaskOwnedIncomeFromGamblingRowEntry
+
 
 class TaskOwnedIncomeFromSalariesRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedIncomeFromSalariesRowEntry
@@ -433,10 +461,12 @@ class TaskOwnedIncomeFromSalariesRowEntry(DigitalizationTask):
             row_number=self.row_number if hasattr(self, 'row_number') else -1
         )
 
+
 class TaskOwnedIncomeFromSalariesTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromSalariesTable
     storage_model = models.OwnedIncomeFromSalariesTable
     child_class = TaskOwnedIncomeFromSalariesRowEntry
+
 
 class TaskOwnedBuildingsRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedBuildingsRowEntry
@@ -465,7 +495,6 @@ class TaskOwnedBuildingsRowEntry(DigitalizationTask):
         )
 
 
-@register()
 class TaskOwnedBuildingsTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedBuildingsTable
     storage_model = models.OwnedBuildingsTable
@@ -496,6 +525,8 @@ class TaskOwnedIncomeFromInvestmentsRowEntry(DigitalizationTask):
             row_number=self.row_number if hasattr(self, 'row_number') else -1
         )
 
+
+@register()
 class TaskOwnedIncomeFromInvestmentsTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromInvestmentsTable
     storage_model = models.OwnedIncomeFromInvestmentsTable
