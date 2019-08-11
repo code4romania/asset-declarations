@@ -31,13 +31,14 @@ class TaskGetInitialInformation(DigitalizationTask):
 
 
 class TaskOwnedLandRowEntry(DigitalizationTask):
-    task_form = forms.TranscribeOwnedLandSingleRowEntry
+    task_form = forms.TranscribeOwnedLandRowEntry
     template_name = "tasks/owned_land.html"
 
     def save_verified_data(self, verified_data):
         owner_person, created = models.Person.objects.get_or_create(
             name=verified_data['owner_name'],
-            surname=verified_data['owner_surname'])
+            surname=verified_data['owner_surname']
+        )
 
         owned_land, created = models.OwnedLandTableEntry.objects.get_or_create(
             coowner=owner_person,
@@ -62,7 +63,7 @@ class TaskOwnedLandTable(CountTableRowsTask):
     child_class = TaskOwnedLandRowEntry
 
 class TaskOwnedAutomobileRowEntry(DigitalizationTask):
-    task_form = forms.TranscribeOwnedAutomobileSingleRowEntry
+    task_form = forms.TranscribeOwnedAutomobileRowEntry
     template_name = "tasks/owned_automobile.html"
 
     def save_verified_data(self, verified_data):
@@ -76,7 +77,7 @@ class TaskOwnedAutomobileRowEntry(DigitalizationTask):
         )
 
 class TaskOwnedAutomobileTable(CountTableRowsTask):
-    task_form = forms.TranscribeOwnedAutomobile
+    task_form = forms.TranscribeOwnedAutomobileTable
     storage_model = models.OwnedAutomobileTable
     child_class = TaskOwnedAutomobileRowEntry
 
@@ -104,17 +105,23 @@ class TaskOwnedIncomeFromAgriculturalActivitiesRowEntry(DigitalizationTask):
     template_name = "tasks/agricultural_activity.html"
 
     def save_verified_data(self, verified_data):
+        owner_person, created = models.Person.objects.get_or_create(
+            name=verified_data['name'],
+            surname=verified_data['surname']
+        )
 
         income_declaration, created = models.OwnedIncomeFromAgriculturalActivitiesTableEntry.objects.get_or_create(
-            name_source_of_goods=verified_data['source'],
+            person=owner_person,
+            source_of_goods=verified_data['source'],
             holder_relationship=verified_data['holder_relationship'],
+            holder_type=verified_data['holder_type'],
             county=verified_data['county'],
             city=verified_data['city'],
             commune=verified_data['commune'],
-            goods_name=verified_data['offered_service'],
+            service=verified_data['offered_service'],
             annual_income=verified_data['income_amount'],
-            annual_income_currency=verified_data['currency'],
-            row_number=self.row_number if hasattr(self, 'row_number') else -1
+            row_number=self.row_number if hasattr(self, 'row_number') else -1,
+            currency=verified_data['currency']
         )
 
 class TaskOwnedIncomeFromAgriculturalActivitiesTable(CountTableRowsTask):
@@ -123,7 +130,7 @@ class TaskOwnedIncomeFromAgriculturalActivitiesTable(CountTableRowsTask):
     child_class = TaskOwnedIncomeFromAgriculturalActivitiesRowEntry
 
 class TaskOwnedDebtsRowEntry(DigitalizationTask):
-    task_form = forms.TranscribeOwnedDebtsSingleRowEntry
+    task_form = forms.TranscribeOwnedDebtsRowEntry
     template_name = "tasks/owned_debts.html"
 
     def save_verified_data(self, verified_data):
@@ -153,12 +160,12 @@ class TaskOwnedDebtsRowEntry(DigitalizationTask):
                 )
 
 class TaskOwnedDebtsTable(CountTableRowsTask):
-    task_form = forms.TranscribeDebtsTableRowsCount
+    task_form = forms.TranscribeOwnedDebtsTable
     storage_model = models.OwnedDebtsTable
     child_class = TaskOwnedDebtsRowEntry
 
 class TaskOwnedIncomeFromPensionsRowEntry(DigitalizationTask):
-    task_form = forms.TranscribeOwnedIncomeFromPensionsSingleRowEntry
+    task_form = forms.TranscribeOwnedIncomeFromPensionsRowEntry
     template_name = "tasks/owned_income_from_pensions.html"
 
     def save_verified_data(self, verified_data):
@@ -166,7 +173,9 @@ class TaskOwnedIncomeFromPensionsRowEntry(DigitalizationTask):
             surname=verified_data['beneficiary_surname'],
             name=verified_data['beneficiary_name']
         )
+
         owned_income_from_pensions, created = models.OwnedIncomeFromPensionsTableEntry.objects.get_or_create(
+            person=owner_person,
             holder_relationship=verified_data['beneficiary_relationship'],
             source_of_goods=verified_data['income_source'],
             county=verified_data['county'],
@@ -207,35 +216,60 @@ class TaskOwnedGoodsOrServicesRowEntry(DigitalizationTask):
             row_number=self.row_number if hasattr(self, 'row_number') else -1
         )
 
-class TaskOwnedGoodsOrServicesPerSpouseTable(CountTableRowsTask):
+
+class TaskOwnedGoodsOrServicesTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedGoodsOrServicesTable
     storage_model = models.OwnedGoodsOrServicesTable
     child_class = TaskOwnedGoodsOrServicesRowEntry
 
-class TaskTranscribeOwnedInvestmentsTable(CountTableRowsTask):
-    task_form = forms.TranscribeOwnedInvestmentsTable
-    storage_model = models.OwnedInvestmentsTable
-    # TODO - add child_class
-    child_class = None
+class TaskOwnedInvestmentsOver5KRowEntry(DigitalizationTask):
+    task_form = forms.TranscribeOwnedInvestmentsOver5KRowEntry
+    template_name = "tasks/owned_investments_over_5k.html"
+
+    def save_verified_data(self, verified_data):
+        loan_beneficiary, created = models.Person.objects.get_or_create(
+            name=verified_data['name'],
+            surname=verified_data['surname']
+        )
+
+        owned_investments_over_5k, created = models.OwnedInvestmentsOver5KTableEntry.objects.get_or_create(
+            loan_beneficiary=loan_beneficiary,
+            issue_title=verified_data['issue_title'],
+            shareholder_society=verified_data['shareholder_society'],
+            type_of_investment=verified_data['type_of_investment'],
+            number_of_stocks=verified_data['number_of_stocks'],
+            share_ratio=verified_data['share_ratio'],
+            total_value=verified_data['total_value'],
+            currency=verified_data['currency']
+        )
+
+
+class TaskOwnedInvestmentsOver5KTable(CountTableRowsTask):
+    task_form = forms.TranscribeOwnedInvestmentsOver5KTable
+    storage_model = models.OwnedInvestmentsOver5KTable
+    child_class = TaskOwnedInvestmentsOver5KRowEntry
 
 class TaskOwnedIncomeFromOtherSourcesRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedIncomeFromOtherSourcesRowEntry
     template_name = "tasks/owned_income_other_sources.html"
 
     def save_verified_data(self, verified_data):
-        owned_income_other_sources, created = models.OwnedIncomeFromOtherSourcesTable.objects.get_or_create(
-            holder_relationship = verified_data['holder_relationship'],
-            surname=verified_data['surname'],
+        owner_person, created = models.Person.objects.get_or_create(
             name=verified_data['name'],
-            source_of_goods = verified_data['source_of_goods'],
-            county = verified_data['county'],
-            city = verified_data['city'],
-            commune = verified_data['commune'],
-            address = verified_data['address'],
-            service = verified_data['service'],
-            annual_income = verified_data['annual_income'],
-            currency = verified_data['currency'],
-            row_number=self.row_number if hasattr(self, 'row_number') else -1
+            surname=verified_data['surname']
+        )
+
+        owned_income_other_sources, created = models.OwnedIncomeFromOtherSourcesTableEntry.objects.get_or_create(
+            person=owner_person,
+            holder_relationship=verified_data['holder_relationship'],
+            source_of_goods=verified_data['source_of_goods'],
+            county=verified_data['county'],
+            city=verified_data['city'],
+            commune=verified_data['commune'],
+            address=verified_data['address'],
+            service=verified_data['service'],
+            annual_income=verified_data['annual_income'],
+            currency=verified_data['currency'],
             )
 
 class TaskOwnedIncomeFromOtherSourcesTable(CountTableRowsTask):
@@ -244,7 +278,7 @@ class TaskOwnedIncomeFromOtherSourcesTable(CountTableRowsTask):
     child_class = TaskOwnedIncomeFromOtherSourcesRowEntry
 
 class TaskOwnedJewelryRowEntry(DigitalizationTask):
-    task_form = forms.TranscribeOwnedJewelrySingleRowEntry
+    task_form = forms.TranscribeOwnedJewelryRowEntry
     template_name = "tasks/owned_jewelry.html"
 
     def save_verified_data(self, verified_data):
@@ -256,7 +290,7 @@ class TaskOwnedJewelryRowEntry(DigitalizationTask):
             row_number=self.row_number if hasattr(self, 'row_number') else -1)
 
 class TaskOwnedJewelryTable(CountTableRowsTask):
-    task_form = forms.TranscribeOwnedJewelry
+    task_form = forms.TranscribeOwnedJewelryTable
     storage_model = models.OwnedJewelryTable
     child_class = TaskOwnedJewelryRowEntry
 
@@ -284,7 +318,7 @@ class TaskExtraValuableRowEntry(DigitalizationTask):
         )
 
 class TaskExtraValuableTable(CountTableRowsTask):
-    task_form = forms.TranscribeExtraValuable
+    task_form = forms.TranscribeExtraValuableTable
     storage_model = models.OwnedExtraValuableTable
     child_class = TaskExtraValuableRowEntry
 
@@ -318,11 +352,33 @@ class TaskOwnedIncomeFromDeferredUseOfGoodsTable(CountTableRowsTask):
     storage_model = models.OwnedIncomeFromDeferredUseOfGoodsTable
     child_class = TaskOwnedIncomeFromDeferredUseOfGoodsRowEntry
 
+class TaskOwnedIncomeFromIndependentActivitiesRowEntry(DigitalizationTask):
+    task_form = forms.TranscribeIndependentActivitiesRowEntry
+    template_name = "tasks/owned_income_from_independent_activities.html"
+
+    def save_verified_data(self, verified_data):
+        owner_person, created = models.Person.objects.get_or_create(
+            name=verified_data['name'],
+            surname=verified_data['surname']
+        )
+
+        owned_income_from_independent_activities, created = models.OwnedIncomeFromIndependentActivitiesTableEntry.objects.get_or_create(
+            person=owner_person,
+            county=verified_data['county'],
+            city=verified_data['city'],
+            commune=verified_data['commune'],
+            address=verified_data['address'],
+            holder_relationship=verified_data['holder_relationship'],
+            source_of_goods=verified_data['source_of_goods'],
+            service=verified_data['service'],
+            annual_income=verified_data['annual_income'],
+            currency=verified_data['currency'],
+        )
+
 class TaskOwnedIncomeFromIndependentActivitiesTable(CountTableRowsTask):
-    task_form = forms.TranscribeIndependentActivities
+    task_form = forms.TranscribeIndependentActivitiesTable
     storage_model = models.OwnedIncomeFromIndependentActivitiesTable
-    # TODO - add child_class
-    child_class = None
+    child_class = TaskOwnedIncomeFromIndependentActivitiesRowEntry
 
 class TaskOwnedIncomeFromGamblingRowEntry(DigitalizationTask):
     task_form = forms.TranscribeOwnedIncomeFromGamblingRowEntry
@@ -378,12 +434,12 @@ class TaskOwnedIncomeFromSalariesRowEntry(DigitalizationTask):
         )
 
 class TaskOwnedIncomeFromSalariesTable(CountTableRowsTask):
-    task_form = forms.TranscribeOwnedIncomeFromSalaries
+    task_form = forms.TranscribeOwnedIncomeFromSalariesTable
     storage_model = models.OwnedIncomeFromSalariesTable
     child_class = TaskOwnedIncomeFromSalariesRowEntry
 
 class TaskOwnedBuildingsRowEntry(DigitalizationTask):
-    task_form = forms.TranscribeOwnedBuildingsTableRowEntry
+    task_form = forms.TranscribeOwnedBuildingsRowEntry
     template_name = "tasks/owned_buildings_task.html"
 
     def save_verified_data(self, verified_data):
@@ -409,6 +465,7 @@ class TaskOwnedBuildingsRowEntry(DigitalizationTask):
         )
 
 
+@register()
 class TaskOwnedBuildingsTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedBuildingsTable
     storage_model = models.OwnedBuildingsTable
@@ -421,7 +478,13 @@ class TaskOwnedIncomeFromInvestmentsRowEntry(DigitalizationTask):
     template_name = "tasks/owned_investments.html"
 
     def save_verified_data(self, verified_data):
+        owner_person, created = models.Person.objects.get_or_create(
+            name=verified_data['name'],
+            surname=verified_data['surname']
+        )
+
         income_declaration, created = models.OwnedIncomeFromInvestmentsTableEntry.objects.get_or_create(
+            person=owner_person,
             holder_relationship=verified_data['holder_relationship'],
             county=verified_data['county'],
             city=verified_data['city'],
@@ -433,7 +496,6 @@ class TaskOwnedIncomeFromInvestmentsRowEntry(DigitalizationTask):
             row_number=self.row_number if hasattr(self, 'row_number') else -1
         )
 
-@register()
 class TaskOwnedIncomeFromInvestmentsTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromInvestmentsTable
     storage_model = models.OwnedIncomeFromInvestmentsTable

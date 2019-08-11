@@ -15,18 +15,24 @@ from project_template.datamodels.estranged_goods_type import EstrangedGoodsType
 from project_template.datamodels.financial_institution import FinancialInstitution
 from project_template.datamodels.goods_separation_type import GoodsSeparationType
 from project_template.datamodels.holder_relationship import HolderRelationship
+from project_template.datamodels.holder_type import HolderType
 from project_template.datamodels.income_provider_type import IncomeProviderType
 from project_template.datamodels.institution import Institution
 from project_template.datamodels.mobile_goods_type import MobileGoodsType
 from project_template.datamodels.position import Position
 from project_template.datamodels.real_estate_type import RealEstateType
 from project_template.datamodels.building_type import BuildingType
+from project_template.datamodels.investment_type import InvestmentType
 
-start_date = 1980
-end_date = datetime.datetime.now().year
-YEAR_CHOICES = tuple(map(str, range(start_date, end_date + 1)))
-YEAR_DICT_CHOICES = [(date, date) for date in YEAR_CHOICES]
-FIRST_2_TYPES = 2
+
+def calculate_year_choices():
+    start_date = 1980
+    end_date = datetime.datetime.now().year
+    return tuple(map(str, range(start_date, end_date + 1)))
+
+
+def get_dict_year_choices():
+    return [(date, date) for date in calculate_year_choices()]
 
 
 class TranscribeInitialInformation(forms.Form):
@@ -37,21 +43,22 @@ class TranscribeInitialInformation(forms.Form):
     surname = forms.CharField(label=_("Care este prenumele politicianului?"))
     # Form fields for identifying the declaration
     position = forms.ChoiceField(label=_("Care este pozitia politicianului?"), choices=Position.return_as_iterable())
-    date = forms.DateField(label=_("Care este data completării declarației de avere?"), widget=forms.SelectDateWidget(years=YEAR_CHOICES), input_formats=['%Y-%m-%d'])
+    date = forms.DateField(label=_("Care este data completării declarației de avere?"), widget=forms.SelectDateWidget(years=calculate_year_choices()), input_formats=['%Y-%m-%d'])
     institution = forms.ChoiceField(label=_("Care este institutia in cadrul careia lucra politicianul la data completarii declaratiei de avere?"),
                                         choices=Institution.return_as_iterable())
     declaration_type = forms.ChoiceField(label=_("Ce tip de declaratie este completata?"), choices=DeclarationType.return_as_iterable())
 
+
 class TranscribeOwnedLandTable(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['land']))
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['land']), min_value=0)
 
 
-class TranscribeOwnedLandSingleRowEntry(forms.Form):
+class TranscribeOwnedLandRowEntry(forms.Form):
     county = forms.ChoiceField(label="Care este judetul in care se gaseste terenul detinut?", choices=Counties.return_counties())
     city = forms.CharField(label="Care este localitatea in care se gaseste terenul detinut?")
     commune = forms.CharField(label="Care este comuna in care se gaseste terenul detinut?")
     real_estate_type = forms.ChoiceField(label="Care este categoria de teren?", choices=RealEstateType.return_as_iterable())
-    ownership_start_year = forms.ChoiceField(label="Care este anul cand terenul a fost dobandit?", choices = YEAR_DICT_CHOICES)
+    ownership_start_year = forms.ChoiceField(label="Care este anul cand terenul a fost dobandit?", choices=get_dict_year_choices)
     surface_area = forms.FloatField(label="Care este suprafata terenului? (mp)")
     percent_of_ownership = forms.IntegerField(label="Care este cota parte din acest teren? (in procente)", max_value=100, min_value=0)
     taxable_value = forms.FloatField(label="Care este valoarea impozabilă a terenului? (dacă există)", required=False)
@@ -60,16 +67,17 @@ class TranscribeOwnedLandSingleRowEntry(forms.Form):
     owner_surname = forms.CharField(label="Care este numele proprietarului?")
     owner_name = forms.CharField(label="Care este prenumele proprietarului")
 
+
 class TranscribeOwnedBuildingsTable(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}".format(constants.DECLARATION_TABLES['buildings']))
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}".format(constants.DECLARATION_TABLES['buildings']), min_value=0)
 
 
-class TranscribeOwnedBuildingsTableRowEntry(forms.Form):
+class TranscribeOwnedBuildingsRowEntry(forms.Form):
     county = forms.ChoiceField(label="Care este judetul in care se gaseste cladirea detinuta?", choices=Counties.return_counties())
     city = forms.CharField(label="Care este localitatea in care se gaseste cladirea detinuta?")
     commune = forms.CharField(label="Care este comuna in care se gaseste cladirea detinuta?")
     building_type = forms.ChoiceField(label="Care este categoria de teren?", choices=BuildingType.return_as_iterable())
-    ownership_start_year = forms.ChoiceField(label="Care este anul cand cladirea a fost dobandita?", choices=YEAR_DICT_CHOICES)
+    ownership_start_year = forms.ChoiceField(label="Care este anul cand cladirea a fost dobandita?", choices=get_dict_year_choices)
     surface_area = forms.FloatField(label="Care este suprafata cladirii? (mp)")
     percent_of_ownership = forms.IntegerField(label="Care este cota parte din acestă clădire? (în procente)", max_value=100, min_value=0)
     taxable_value = forms.FloatField(label="Care este valoarea impozabilă a clădirii? (dacă există)", required=False)
@@ -79,30 +87,31 @@ class TranscribeOwnedBuildingsTableRowEntry(forms.Form):
     owner_name = forms.CharField(label="Care este prenumele titularului")
 
 
-class TranscribeOwnedAutomobile(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['automobiles']))
+class TranscribeOwnedAutomobileTable(forms.Form):
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['automobiles']), min_value=0)
 
 
-class TranscribeOwnedAutomobileSingleRowEntry(forms.Form):
+class TranscribeOwnedAutomobileRowEntry(forms.Form):
     automobile_type = forms.CharField(label="Care este tipul autovehiculului?", widget=forms.Select(choices=MobileGoodsType.return_as_iterable()))
     manufacturer = forms.CharField(label="Care este marca autovehiculului?")
     num_of_automobiles = forms.IntegerField(label="Care este numarul de autovehicule detinute?")
-    year_of_manufacture = forms.ChoiceField(label="Care este anul de fabricatie al autovehiculului?", choices=YEAR_DICT_CHOICES)
+    year_of_manufacture = forms.ChoiceField(label="Care este anul de fabricatie al autovehiculului?", choices=get_dict_year_choices)
     attainment_type = forms.CharField(label="Care este modul in care a fost dobandit autovehiculul?", widget=forms.Select(choices=AttainmentType.return_as_iterable()))
 
-class TranscribeOwnedJewelry(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['jewelry']))
+
+class TranscribeOwnedJewelryTable(forms.Form):
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['jewelry']), min_value=0)
 
 
-class TranscribeOwnedJewelrySingleRowEntry(forms.Form):
+class TranscribeOwnedJewelryRowEntry(forms.Form):
     description = forms.CharField(label="Care este descrierea bunului?")
-    ownership_start_year = forms.ChoiceField(label="Care este anul dobandirii bunului?", choices=YEAR_DICT_CHOICES)
+    ownership_start_year = forms.ChoiceField(label="Care este anul dobandirii bunului?", choices=get_dict_year_choices)
     estimated_value = forms.FloatField(label="Care este valoarea estimata a bunului?")
     currency = forms.ChoiceField(label="Care este moneda in care este estimata valoarea bunului?", choices=Currency.return_as_iterable())
 
 
-class TranscribeExtraValuable(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['extra_valuable']))
+class TranscribeExtraValuableTable(forms.Form):
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['extra_valuable']), min_value=0)
 
 
 class TranscribeExtraValuableRowEntry(forms.Form):
@@ -112,7 +121,7 @@ class TranscribeExtraValuableRowEntry(forms.Form):
     city = forms.CharField(label="Orasul in care se gaseste bunul instrainat(daca este cazul)")
     commune = forms.CharField(label="Comuna in care se gaseste bunul instrainat(daca este cazul)")
     estranged_date = forms.DateField(label="Care este data instrainarii bunului?",
-                                        widget=forms.SelectDateWidget(years=YEAR_CHOICES),
+                                        widget=forms.SelectDateWidget(years=calculate_year_choices()),
                                         input_formats=['%Y-%m-%d'])
     owner_name = forms.CharField(label="Care este numele persoanei catre care s-a instrainat bunul?")
     owner_surname = forms.CharField(label="Care este prenumele persoanei catre care s-a instrainat bunul?")
@@ -124,41 +133,50 @@ class TranscribeExtraValuableRowEntry(forms.Form):
 
 
 class TranscribeOwnedBankAccountsTable(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['bank_accounts']))
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['bank_accounts']), min_value=0)
 
 
 class TranscribeOwnedBankAccountsRowEntry(forms.Form):
     financial_institution = forms.ChoiceField(label="Care este institutia financiara?", choices=FinancialInstitution.return_as_iterable())
     account_type = forms.ChoiceField(label="Care este tipul contului?", choices=AccountType.return_as_iterable())
     currency = forms.ChoiceField(label="Care este valuta?", choices=Currency.return_as_iterable())
-    account_start_date = forms.ChoiceField(label="Care este anul deschiderii contului?", choices = YEAR_DICT_CHOICES)
+    account_start_date = forms.ChoiceField(label="Care este anul deschiderii contului?", choices=get_dict_year_choices)
     balance = forms.FloatField(label="Care este valoarea soldului?")
 
 
-class TranscribeOwnedInvestmentsTable(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['bank_accounts']))
+class TranscribeOwnedInvestmentsOver5KTable(forms.Form):
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['investments']), min_value=0)
 
 
-## Transcribe information about other actives table
+class TranscribeOwnedInvestmentsOver5KRowEntry(forms.Form):
+    beneficiary_surname = forms.CharField(label="Care este numele beneficiarului?")
+    beneficiary_name = forms.CharField(label="Care este prenumele beneficiarului?")
+    issue_title = forms.CharField(label="Care este titlul emitentului?")
+    shareholder_society = forms.CharField(label="Care este societatea in care persoana este actionar sau asociat?")
+    type_of_investment = forms.ChoiceField(label="Care este tipul?", choices=InvestmentType.return_as_iterable())
+    number_of_stocks = forms.IntegerField(label="Care este numarul de titluri?")
+    share_ratio = forms.FloatField(label="Care este cota de participare?")
+    total_value = forms.FloatField(label="Care este valoarea totala la zi?")
+    currency = forms.ChoiceField(label="Care este moneda?", choices=Currency.return_as_iterable())
 
 
-class TranscribeDebtsTableRowsCount(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['debts']))
+class TranscribeOwnedDebtsTable(forms.Form):
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['debts']), min_value=0)
 
 
-class TranscribeOwnedDebtsSingleRowEntry(forms.Form):
+class TranscribeOwnedDebtsRowEntry(forms.Form):
     loaner_surname = forms.CharField(label="Care este numele creditorului?")
     loaner_name = forms.CharField(label="Care este prenumele creditorului?")
     institution = forms.CharField(label="Care este numele institutiei creditoare?", widget=forms.Select(choices=FinancialInstitution.return_as_iterable()))
     type_of_debt = forms.CharField(label="Care este tipul de datorie?", widget=forms.Select(choices=DebtType.return_as_iterable()))
-    loan_start_year = forms.ChoiceField(label="Care este anul contractarii imprumutului?", choices=YEAR_DICT_CHOICES)
-    loan_maturity = forms.ChoiceField(label="Care este data scadentei?", choices=YEAR_DICT_CHOICES)
+    loan_start_year = forms.ChoiceField(label="Care este anul contractarii imprumutului?", choices=get_dict_year_choices)
+    loan_maturity = forms.ChoiceField(label="Care este data scadentei?", choices=get_dict_year_choices)
     loan_amount = forms.FloatField(label="Care este valoarea imprumutului?")
     currency = forms.ChoiceField(label="Care este moneda in care s-a facut imprumutul?", choices=Currency.return_as_iterable())
 
 
 class TranscribeOwnedGoodsOrServicesTable(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['goods']))
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['goods']), min_value=0)
 
 
 class TranscribeOwnedGoodsOrServicesRowEntry(forms.Form):
@@ -175,8 +193,8 @@ class TranscribeOwnedGoodsOrServicesRowEntry(forms.Form):
     currency = forms.ChoiceField(label="Care este valuta in care e incasat venitul?", choices=Currency.return_as_iterable())
 
 
-class TranscribeOwnedIncomeFromSalaries(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['salaries']))
+class TranscribeOwnedIncomeFromSalariesTable(forms.Form):
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['salaries']), min_value=0)
 
 
 class TranscribeOwnedIncomeFromSalariesRowEntry(forms.Form):
@@ -193,12 +211,26 @@ class TranscribeOwnedIncomeFromSalariesRowEntry(forms.Form):
     currency = forms.ChoiceField(label="Care este valuta in care e incasat venitul?", choices=Currency.return_as_iterable())
 
 
-class TranscribeIndependentActivities(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['independent_activities']))
+class TranscribeIndependentActivitiesTable(forms.Form):
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['independent_activities']), min_value=0)
+
+
+class TranscribeIndependentActivitiesRowEntry(forms.Form):
+    surname = forms.CharField(label="Care e numele persoanei care a realizat venitul?")
+    name = forms.CharField(label="Care e prenumele persoanei care a realizat venitul?")
+    county = forms.ChoiceField(label="Care este judetul de domiciliu?", choices=Counties.return_counties())
+    city = forms.CharField(label="Care este localitatea de domiciliu?")
+    commune = forms.CharField(label="Care este comuna de domiciliu?")
+    address = forms.CharField(label="Care este adresa de domiciliu?")
+    holder_relationship = forms.ChoiceField(label="Care este relatia cu persoana care a realizat venitul?", choices=HolderRelationship.return_as_iterable())
+    source_of_goods = forms.CharField(label="Care este sursa de venit?")
+    service = forms.CharField(label="Care e serviciul prestat?")
+    annual_income = forms.FloatField(label="Care este venitul persoanei?")
+    currency = forms.ChoiceField(label="Care este valuta in care e incasat venitul?", choices=Currency.return_as_iterable())
 
 
 class TranscribeOwnedIncomeFromDeferredUseOfGoodsTable(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['deferred_use']))
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['deferred_use']), min_value=0)
 
 
 class TranscribeOwnedIncomeFromDeferredUseOfGoodsRowEntry(forms.Form):
@@ -216,7 +248,7 @@ class TranscribeOwnedIncomeFromDeferredUseOfGoodsRowEntry(forms.Form):
 
 
 class TranscribeOwnedIncomeFromInvestmentsTable(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['income_investments']))
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['income_investments']), min_value=0)
 
 
 class TranscribeOwnedIncomeFromInvestmentsRowEntry(forms.Form):
@@ -226,17 +258,17 @@ class TranscribeOwnedIncomeFromInvestmentsRowEntry(forms.Form):
     county = forms.ChoiceField(label="Care este judetul de unde provine sursa de venit?", choices=Counties.return_counties())
     city = forms.CharField(label="Care este localitatea de unde provine sursa de venit?")
     commune = forms.CharField(label="Care este comuna de unde provine sursa de venit?")
-    source_of_goods  = forms.CharField(label="Care este numele sursei de venit?")
+    source_of_goods = forms.CharField(label="Care este numele sursei de venit?")
     service = forms.CharField(label="Care e serviciul prestat?")
     income_amount = forms.FloatField(label="Care este venitul anual incasat?", min_value=0.0)
     currency = forms.ChoiceField(label="Care este moneda venitului?", choices=Currency.return_as_iterable())
 
 
 class TranscribeOwnedIncomeFromPensionsTable(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['pensions']))
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['pensions']), min_value=0)
 
 
-class TranscribeOwnedIncomeFromPensionsSingleRowEntry(forms.Form):
+class TranscribeOwnedIncomeFromPensionsRowEntry(forms.Form):
     beneficiary_relationship = forms.ChoiceField(label="Cine este beneficiarul pensiei?", choices=HolderRelationship.return_as_iterable())
     beneficiary_surname = forms.CharField(label="Care este numele beneficiarului?")
     beneficiary_name = forms.CharField(label="Care este prenumele beneficiarului?")
@@ -252,27 +284,25 @@ class TranscribeOwnedIncomeFromPensionsSingleRowEntry(forms.Form):
 
 
 class TranscribeOwnedIncomeFromAgriculturalActivitiesTable(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['agriculture']))
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['agriculture']), min_value=0)
 
 
 class TranscribeOwnedIncomeFromAgriculturalActivitiesRowEntry(forms.Form):
     holder_relationship = forms.ChoiceField(label="Cine este beneficiarul venitului din activități agricole?", choices=HolderRelationship.return_as_iterable())
-    holder_type = forms.ChoiceField(label="Optiune", choices=[(0, "Insitutie"), (1, "Persoana")], widget=forms.RadioSelect)
+    holder_type = forms.ChoiceField(label="Tipul detinatorului", choices=HolderType.return_as_iterable(), widget=forms.RadioSelect)
     surname = forms.CharField(label="Care e numele persoanei?")
     name = forms.CharField(label="Care e prenumele persoanei?")
     source = forms.CharField(label="Care este sursa?")
     county = forms.ChoiceField(label="Care este judetul in care se gaseste terenul detinut?", choices=Counties.return_counties())
     city = forms.CharField(label="Care este localitatea in care se gaseste terenul detinut?")
     commune = forms.CharField(label="Care este comuna in care se gaseste terenul detinut?")
-    # TODO - identify the reason for the form field below
-    # foreign_residence_address = forms.CharField(label="Adresa strainatate?")
     offered_service = forms.CharField(label="Care e serviciul prestat?")
     income_amount = forms.FloatField(label="Care este venitul anual incasat?", min_value=0.0)
     currency = forms.ChoiceField(label="Care este moneda venitului?", choices=Currency.return_as_iterable())
 
 
 class TranscribeOwnedIncomeFromGamblingTable(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['gambling']))
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['gambling']), min_value=0)
 
 
 class TranscribeOwnedIncomeFromGamblingRowEntry(forms.Form):
@@ -290,7 +320,7 @@ class TranscribeOwnedIncomeFromGamblingRowEntry(forms.Form):
 
 
 class TranscribeOwnedIncomeFromOtherSourcesTable(forms.Form):
-    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['other_sources']))
+    count = forms.IntegerField(label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES['other_sources']), min_value=0)
 
 
 class TranscribeOwnedIncomeFromOtherSourcesRowEntry(forms.Form):

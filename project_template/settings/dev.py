@@ -16,7 +16,7 @@ from .base import *
 If set Moonsheep won't communicate with PyBossa and will:
 1. serve random mocked tasks
 2. send form submissions straight to the verification
-   won't test cross-checking as there is going to be only one entry, but will allow to test the whole flow  
+   won't test cross-checking as there is going to be only one entry, but will allow to test the whole flow
 """
 MOONSHEEP_DEVELOPMENT_MODE = True
 
@@ -41,9 +41,9 @@ SECRET_KEY = 'https://uploads.skyhighnetworks.com/wp-content/uploads/2015/08/061
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
 }
 
 

@@ -1,5 +1,25 @@
 # Catalog politic  - Declaratii de avere [![GitHub contributors](https://img.shields.io/github/contributors/code4romania/catpol-declaratii.svg)](https://github.com/code4romania/catpol-declaratii/graphs/contributors) [![GitHub last commit](https://img.shields.io/github/last-commit/code4romania/catpol-declaratii.svg)](https://github.com/code4romania/catpol-declaratii/commits/master) [![License: MPL 2.0](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 
+<!-- Please don't remove this: Grab your social icons from https://github.com/carlsednaoui/gitsocial -->
+
+<!-- display the social media buttons in your README -->
+
+[![code for romania twitter][1.1]][1]
+[![code for romania facebook][2.1]][2]
+
+<!-- links to social media icons -->
+<!-- no need to change these -->
+
+<!-- icons with padding -->
+
+[1.1]: http://i.imgur.com/tXSoThF.png (twitter icon with padding)
+[2.1]: http://i.imgur.com/P3YfQoD.png (facebook icon with padding)
+
+[1]: https://twitter.com/Code4Romania
+[2]: https://www.facebook.com/code4romania/
+
+<!-- Please don't remove this: Grab your social icons from https://github.com/carlsednaoui/gitsocial -->
+
 * MAKING PUBLIC INFORMATION TRULY PUBLIC 
 * aggregate data on the higher echelons of elected officials
 * data on activity while serving in each of the elected positions held
@@ -66,10 +86,32 @@ This remains currently undecided.
 Installation process
 * Clone this repo: `git clone git@github.com:code4romania/catpol-declaratii.git`
 * Open the directory where you have cloned the repo (`cd catpol-declaratii`)
+* Optionally, you can create a virtual environment named "venv": `python3 -m venv venv` and then activate it: `source venv/bin/activate`
 * `pip install -r requirements-dev.txt` 
 * `export DJANGO_SETTINGS_MODULE=project_template.settings.dev`
 * `python manage.py migrate`
 * `python manage.py runserver`
+
+Using Dockerfile:
+* Install docker
+* Clone this repo: `git clone git@github.com:code4romania/catpol-declaratii.git`
+* Open the directory where you have cloned the repo (`cd catpol-declaratii`)
+* Run the following command to create a Docker image for the project `docker build -t catpol`
+* Run the following command to run the Docker image `docker run -p 8000 catpol`
+* Show the container id running the `catpol` image `docker ps`
+* Inspect the container to get the host port `docker inspect <container_id>`, you should see something like:
+```json
+            "Ports": {
+                "8000/tcp": [
+                    {
+                        "HostIp": "0.0.0.0",
+                        "HostPort": "32769"
+                    }
+                ]
+            },
+ ```
+ * Connect to specified port on localhost and enjoy the solution
+
 
 ## Contributing 
 
