@@ -92,7 +92,8 @@ Installation process
 
 Using Dockerfile:
 * Install docker
-* Clone this repo: `git clone git@github.com:code4romania/catpol-declaratii.git`
+* Fork this repo
+* Clone your fork
 * Open the directory where you have cloned the repo (`cd catpol-declaratii`)
 * Run the following command to create a Docker image for the project `docker build -t catpol`
 * Run the following command to run the Docker image `docker run -p 8000 catpol`
