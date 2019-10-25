@@ -21,9 +21,6 @@
 <!-- Please don't remove this: Grab your social icons from https://github.com/carlsednaoui/gitsocial -->
 
 * MAKING PUBLIC INFORMATION TRULY PUBLIC 
-* aggregate data on the higher echelons of elected officials
-* data on activity while serving in each of the elected positions held
-* details about criminal legal proceeding or past convictions
 * data from asset declarations, including a net worth estimation
 
 [See the project live](http://catalogpolitic.ro/)
@@ -84,12 +81,13 @@ This remains currently undecided.
 ## Deployment 
 
 Installation process
-* Clone this repo: `git clone git@github.com:code4romania/catpol-declaratii.git`
+* Fork this repo
+* Clone your fork
 * Open the directory where you have cloned the repo (`cd catpol-declaratii`)
 * Optionally, you can create a virtual environment named "venv": `python3 -m venv venv` and then activate it: `source venv/bin/activate`
 * `pip install -r requirements-dev.txt` 
 * `export DJANGO_SETTINGS_MODULE=project_template.settings.dev`
-* `python manage.py migrate`
+* `python manage.py migrate --run-syncdb`
 * `python manage.py runserver`
 
 ## Contributing 
