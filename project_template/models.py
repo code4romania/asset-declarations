@@ -57,7 +57,7 @@ class Politician(models.Model):
     name = models.CharField(_("Name"), max_length=128)
     surname = models.CharField(_("Surname"), max_length=128)
     initials = models.CharField(_("Initials"), max_length=20)
-    previous_name = models.CharField(_("PreviousName"), max_length=128)
+    previous_name = models.CharField(_("Previous Name"), max_length=128, blank=True)
 
     # Automatically set the field to now every time the object is saved. Useful for “last-modified” timestamps.
     # Note that the current date is always used; it’s not just a default value that you can override.
@@ -175,7 +175,7 @@ class OwnedAutomobileTable(models.Model):
 # Tabel Bunuri Mobile - actual row information
 class OwnedAutomobileTableEntry(models.Model):
     table = models.ForeignKey(OwnedAutomobileTable, on_delete=models.CASCADE, null=True)
-    goods_type = models.CharField("Natura", max_length=32, choices=MobileGoodsType.return_as_iterable())
+    goods_type = models.CharField("Tipul vehiculului", max_length=32, choices=MobileGoodsType.return_as_iterable())
     brand = models.CharField("Marca", max_length=128)
     no_owned = models.PositiveSmallIntegerField("Numar de bucati")
     fabrication_year = models.IntegerField("Anul de fabricatie")
@@ -227,7 +227,7 @@ class OwnedBankAccountsTable(models.Model):
 class OwnedBankAccountsTableEntry(models.Model):
     table = models.ForeignKey(OwnedBankAccountsTable, on_delete=models.CASCADE, null=True)
     institution = models.CharField("Instituția", max_length=128, choices=FinancialInstitution.return_as_iterable())
-    account_type = models.CharField("Tipul", max_length=32, choices=AccountType.return_as_iterable())
+    account_type = models.IntegerField("Tipul", choices=AccountType.return_as_iterable())
     currency = models.CharField("Valuta", max_length=16, choices=Currency.return_as_iterable())
     opening_year = models.IntegerField("Deschis in anul")
     account_balance = models.DecimalField("Soldul", decimal_places=2, max_digits=10)
