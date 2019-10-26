@@ -4,17 +4,25 @@ services:
   - docker
 
 env:
-  - DOCKER_IMAGE_NAME="ovidiub13/catpol"
+  - DOCKER_IMAGE_NAME="$DOCKER_USERNAME/catpol"
 
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
 
-script:
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker build -t "$DOCKER_IMAGE_NAME" .
-  - docker push "$DOCKER_IMAGE_NAME"
+jobs:
+  include:
+    - stage: Unit tests
+      script: echo "We ain't got none"
+    - stage: Build
+      script:
+        - docker build -t "$DOCKER_IMAGE_NAME" .
+    - stage: Upload
+      if: branch = (master|develop)
+      script:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker push "$DOCKER_IMAGE_NAME"
 
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
