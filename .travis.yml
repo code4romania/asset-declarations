@@ -1,11 +1,12 @@
-language: python
-python:
-  - "3.5"
-  - "3.6"
-  - "3.7"
+language: minimal
 
-install:
-  - pip install -r requirements.txt
+services:
+  - docker
+
+env:
+  - DOCKER_IMAGE_NAME="ovidiub13/catpol"
 
 script:
-  - echo "I did a thing"
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker build -t "$DOCKER_IMAGE_NAME" .
+  - docker push "$DOCKER_IMAGE_NAME"
