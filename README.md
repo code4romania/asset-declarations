@@ -49,8 +49,6 @@ Catalog Politic - Declaratii de avere - aims to automate the process of parsing 
 
 [Django](https://www.djangoproject.com)   
 [Moonsheep](http://moonsheep.org/)    
-[PyBossa](https://pybossa.com/)    
-[Bootstrap](https://bootstrap.build)
 
 ### Programming languages
 
