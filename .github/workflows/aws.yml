@@ -4,19 +4,39 @@
 
 on:
   push:
-    branches:
-      - devel_issue#161
 
-name: Deploy to Amazon ECS
+name: Build Docker image and deploy to Amazon ECS
 
 jobs:
-  deploy:
-    name: Deploy
+  build:
+    name: Build
     runs-on: ubuntu-latest
+    env:
+      DOCKER_HUB_USERNAME: ovidiub13
+      RUN_ENVIRONMENT: dev
 
     steps:
     - name: Checkout
       uses: actions/checkout@v1
+
+    - name: Build the Docker image
+      id: build-image
+      run: |
+        DOCKER_TAG=${GITHUB_REF##*/}
+        DOCKER_TAG=${DOCKER_TAG/\#/-}
+        docker build \
+          --build-arg ENVIRONMENT=$RUN_ENVIRONMENT \
+          -t $DOCKER_HUB_USERNAME/catpol:$DOCKER_TAG-$GITHUB_SHA \
+          .
+        echo "::set-output name=image::$DOCKER_HUB_USERNAME/catpol:$DOCKER_TAG-$GITHUB_SHA"
+
+    - name: Upload Docker image
+      run: |
+        echo ${{secrets.DOCKER_HUB_PASSWORD}} | \
+          docker login \
+            -u $DOCKER_HUB_USERNAME \
+            --password-stdin
+        docker push ${{ steps.build-image.outputs.image }}
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -43,20 +63,18 @@ jobs:
     #     docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
     #     echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
-    # - name: Fill in the new image ID in the Amazon ECS task definition
-    #   id: task-def
-    #   uses: aws-actions/amazon-ecs-render-task-definition@v1
-    #   with:
-    #     task-definition: aws_deploy/task-def.json
-    #     container-name: catpol
-    #     image: ovidiub13/catpol
-    #     image: ${{ steps.build-image.outputs.image }}
+    - name: Fill in the new image ID in the Amazon ECS task definition
+      id: task-def
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
+      with:
+        task-definition: aws_deploy/task-def.json
+        container-name: catpol
+        image: ${{ steps.build-image.outputs.image }}
 
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
-        # task-definition: ${{ steps.task-def.outputs.task-definition }}
-        task-definition: aws_deploy/task-def.json
+        task-definition: ${{ steps.task-def.outputs.task-definition }}
         service: CatPol-service
         cluster: CatPol
         wait-for-service-stability: true
