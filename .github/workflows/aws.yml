@@ -5,7 +5,8 @@
 # Cluster and service must be created before hand:
 
 # aws ecs create-cluster --cluster-name Code4Romania
-# aws ecs register-task-definition --region eu-central-1 --cli-input-json file://`pwd`/aws_deploy/task-def.json
+# aws ecs register-task-definition --region eu-central-1
+#     --cli-input-json file://`pwd`/.github/workflows/aws_deploy/task-def.json
 # aws ecs create-service --service-name CatPol-service --task-definition CatPol-test-task:1
 #     --desired-count 1 --launch-type "FARGATE"
 #     --network-configuration "awsvpcConfiguration={subnets=[subnet-1234abcd],securityGroups=[sg-1234abcd]}"
@@ -79,7 +80,7 @@ jobs:
       id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
-        task-definition: aws_deploy/task-def.json
+        task-definition: .github/workflows/aws_deploy/task-def.json
         container-name: catpol
         image: ${{ steps.image-name.outputs.image }}
 
