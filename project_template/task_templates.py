@@ -1,9 +1,28 @@
+from django.utils.decorators import classproperty
+
 from moonsheep.tasks import AbstractTask
+
+import project_template.models as models
 
 EXAMPLE_URL = 'http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf'
 
 
+def mocked_params(cls) -> dict:
+    if models.Declaration.objects.exists():
+        d = models.Declaration.objects.order_by('?').first()
+        return {
+            'url': d.url,
+            'politician_id': d.politician.id
+        }
+    else:
+        return {
+            'url': EXAMPLE_URL,
+        }
+
+
 class DigitalizationTask(AbstractTask):
+
+    mocked_params = classproperty(mocked_params)
 
     def create_new_task(self, task, info):
         from moonsheep.registry import register
