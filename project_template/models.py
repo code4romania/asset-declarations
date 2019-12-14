@@ -1,6 +1,10 @@
-from django.core.exceptions import ValidationError
 from django.db import models
+from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext_lazy as _
 
+from moonsheep.models import DocumentModel
+
+from .constants import DECLARATION_TABLES
 from project_template.datamodels.account_type import AccountType
 from project_template.datamodels.attainment_type import AttainmentType
 from project_template.datamodels.building_type import BuildingType
@@ -18,10 +22,6 @@ from project_template.datamodels.position import Position
 from project_template.datamodels.institution import Institution
 from project_template.datamodels.counties import Counties
 
-
-# More on lazy translations at https://docs.djangoproject.com/en/2.1/topics/i18n/translation/#lazy-translation
-from django.utils.translation import ugettext_lazy as _
-from .constants import DECLARATION_TABLES
 
 FIRST_2_TYPES = 2
 
@@ -81,7 +81,7 @@ class Politician(models.Model):
         return "{} {}".format(self.name, self.surname)
 
 
-class Declaration(models.Model):
+class Declaration(DocumentModel):
     url = models.URLField(max_length=500)
     politician = models.ForeignKey(Politician, on_delete=models.CASCADE, null=True)
     position = models.CharField(_("Functie"), max_length=128, choices=Position.return_as_iterable())

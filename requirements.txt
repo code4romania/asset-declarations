@@ -1,4 +1,5 @@
 --index-url https://pypi.python.org/simple/
 
 django~=2.0
-git+https://github.com/themoonsheep/moonsheep@8ac9fb5#egg=django-moonsheep
+git+https://github.com/themoonsheep/moonsheep
+psycopg2
