@@ -1,11 +1,6 @@
 from django.contrib import admin
 from django.contrib.admin import site
 
-from moonsheep.register import base_task
-
-from project_template.models import *
-from project_template.tasks import *
-
 
 # Register your models here.
 

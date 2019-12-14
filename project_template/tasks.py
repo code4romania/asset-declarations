@@ -1,4 +1,4 @@
-from moonsheep.decorators import register
+from moonsheep.tasks import register_task
 
 import project_template.models as models
 import project_template.forms as forms
@@ -244,7 +244,7 @@ class TaskOwnedIncomeFromOtherSourcesRowEntry(DigitalizationTask):
             **verified_data
         )
 
-@register()
+@register_task()
 class TaskOwnedIncomeFromOtherSourcesTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromOtherSourcesTable
     storage_model = models.OwnedIncomeFromOtherSourcesTable

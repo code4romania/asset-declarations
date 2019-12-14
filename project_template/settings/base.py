@@ -12,11 +12,18 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 
+from moonsheep.settings import *
+
+MOONSHEEP.update({
+    'APP': 'project_template'  # TODO list from document models instead of defining here
+})
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 ALLOWED_HOSTS = []
 
+# AUTH_USER_MODEL = 'moonsheep.User'
 
 # Application definition
 
@@ -28,8 +35,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'project_template',
     'moonsheep',
+    'project_template'
 ]
 
 MIDDLEWARE = [

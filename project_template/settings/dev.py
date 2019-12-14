@@ -18,15 +18,15 @@ If set Moonsheep won't communicate with PyBossa and will:
 2. send form submissions straight to the verification
    won't test cross-checking as there is going to be only one entry, but will allow to test the whole flow
 """
-MOONSHEEP_DEVELOPMENT_MODE = True
 
 DEBUG = TEMPLATE_DEBUG = True
+
+MOONSHEEP['DEV_ROTATE_TASKS'] = True
 
 INTERNAL_IPS = ['127.0.0.1', 'localhost']
 
 AUTH_PASSWORD_VALIDATORS = []
 
-MOONSHEEP_TASK_SOURCE = 'random'
 MOONSHEEP_BASE_TASKS = ['project-template.tasks.TaskWithForm', 'project-template.tasks.TaskWithTemplate']
 
 # Add debug toolbar
@@ -41,9 +41,17 @@ SECRET_KEY = 'https://uploads.skyhighnetworks.com/wp-content/uploads/2015/08/061
 
 DATABASES = {
     'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'catpol',
+            'USER': 'postgres',
+            'PASSWORD': 'postgres',
+            'HOST': '127.0.0.1',
+            'PORT': '5433',
+        },
+    'sqlite': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
 }
 
 
