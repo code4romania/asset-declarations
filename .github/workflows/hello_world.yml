@@ -1,0 +1,14 @@
+on: [push, pull_request]
+
+name: Print a hello world
+
+jobs:
+  hello:
+    name: Hello world
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Hello
+      run: echo "Hello World"
