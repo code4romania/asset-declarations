@@ -11,4 +11,9 @@ jobs:
       uses: actions/checkout@v1
 
     - name: Hello
-      run: echo "Hello World"
+      run: |
+        echo "Hello World"
+        foo="${{ secrets.DOCKER_HUB_ORGANIZATION }}"
+        for (( i=0; i<${#foo}; i++ )); do
+          echo "${foo:$i:1}"
+        done
