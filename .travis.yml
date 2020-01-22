@@ -4,7 +4,7 @@ services:
   - docker
 
 env:
-  - DOCKER_IMAGE_NAME="$DOCKER_HUB_ORGANIZATION/catpol"
+  - DOCKER_IMAGE_NAME="$DOCKER_HUB_ORGANIZATION/catalog-politic-declaratii"
 
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
