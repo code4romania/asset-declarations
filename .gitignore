@@ -33,3 +33,5 @@ wheels/
 .installed.cfg
 *.egg
 MANIFEST
+
+.DS_STORE
