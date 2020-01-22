@@ -4,7 +4,7 @@ services:
   - docker
 
 env:
-  - DOCKER_IMAGE_NAME="$DOCKER_USERNAME/catpol"
+  - DOCKER_IMAGE_NAME="$DOCKER_HUB_ORGANIZATION/catpol"
 
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
