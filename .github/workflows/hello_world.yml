@@ -1,19 +1,23 @@
+name: Build and push to Dockerhub
 on: [push, pull_request]
 
-name: Print a hello world
-
 jobs:
-  hello:
-    name: Hello world
+  docker:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v1
+    - uses: actions/checkout@v1
 
-    - name: Hello
+    - name: Build the Docker image
+      if: github.ref == 'refs/heads/develop'
       run: |
-        echo "Hello World"
-        foo="${{ secrets.DOCKER_HUB_ORGANIZATION }}"
-        for (( i=0; i<${#foo}; i++ )); do
-          echo "${foo:$i:1}"
-        done
+        docker build . \
+        --file ./Dockerfile \
+        --tag ${{ secrets.DOCKER_HUB_ORGANIZATION }}/${{ secrets.DOCKER_HUB_REPOSITORY }}:latest
+
+    - name: Login to docker registry
+      if: github.ref == 'refs/heads/develop'
+      run: docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+    - name: Push to docker registry
+      if: github.ref == 'refs/heads/develop'
+      run: docker push ${{ secrets.DOCKER_HUB_ORGANIZATION }}/${{ secrets.DOCKER_HUB_REPOSITORY }}:latest
