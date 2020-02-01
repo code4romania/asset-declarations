@@ -104,8 +104,7 @@ class Person(models.Model):
 
 class CommonInfo(models.Model):
     county = models.CharField("Judet", max_length=32, choices=Counties.return_counties())
-    city = models.CharField("Localitate", max_length=32, null=True, blank=True)
-    commune = models.CharField("Comuna", max_length=32, null=True, blank=True)
+    city_commune = models.CharField("Localitate", max_length=32, null=True, blank=True)
     address = models.CharField("Adresa", max_length=64, null=True, blank=True)
 
     class Meta:
