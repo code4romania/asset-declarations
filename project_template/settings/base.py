@@ -12,7 +12,16 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 
+import environ
 from moonsheep.settings import *
+
+root = environ.Path(__file__) - 3  # three folder back (/a/b/c/ - 3 = /)
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
+environ.Env.read_env(f"{root}/.env")  # reading .env file
+
 
 MOONSHEEP.update({
     'APP': 'project_template'  # TODO list from document models instead of defining here
@@ -99,6 +108,14 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+
+
+DATABASES = {
+    # read os.environ['DATABASE_URL'] and raises ImproperlyConfigured exception if not found
+    'default': env.db('DATABASE_URL'),
+    # read os.environ['SQLITE_URL']
+    'extra': env.db('SQLITE_URL', default=f"sqlite:///{os.path.join(BASE_DIR, 'db.sqlite3'),}")
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
