@@ -28,7 +28,9 @@ class DigitalizationTask(AbstractTask):
 
     def create_mocked_task(self, task_data):
         task_data["info"].update(
-            {"url": "http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf",}
+            {
+                "url": "http://www.cdep.ro/declaratii/deputati/2016/avere/002a.pdf",
+            }
         )
 
         return task_data

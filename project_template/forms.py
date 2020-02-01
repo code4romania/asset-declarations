@@ -39,7 +39,9 @@ class TranscribeInitialInformation(forms.Form):
         required=False,
     )
     initials = forms.CharField(
-        label=_("Care sunt initialele politicianului? (in cazul in care se aplica)"),
+        label=_(
+            "Care sunt initialele politicianului? (in cazul in care se aplica)"
+        ),
         required=False,
     )
     surname = forms.CharField(label=_("Care este prenumele politicianului?"))
@@ -83,7 +85,8 @@ class TranscribeOwnedLandRowEntry(PartialModelForm):
         super().__init__(*args, **kwargs)
         # Set a specific form field for a model field
         self.fields["acquisition_year"] = forms.ChoiceField(
-            label=self.fields["acquisition_year"].label, choices=get_dict_year_choices
+            label=self.fields["acquisition_year"].label,
+            choices=get_dict_year_choices,
         )
 
     class Meta:
@@ -110,7 +113,8 @@ class TranscribeOwnedBuildingsRowEntry(PartialModelForm):
         super().__init__(*args, **kwargs)
         # Set a specific form field for a model field
         self.fields["acquisition_year"] = forms.ChoiceField(
-            label=self.fields["acquisition_year"].label, choices=get_dict_year_choices
+            label=self.fields["acquisition_year"].label,
+            choices=get_dict_year_choices,
         )
 
     class Meta:
@@ -138,7 +142,8 @@ class TranscribeOwnedAutomobileRowEntry(PartialModelForm):
         # Set a specific form field for a model field
         # TODO: A fabrication_year can be much older than the current acquisition_year dropdown allows
         self.fields["fabrication_year"] = forms.ChoiceField(
-            label=self.fields["fabrication_year"].label, choices=get_dict_year_choices
+            label=self.fields["fabrication_year"].label,
+            choices=get_dict_year_choices,
         )
 
     class Meta:
@@ -165,7 +170,8 @@ class TranscribeOwnedJewelryRowEntry(PartialModelForm):
         super().__init__(*args, **kwargs)
         # Set a specific form field for a model field
         self.fields["acquisition_year"] = forms.ChoiceField(
-            label=self.fields["acquisition_year"].label, choices=get_dict_year_choices
+            label=self.fields["acquisition_year"].label,
+            choices=get_dict_year_choices,
         )
 
     class Meta:
@@ -191,7 +197,9 @@ class TranscribeExtraValuableRowEntry(PartialModelForm):
         label=_("Care este numele persoanei catre care s-a instrainat bunul?")
     )
     owner_name = forms.CharField(
-        label=_("Care este prenumele persoanei catre care s-a instrainat bunul?")
+        label=_(
+            "Care este prenumele persoanei catre care s-a instrainat bunul?"
+        )
     )
 
     def __init__(self, *args, **kwargs):
@@ -236,7 +244,8 @@ class TranscribeOwnedBankAccountsRowEntry(PartialModelForm):
         super().__init__(*args, **kwargs)
         # Customise a Model form field widget
         self.fields["opening_year"] = forms.ChoiceField(
-            label=self.fields["opening_year"].label, choices=get_dict_year_choices
+            label=self.fields["opening_year"].label,
+            choices=get_dict_year_choices,
         )
 
 
@@ -251,8 +260,12 @@ class TranscribeOwnedInvestmentsOver5KTable(forms.Form):
 
 class TranscribeOwnedInvestmentsOver5KRowEntry(PartialModelForm):
     # Custom form fields not found in the Model
-    beneficiary_surname = forms.CharField(label=_("Care este numele beneficiarului?"))
-    beneficiary_name = forms.CharField(label=_("Care este prenumele beneficiarului?"))
+    beneficiary_surname = forms.CharField(
+        label=_("Care este numele beneficiarului?")
+    )
+    beneficiary_name = forms.CharField(
+        label=_("Care este prenumele beneficiarului?")
+    )
 
     class Meta:
         model = models.OwnedInvestmentsOver5KTableEntry
@@ -288,7 +301,8 @@ class TranscribeOwnedDebtsRowEntry(PartialModelForm):
 
         # Customise some Model form field widgets
         self.fields["acquirement_year"] = forms.ChoiceField(
-            label=self.fields["acquirement_year"].label, choices=get_dict_year_choices
+            label=self.fields["acquirement_year"].label,
+            choices=get_dict_year_choices,
         )
         # TODO: due_date can also be in the future
         self.fields["due_date"] = forms.ChoiceField(
@@ -413,8 +427,12 @@ class TranscribeOwnedIncomeFromPensionsTable(forms.Form):
 
 
 class TranscribeOwnedIncomeFromPensionsRowEntry(PartialModelForm):
-    beneficiary_surname = forms.CharField(label=_("Care este numele beneficiarului?"))
-    beneficiary_name = forms.CharField(label=_("Care este prenumele beneficiarului?"))
+    beneficiary_surname = forms.CharField(
+        label=_("Care este numele beneficiarului?")
+    )
+    beneficiary_name = forms.CharField(
+        label=_("Care este prenumele beneficiarului?")
+    )
 
     class Meta:
         model = models.OwnedIncomeFromPensionsTableEntry

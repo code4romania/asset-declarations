@@ -7,7 +7,9 @@ class Institution(common_utils.IterableEnum):
     SENATE = "Senat"
     DEPUTIES_CHAMBER = "Camera Deputatilor"
     GENERAL_GOVERNMENT_SECRETARY = "Secretariatul General al Guvernului"
-    PUBLIC_ADMIN_MINISTRY = "Ministerul Dezvoltarii Regionale si Administratiei Publice"
+    PUBLIC_ADMIN_MINISTRY = (
+        "Ministerul Dezvoltarii Regionale si Administratiei Publice"
+    )
     ENVIRONMENT_MINISTRY = "Ministerul Mediului"
     INTERIOR_AFFAIRS_MINISTRY = "Ministerul Afacerilor Interne"
     EXTERIOR_AFFAIRS_MINISTRY = "Ministerul Afacerilor Externe"
@@ -21,12 +23,16 @@ class Institution(common_utils.IterableEnum):
     ENERGY_MINISTRY = "Ministerul Energiei"
     TRANSPORTATION_MINISTRY = "Ministerul Transporturilor"
     EUROPEAN_FUNDS_MINISTRY = "Ministerul Fondurilor Europene"
-    BUSINESS_MINISTRY = "Ministerul pentru Mediul de Afaceri,Comert si Antreprenoriat"
+    BUSINESS_MINISTRY = (
+        "Ministerul pentru Mediul de Afaceri,Comert si Antreprenoriat"
+    )
     HEALTH_MINISTRY = "Ministerul Sanatatii"
     CULTURE_MINISTRY = "Ministerul Culturii si Identitatii Nationale"
     FOREST_MINISTRY = "Ministerul Apelor si Padurilor"
     RESEARCH_MINISTRY = "Ministerul Cercetarii si Inovarii"
-    COMMUNICATION_MINISTRY = "Ministerul Comunicatiilor si Societatii Informationale"
+    COMMUNICATION_MINISTRY = (
+        "Ministerul Comunicatiilor si Societatii Informationale"
+    )
     YOUTH_MINISTRY = "Ministerul Tineretului si Sportului"
     TOURISM_MINISTRY = "Ministerul Turismului"
     EVERYWHERE_MINISTRY = "Ministerul pentru Romanii de Pretutindeni"

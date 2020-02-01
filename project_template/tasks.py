@@ -2,7 +2,10 @@ from moonsheep.tasks import register_task
 
 import project_template.models as models
 import project_template.forms as forms
-from project_template.task_templates import DigitalizationTask, CountTableRowsTask
+from project_template.task_templates import (
+    DigitalizationTask,
+    CountTableRowsTask,
+)
 
 
 class TaskGetInitialInformation(DigitalizationTask):
@@ -19,7 +22,10 @@ class TaskGetInitialInformation(DigitalizationTask):
 
         politician.add_position(verified_data["position"])
 
-        processed_declaration, created = models.Declaration.objects.get_or_create(
+        (
+            processed_declaration,
+            created,
+        ) = models.Declaration.objects.get_or_create(
             politician=politician,
             date=verified_data["date"],
             position=verified_data["position"],
@@ -62,7 +68,9 @@ class TaskOwnedAutomobileRowEntry(DigitalizationTask):
         (
             owned_automobile,
             created,
-        ) = models.OwnedAutomobileTableEntry.objects.get_or_create(**verified_data)
+        ) = models.OwnedAutomobileTableEntry.objects.get_or_create(
+            **verified_data
+        )
 
 
 class TaskOwnedAutomobileTable(CountTableRowsTask):
@@ -79,7 +87,9 @@ class TaskOwnedBankAccountsRowEntry(DigitalizationTask):
         (
             owned_bank_accounts,
             created,
-        ) = models.OwnedBankAccountsTableEntry.objects.get_or_create(**verified_data,)
+        ) = models.OwnedBankAccountsTableEntry.objects.get_or_create(
+            **verified_data,
+        )
 
 
 class TaskOwnedBankAccountsTable(CountTableRowsTask):
@@ -121,7 +131,9 @@ class TaskOwnedDebtsRowEntry(DigitalizationTask):
     template_name = "tasks/owned_debts.html"
 
     def save_verified_data(self, verified_data):
-        if verified_data.get("loaner_name") and verified_data.get("loaner_surname"):
+        if verified_data.get("loaner_name") and verified_data.get(
+            "loaner_surname"
+        ):
             # Use the custom form fields
             loaner_person, created = models.Person.objects.get_or_create(
                 name=verified_data.get("loaner_name"),
@@ -132,11 +144,17 @@ class TaskOwnedDebtsRowEntry(DigitalizationTask):
             del verified_data["loaner_name"]
             del verified_data["loaner_surname"]
 
-            owned_debts, created = models.OwnedDebtsTableEntry.objects.get_or_create(
+            (
+                owned_debts,
+                created,
+            ) = models.OwnedDebtsTableEntry.objects.get_or_create(
                 person=loaner_person, **verified_data,
             )
         elif verified_data.get("institution"):
-            owned_debts, created = models.OwnedDebtsTableEntry.objects.get_or_create(
+            (
+                owned_debts,
+                created,
+            ) = models.OwnedDebtsTableEntry.objects.get_or_create(
                 **verified_data,
             )
 
@@ -265,9 +283,10 @@ class TaskOwnedJewelryRowEntry(DigitalizationTask):
     template_name = "tasks/owned_jewelry.html"
 
     def save_verified_data(self, verified_data):
-        owned_jewelry, created = models.OwnedJewelryTableEntry.objects.get_or_create(
-            **verified_data
-        )
+        (
+            owned_jewelry,
+            created,
+        ) = models.OwnedJewelryTableEntry.objects.get_or_create(**verified_data)
 
 
 class TaskOwnedJewelryTable(CountTableRowsTask):
