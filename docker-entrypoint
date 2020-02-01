@@ -1,0 +1,9 @@
+#!/bin/sh
+
+PORT=${PORT:-"8000"}
+
+echo "Migrating databse"
+python3 manage.py migrate --run-syncdb
+
+echo "Start web server on $PORT"
+python3 manage.py runserver "0.0.0.0:$PORT"

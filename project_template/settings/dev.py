@@ -34,25 +34,10 @@ if DEBUG:
     INSTALLED_APPS += ['debug_toolbar', 'django_extensions']
     MIDDLEWARE.insert(1, 'debug_toolbar.middleware.DebugToolbarMiddleware')
 
+# TODO: read it from env or generate a new one
 SECRET_KEY = 'https://uploads.skyhighnetworks.com/wp-content/uploads/2015/08/06195203/Bart-Chalkboard-for-Blog-Post.png'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'catpol',
-            'USER': 'postgres',
-            'PASSWORD': 'postgres',
-            'HOST': 'catpol-database',
-            'PORT': '5432',
-        },
-    'sqlite': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    },
-}
-
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

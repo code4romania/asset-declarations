@@ -1,15 +1,18 @@
 FROM alexstefanescu/catpol-dependencies
 
-RUN pip3 install --upgrade pip setuptools
+RUN pip3 install --upgrade pip setuptools \
+    && wget -qO- https://github.com/jwilder/dockerize/releases/download/v0.2.0/dockerize-linux-amd64-v0.2.0.tar.gz | tar -zxf - -C /usr/bin \
+    && chown root:root /usr/bin/dockerize
 
 ARG ENVIRONMENT=dev
 ENV DJANGO_SETTINGS_MODULE=project_template.settings.${ENVIRONMENT}
 
-# RUN find -type d -name __pycache__ -prune -exec rm -rf {} \; && \
-#     rm -rf ~/.cache/pip
+COPY ./ /opt/catpol
 
-COPY . /opt/catpol
+# Re-install dependencies since it might have updated from cache
+RUN pip3 install -r requirements-${ENVIRONMENT}.txt
+
 RUN python3 manage.py check
-CMD python3 manage.py migrate --run-syncdb \
-    && python3 manage.py runserver 0.0.0.0:8000
+
+ENTRYPOINT ["/opt/catpol/docker-entrypoint"]
 EXPOSE 8000

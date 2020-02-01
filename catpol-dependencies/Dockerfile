@@ -13,8 +13,6 @@ RUN pip3 install --upgrade pip setuptools
 ARG ENVIRONMENT=dev
 
 WORKDIR /opt/catpol
-COPY ./requirements* /opt/catpol/
-RUN pip3 install -r requirements-${ENVIRONMENT}.txt 
 
-# RUN find -type d -name __pycache__ -prune -exec rm -rf {} \; && \
-#     rm -rf ~/.cache/pip
+COPY ./requirements* /opt/catpol/
+RUN pip3 install -r requirements-${ENVIRONMENT}.txt
