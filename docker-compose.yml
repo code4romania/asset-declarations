@@ -1,19 +1,19 @@
 version: '3'
 services:
-  catpol-database:
-    image: "postgres:12"
-    container_name: catpol_psql
-    ports:
-      - "5432:5432"
-    env_file:
-      - database.env
-    volumes:
-      - database-data:/var/lib/postgresql/data/ 
-  catpol:
+  web:
       build: .
-      container_name: catpol
+      command: ls -la /opt/catpol && dockerize --wait tcp://db:3306
       ports:
         - "8000:8000"
+      volumes:
+        - ./:/opt/catpol
+
+  db:
+    image: "postgres:12"
+    ports:
+      - "5432:5432"
+    volumes:
+      - database-data:/var/lib/postgresql/data/
 
 volumes:
   database-data:
