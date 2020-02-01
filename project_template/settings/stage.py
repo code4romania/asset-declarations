@@ -21,7 +21,7 @@ SECRET_KEY = '${SECRET_KEY}'
 DEBUG = TEMPLATE_DEBUG = False
 MOONSHEEP_DEVELOPMENT_MODE = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 INTERNAL_IPS = []
 
-WSGI_APPLICATION = 'project_template.wsgi.application'
+WSGI_APPLICATION = "project_template.wsgi.application"

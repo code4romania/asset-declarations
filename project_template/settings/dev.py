@@ -21,18 +21,21 @@ If set Moonsheep won't communicate with PyBossa and will:
 
 DEBUG = TEMPLATE_DEBUG = True
 
-MOONSHEEP['DEV_ROTATE_TASKS'] = True
+MOONSHEEP["DEV_ROTATE_TASKS"] = True
 
-INTERNAL_IPS = ['127.0.0.1', 'localhost']
+INTERNAL_IPS = ["127.0.0.1", "localhost"]
 
 AUTH_PASSWORD_VALIDATORS = []
 
-MOONSHEEP_BASE_TASKS = ['project-template.tasks.TaskWithForm', 'project-template.tasks.TaskWithTemplate']
+MOONSHEEP_BASE_TASKS = [
+    "project-template.tasks.TaskWithForm",
+    "project-template.tasks.TaskWithTemplate",
+]
 
 # Add debug toolbar
 if DEBUG:
-    INSTALLED_APPS += ['debug_toolbar', 'django_extensions']
-    MIDDLEWARE.insert(1, 'debug_toolbar.middleware.DebugToolbarMiddleware')
+    INSTALLED_APPS += ["debug_toolbar", "django_extensions"]
+    MIDDLEWARE.insert(1, "debug_toolbar.middleware.DebugToolbarMiddleware")
 
 # TODO: read it from env or generate a new one
 SECRET_KEY = 'https://uploads.skyhighnetworks.com/wp-content/uploads/2015/08/06195203/Bart-Chalkboard-for-Blog-Post.png'
