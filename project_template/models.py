@@ -4,7 +4,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from moonsheep.models import DocumentModel
 
-from .constants import DECLARATION_TABLES
 from project_template.datamodels.account_type import AccountType
 from project_template.datamodels.attainment_type import AttainmentType
 from project_template.datamodels.building_type import BuildingType
@@ -22,6 +21,8 @@ from project_template.datamodels.position import Position
 from project_template.datamodels.institution import Institution
 from project_template.datamodels.counties import Counties
 
+from .constants import DECLARATION_TABLES
+from .utils import AutoCleanModelMixin, XORModelMixin
 
 FIRST_2_TYPES = 2
 
@@ -51,7 +52,7 @@ def validate_percentage(value):
         )
 
 
-class Politician(models.Model):
+class Politician(AutoCleanModelMixin, models.Model):
     all_positions = None
 
     name = models.CharField(_("Name"), max_length=128)
@@ -81,7 +82,7 @@ class Politician(models.Model):
         return "{} {}".format(self.name, self.surname)
 
 
-class Declaration(DocumentModel):
+class Declaration(AutoCleanModelMixin, DocumentModel):
     url = models.URLField(max_length=500)
     politician = models.ForeignKey(Politician, on_delete=models.CASCADE, null=True)
     position = models.CharField(_("Functie"), max_length=128, choices=Position.return_as_iterable())
@@ -95,14 +96,21 @@ class Declaration(DocumentModel):
         )
 
 
-class Person(models.Model):
+class Person(AutoCleanModelMixin, models.Model):
     name = models.CharField("Nume persoana", max_length=128)
     previous_name = models.CharField("Nume anterior", max_length=128, null=True, blank=True)
     initials = models.CharField("Initiale", max_length=10, null=True, blank=True)
     surname = models.CharField("Prenume", max_length=128)
 
 
-class CommonInfo(models.Model):
+class CommonInfo(AutoCleanModelMixin, XORModelMixin, models.Model):
+    XOR_FIELDS = [
+        {
+            "commune": _("commune"),
+            "city": _("city"),
+        }
+    ]
+
     county = models.CharField("Judet", max_length=32, choices=Counties.return_counties())
     city = models.CharField("Localitate", max_length=32, null=True, blank=True)
     commune = models.CharField("Comuna", max_length=32, null=True, blank=True)
@@ -277,6 +285,13 @@ class OwnedDebtsTable(models.Model):
 
 # Tabel Datorii - actual row information
 class OwnedDebtsTableEntry(models.Model):
+    XOR_FIELDS = [
+        {
+            "person": _("person"),
+            "lender": _("lender"),
+        }
+    ]
+
     table = models.ForeignKey(OwnedDebtsTable, on_delete=models.CASCADE, null=True)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)
     lender = models.CharField("Creditor", max_length=128, choices=FinancialInstitution.return_as_iterable(), null=True, blank=True)
@@ -402,5 +417,5 @@ class OwnedIncomeFromOtherSourcesTable(models.Model):
 
 # Tabel Venituri din alte surse - actual row information
 class OwnedIncomeFromOtherSourcesTableEntry(CommonIncomeFields):
-    table = models.ForeignKey(OwnedIncomeFromOtherSourcesTable, on_delete=models.CASCADE, null=True)
+    table = models.ForeignKey(OwnedIncomeFromOtherSourcesTable, on_delete=models.CASCADE, null=True, blank=True)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)
