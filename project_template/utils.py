@@ -7,8 +7,8 @@ class AutoCleanModelMixin:
     def _init_states(self):
         self.initial_state = self.current_state
 
-        self.cleaned_state = {} if not self.pk else self.initial_state.copy()
-        self.saved_state = {} if not self.pk else self.initial_state.copy()
+        self.cleaned_state = {} if not getattr(self, 'pk', None) else self.initial_state.copy()
+        self.saved_state = {} if not getattr(self, 'pk', None) else self.initial_state.copy()
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -18,7 +18,7 @@ class AutoCleanModelMixin:
     def current_state(self):
         return {
             field.name: self.__dict__[field.attname]
-            for field in self._meta.fields
+            for field in (self._meta.fields if hasattr(self, '_meta') else [])
             if field.attname in self.__dict__
         }
 
