@@ -76,12 +76,22 @@ class AutoCleanModelMixin:
 
 
 class XORModelMixin:
+    """
+    Certain fields, like commune and city, are mutually exclusive, meaning that those can't be all None or both filled.
+
+    To use this mixin, the class needs to have a XOR_FIELDS attribute that represents a list of dicts, containing
+    mutually exclusive fields as keys and their translation as values.
+
     XOR_FIELDS = [
-        # {
-        #     "commune": _("commune"),
-        #     "city": _("city"),
-        # }
+        {
+            "commune": _("commune"),
+            "city": _("city"),
+        }
     ]
+
+    """
+
+    XOR_FIELDS = []
 
     def full_clean(self, *args, **kwargs):
         super().full_clean(*args, **kwargs)
