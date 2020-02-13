@@ -52,7 +52,7 @@ def validate_percentage(value):
         )
 
 
-class Politician(AutoCleanModelMixin, models.Model):
+class Politician(models.Model):
     all_positions = None
 
     name = models.CharField(_("Name"), max_length=128)
@@ -82,7 +82,7 @@ class Politician(AutoCleanModelMixin, models.Model):
         return "{} {}".format(self.name, self.surname)
 
 
-class Declaration(AutoCleanModelMixin, DocumentModel):
+class Declaration(DocumentModel):
     url = models.URLField(max_length=500)
     politician = models.ForeignKey(Politician, on_delete=models.CASCADE, null=True)
     position = models.CharField(_("Functie"), max_length=128, choices=Position.return_as_iterable())
@@ -96,7 +96,7 @@ class Declaration(AutoCleanModelMixin, DocumentModel):
         )
 
 
-class Person(AutoCleanModelMixin, models.Model):
+class Person(models.Model):
     name = models.CharField("Nume persoana", max_length=128)
     previous_name = models.CharField("Nume anterior", max_length=128, null=True, blank=True)
     initials = models.CharField("Initiale", max_length=10, null=True, blank=True)
