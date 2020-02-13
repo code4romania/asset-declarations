@@ -15,7 +15,7 @@ from .base import *
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # TODO: read secret env form env, it should be added at deploy time
-SECRET_KEY = '${SECRET_KEY}'
+SECRET_KEY = "${SECRET_KEY}"
 
 # To be double sure
 DEBUG = TEMPLATE_DEBUG = False

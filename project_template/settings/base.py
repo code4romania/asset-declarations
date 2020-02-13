@@ -23,9 +23,11 @@ env = environ.Env(
 environ.Env.read_env(f"{root}/.env")  # reading .env file
 
 
-MOONSHEEP.update({
-    'APP': 'project_template'  # TODO list from document models instead of defining here
-})
+MOONSHEEP.update(
+    {
+        "APP": "project_template"  # TODO list from document models instead of defining here
+    }
+)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(
@@ -111,9 +113,12 @@ USE_TZ = True
 
 DATABASES = {
     # read os.environ['DATABASE_URL'] and raises ImproperlyConfigured exception if not found
-    'default': env.db('DATABASE_URL'),
+    "default": env.db("DATABASE_URL"),
     # read os.environ['SQLITE_URL']
-    'extra': env.db('SQLITE_URL', default=f"sqlite:///{os.path.join(BASE_DIR, 'db.sqlite3'),}")
+    "extra": env.db(
+        "SQLITE_URL",
+        default=f"sqlite:///{os.path.join(BASE_DIR, 'db.sqlite3'),}",
+    ),
 }
 
 # Static files (CSS, JavaScript, Images)
