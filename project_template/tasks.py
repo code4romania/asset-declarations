@@ -22,10 +22,7 @@ class TaskGetInitialInformation(DigitalizationTask):
 
         politician.add_position(verified_data["position"])
 
-        (
-            processed_declaration,
-            created,
-        ) = models.Declaration.objects.get_or_create(
+        (processed_declaration, created,) = models.Declaration.objects.get_or_create(
             politician=politician,
             date=verified_data["date"],
             position=verified_data["position"],
@@ -41,17 +38,14 @@ class TaskOwnedLandRowEntry(DigitalizationTask):
     def save_verified_data(self, verified_data):
         # Use the custom form fields
         owner_person, created = models.Person.objects.get_or_create(
-            name=verified_data.get("owner_name"),
-            surname=verified_data.get("owner_surname"),
+            name=verified_data.get("owner_name"), surname=verified_data.get("owner_surname"),
         )
 
         # Remove the custom form fields before saving the table entry
         del verified_data["owner_name"]
         del verified_data["owner_surname"]
 
-        owned_land, created = models.OwnedLandTableEntry.objects.get_or_create(
-            coowner=owner_person, **verified_data,
-        )
+        owned_land, created = models.OwnedLandTableEntry.objects.get_or_create(coowner=owner_person, **verified_data,)
 
 
 class TaskOwnedLandTable(CountTableRowsTask):
@@ -65,12 +59,7 @@ class TaskOwnedAutomobileRowEntry(DigitalizationTask):
     template_name = "tasks/owned_automobile.html"
 
     def save_verified_data(self, verified_data):
-        (
-            owned_automobile,
-            created,
-        ) = models.OwnedAutomobileTableEntry.objects.get_or_create(
-            **verified_data
-        )
+        (owned_automobile, created,) = models.OwnedAutomobileTableEntry.objects.get_or_create(**verified_data)
 
 
 class TaskOwnedAutomobileTable(CountTableRowsTask):
@@ -84,12 +73,7 @@ class TaskOwnedBankAccountsRowEntry(DigitalizationTask):
     template_name = "tasks/owned_bank_accounts.html"
 
     def save_verified_data(self, verified_data):
-        (
-            owned_bank_accounts,
-            created,
-        ) = models.OwnedBankAccountsTableEntry.objects.get_or_create(
-            **verified_data,
-        )
+        (owned_bank_accounts, created,) = models.OwnedBankAccountsTableEntry.objects.get_or_create(**verified_data,)
 
 
 class TaskOwnedBankAccountsTable(CountTableRowsTask):
@@ -131,32 +115,21 @@ class TaskOwnedDebtsRowEntry(DigitalizationTask):
     template_name = "tasks/owned_debts.html"
 
     def save_verified_data(self, verified_data):
-        if verified_data.get("loaner_name") and verified_data.get(
-            "loaner_surname"
-        ):
+        if verified_data.get("loaner_name") and verified_data.get("loaner_surname"):
             # Use the custom form fields
             loaner_person, created = models.Person.objects.get_or_create(
-                name=verified_data.get("loaner_name"),
-                surname=verified_data.get("loaner_surname"),
+                name=verified_data.get("loaner_name"), surname=verified_data.get("loaner_surname"),
             )
 
             # Remove the custom form fields before saving the table entry
             del verified_data["loaner_name"]
             del verified_data["loaner_surname"]
 
-            (
-                owned_debts,
-                created,
-            ) = models.OwnedDebtsTableEntry.objects.get_or_create(
+            (owned_debts, created,) = models.OwnedDebtsTableEntry.objects.get_or_create(
                 person=loaner_person, **verified_data,
             )
         elif verified_data.get("institution"):
-            (
-                owned_debts,
-                created,
-            ) = models.OwnedDebtsTableEntry.objects.get_or_create(
-                **verified_data,
-            )
+            (owned_debts, created,) = models.OwnedDebtsTableEntry.objects.get_or_create(**verified_data,)
 
 
 class TaskOwnedDebtsTable(CountTableRowsTask):
@@ -171,18 +144,14 @@ class TaskOwnedIncomeFromPensionsRowEntry(DigitalizationTask):
 
     def save_verified_data(self, verified_data):
         owner_person, created = models.Person.objects.get_or_create(
-            name=verified_data.get("beneficiary_name"),
-            surname=verified_data.get("beneficiary_surname"),
+            name=verified_data.get("beneficiary_name"), surname=verified_data.get("beneficiary_surname"),
         )
 
         # Remove the custom form fields before saving the table entry
         del verified_data["beneficiary_name"]
         del verified_data["beneficiary_surname"]
 
-        (
-            owned_income_from_pensions,
-            created,
-        ) = models.OwnedIncomeFromPensionsTableEntry.objects.get_or_create(
+        (owned_income_from_pensions, created,) = models.OwnedIncomeFromPensionsTableEntry.objects.get_or_create(
             person=owner_person, **verified_data,
         )
 
@@ -207,10 +176,7 @@ class TaskOwnedGoodsOrServicesRowEntry(DigitalizationTask):
         del verified_data["name"]
         del verified_data["surname"]
 
-        (
-            owned_goods_or_services,
-            created,
-        ) = models.OwnedGoodsOrServicesTableEntry.objects.get_or_create(
+        (owned_goods_or_services, created,) = models.OwnedGoodsOrServicesTableEntry.objects.get_or_create(
             person=owner_person, **verified_data
         )
 
@@ -227,18 +193,14 @@ class TaskOwnedInvestmentsOver5KRowEntry(DigitalizationTask):
 
     def save_verified_data(self, verified_data):
         loan_beneficiary, created = models.Person.objects.get_or_create(
-            name=verified_data.get("beneficiary_name"),
-            surname=verified_data.get("beneficiary_surname"),
+            name=verified_data.get("beneficiary_name"), surname=verified_data.get("beneficiary_surname"),
         )
 
         # Remove the custom form fields before saving the table entry
         del verified_data["beneficiary_name"]
         del verified_data["beneficiary_surname"]
 
-        (
-            owned_investments_over_5k,
-            created,
-        ) = models.OwnedInvestmentsOver5KTableEntry.objects.get_or_create(
+        (owned_investments_over_5k, created,) = models.OwnedInvestmentsOver5KTableEntry.objects.get_or_create(
             loan_beneficiary=loan_beneficiary, **verified_data,
         )
 
@@ -263,10 +225,7 @@ class TaskOwnedIncomeFromOtherSourcesRowEntry(DigitalizationTask):
         del verified_data["name"]
         del verified_data["surname"]
 
-        (
-            owned_income_other_sources,
-            created,
-        ) = models.OwnedIncomeFromOtherSourcesTableEntry.objects.get_or_create(
+        (owned_income_other_sources, created,) = models.OwnedIncomeFromOtherSourcesTableEntry.objects.get_or_create(
             person=owner_person, **verified_data
         )
 
@@ -283,10 +242,7 @@ class TaskOwnedJewelryRowEntry(DigitalizationTask):
     template_name = "tasks/owned_jewelry.html"
 
     def save_verified_data(self, verified_data):
-        (
-            owned_jewelry,
-            created,
-        ) = models.OwnedJewelryTableEntry.objects.get_or_create(**verified_data)
+        (owned_jewelry, created,) = models.OwnedJewelryTableEntry.objects.get_or_create(**verified_data)
 
 
 class TaskOwnedJewelryTable(CountTableRowsTask):
@@ -302,18 +258,14 @@ class TaskExtraValuableRowEntry(DigitalizationTask):
     def save_verified_data(self, verified_data):
         # Use the custom form fields
         owner_person, created = models.Person.objects.get_or_create(
-            name=verified_data.get("owner_name"),
-            surname=verified_data.get("owner_surname"),
+            name=verified_data.get("owner_name"), surname=verified_data.get("owner_surname"),
         )
 
         # Remove the custom form fields before saving the table entry
         del verified_data["owner_name"]
         del verified_data["owner_surname"]
 
-        (
-            owned_extra_valuable,
-            created,
-        ) = models.OwnedExtraValuableTableEntry.objects.get_or_create(
+        (owned_extra_valuable, created,) = models.OwnedExtraValuableTableEntry.objects.get_or_create(
             receiver_of_goods=owner_person, **verified_data,
         )
 
@@ -394,10 +346,7 @@ class TaskOwnedIncomeFromGamblingRowEntry(DigitalizationTask):
         del verified_data["name"]
         del verified_data["surname"]
 
-        (
-            owned_income_from_gambling,
-            created,
-        ) = models.OwnedIncomeFromGamblingTableEntry.objects.get_or_create(
+        (owned_income_from_gambling, created,) = models.OwnedIncomeFromGamblingTableEntry.objects.get_or_create(
             person=owner_person, **verified_data
         )
 
@@ -422,10 +371,7 @@ class TaskOwnedIncomeFromSalariesRowEntry(DigitalizationTask):
         del verified_data["name"]
         del verified_data["surname"]
 
-        (
-            owned_salaries,
-            created,
-        ) = models.OwnedIncomeFromSalariesTableEntry.objects.get_or_create(
+        (owned_salaries, created,) = models.OwnedIncomeFromSalariesTableEntry.objects.get_or_create(
             person=owner_person, **verified_data,
         )
 
@@ -443,18 +389,14 @@ class TaskOwnedBuildingsRowEntry(DigitalizationTask):
     def save_verified_data(self, verified_data):
         # Use the custom form fields
         owner_person, created = models.Person.objects.get_or_create(
-            name=verified_data.get("owner_name"),
-            surname=verified_data.get("owner_surname"),
+            name=verified_data.get("owner_name"), surname=verified_data.get("owner_surname"),
         )
 
         # Remove the custom form fields before saving the table entry
         del verified_data["owner_name"]
         del verified_data["owner_surname"]
 
-        (
-            owned_buildings,
-            created,
-        ) = models.OwnedBuildingsTableEntry.objects.get_or_create(
+        (owned_buildings, created,) = models.OwnedBuildingsTableEntry.objects.get_or_create(
             coowner=owner_person, **verified_data,
         )
 
@@ -479,10 +421,7 @@ class TaskOwnedIncomeFromInvestmentsRowEntry(DigitalizationTask):
         del verified_data["name"]
         del verified_data["surname"]
 
-        (
-            income_from_investments,
-            created,
-        ) = models.OwnedIncomeFromInvestmentsTableEntry.objects.get_or_create(
+        (income_from_investments, created,) = models.OwnedIncomeFromInvestmentsTableEntry.objects.get_or_create(
             person=owner_person, **verified_data,
         )
 

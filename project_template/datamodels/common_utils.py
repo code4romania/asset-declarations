@@ -12,9 +12,7 @@ class IterableEnum(Enum):
 
         if all(isinstance(x, tuple) for x in member_values):
             # all Enum member values are tuples
-            enum_info_as_list = [
-                member for name, member in cls.__members__.items()
-            ]
+            enum_info_as_list = [member for name, member in cls.__members__.items()]
             values = [member.value for member in enum_info_as_list]
 
         elif any(isinstance(x, tuple) for x in member_values):
@@ -23,11 +21,7 @@ class IterableEnum(Enum):
 
         else:
             # all Enum member values are non-tuples
-            enum_info_as_list = [
-                member for name, member in cls.__members__.items()
-            ]
-            values = [
-                (member.name, member.value) for member in enum_info_as_list
-            ]
+            enum_info_as_list = [member for name, member in cls.__members__.items()]
+            values = [(member.name, member.value) for member in enum_info_as_list]
 
         return values

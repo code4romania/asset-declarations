@@ -18,7 +18,7 @@ jobs:
           pip install -r requirements-dev.txt
       - name: Check formatting with black
         run: |
-          black --line-length 80 --target-version py37 --check .
+          black --line-length 120 --target-version py37 --check .
       - name: Run tests
         env:
           DJANGO_SETTINGS_MODULE: project_template.settings.dev

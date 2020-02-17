@@ -19,15 +19,11 @@ class DummyModel(AutoCleanModelMixin, XORModelMixin, models.Model):
         super().__init__(*args, **kwargs)
 
 
-@pytest.mark.parametrize(
-    "commune, city, village", [("", "", ""), ("x", "y", "z"), (0, False, ""),]
-)
+@pytest.mark.parametrize("commune, city, village", [("", "", ""), ("x", "y", "z"), (0, False, ""),])
 def test_xor_errors(commune, city, village):
     """ Should raise ValidationError if no field has a value or all fields are dirty."""
 
-    model = DummyModel(
-        [{"commune": _("commune"), "city": _("city"), "village": _("village"),}]
-    )
+    model = DummyModel([{"commune": _("commune"), "city": _("city"), "village": _("village"),}])
 
     model.commune = commune
     model.city = city
@@ -36,20 +32,14 @@ def test_xor_errors(commune, city, village):
     with pytest.raises(ValidationError) as err:
         model.save()
 
-    assert "Foloseste doar unul din urmatoarele campuri: comuna, oras" in str(
-        err
-    )
+    assert "Foloseste doar unul din urmatoarele campuri: comuna, oras" in str(err)
 
 
-@pytest.mark.parametrize(
-    "commune, city, village", [("a", "", ""), ("", 0, ""), ("", "", False),]
-)
+@pytest.mark.parametrize("commune, city, village", [("a", "", ""), ("", 0, ""), ("", "", False),])
 def test_xor(commune, city, village):
     """ Shouldn't raise any ValidationErrors for false values. """
 
-    model = DummyModel(
-        [{"commune": _("commune"), "city": _("city"), "village": _("village"),}]
-    )
+    model = DummyModel([{"commune": _("commune"), "city": _("city"), "village": _("village"),}])
     model.commune = commune
     model.city = city
     model.village = village
@@ -61,11 +51,7 @@ def test_multiple_xors():
 
     model = DummyModel(
         [
-            {
-                "commune": _("commune"),
-                "city": _("city"),
-                "village": _("village"),
-            },
+            {"commune": _("commune"), "city": _("city"), "village": _("village"),},
             {"lender": _("lender"), "person": _("person"),},
         ]
     )
@@ -73,11 +59,5 @@ def test_multiple_xors():
     with pytest.raises(ValidationError) as err:
         model.save()
 
-    assert (
-        "Foloseste doar unul din urmatoarele campuri: comuna, oras, sat"
-        in str(err)
-    )
-    assert (
-        "Foloseste doar unul din urmatoarele campuri: creditor, persoana"
-        in str(err)
-    )
+    assert "Foloseste doar unul din urmatoarele campuri: comuna, oras, sat" in str(err)
+    assert "Foloseste doar unul din urmatoarele campuri: creditor, persoana" in str(err)

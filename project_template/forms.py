@@ -33,46 +33,31 @@ class TranscribeInitialInformation(forms.Form):
     # Form fields for identifying the politician
     name = forms.CharField(label=_("Care este numele politicianului?"))
     previous_name = forms.CharField(
-        label=_(
-            "Care este numele anterior al politicianului? (in cazul in care se aplica)"
-        ),
-        required=False,
+        label=_("Care este numele anterior al politicianului? (in cazul in care se aplica)"), required=False,
     )
     initials = forms.CharField(
-        label=_(
-            "Care sunt initialele politicianului? (in cazul in care se aplica)"
-        ),
-        required=False,
+        label=_("Care sunt initialele politicianului? (in cazul in care se aplica)"), required=False,
     )
     surname = forms.CharField(label=_("Care este prenumele politicianului?"))
     # Form fields for identifying the declaration
-    position = forms.ChoiceField(
-        label=_("Care este pozitia politicianului?"),
-        choices=Position.return_as_iterable(),
-    )
+    position = forms.ChoiceField(label=_("Care este pozitia politicianului?"), choices=Position.return_as_iterable(),)
     date = forms.DateField(
         label=_("Care este data completării declarației de avere?"),
         widget=forms.SelectDateWidget(years=calculate_year_choices()),
         input_formats=["%Y-%m-%d"],
     )
     institution = forms.ChoiceField(
-        label=_(
-            "Care este institutia in cadrul careia lucra politicianul la data completarii declaratiei de avere?"
-        ),
+        label=_("Care este institutia in cadrul careia lucra politicianul la data completarii declaratiei de avere?"),
         choices=Institution.return_as_iterable(),
     )
     declaration_type = forms.ChoiceField(
-        label=_("Ce tip de declaratie este completata?"),
-        choices=DeclarationType.return_as_iterable(),
+        label=_("Ce tip de declaratie este completata?"), choices=DeclarationType.return_as_iterable(),
     )
 
 
 class TranscribeOwnedLandTable(forms.Form):
     count = forms.IntegerField(
-        label="Câte rânduri completate există în tabelul {}?".format(
-            constants.DECLARATION_TABLES["land"]
-        ),
-        min_value=0,
+        label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES["land"]), min_value=0,
     )
 
 
@@ -85,8 +70,7 @@ class TranscribeOwnedLandRowEntry(PartialModelForm):
         super().__init__(*args, **kwargs)
         # Set a specific form field for a model field
         self.fields["acquisition_year"] = forms.ChoiceField(
-            label=self.fields["acquisition_year"].label,
-            choices=get_dict_year_choices,
+            label=self.fields["acquisition_year"].label, choices=get_dict_year_choices,
         )
 
     class Meta:
@@ -97,9 +81,7 @@ class TranscribeOwnedLandRowEntry(PartialModelForm):
 
 class TranscribeOwnedBuildingsTable(forms.Form):
     count = forms.IntegerField(
-        label="Câte rânduri completate există în tabelul {}".format(
-            constants.DECLARATION_TABLES["buildings"]
-        ),
+        label="Câte rânduri completate există în tabelul {}".format(constants.DECLARATION_TABLES["buildings"]),
         min_value=0,
     )
 
@@ -113,8 +95,7 @@ class TranscribeOwnedBuildingsRowEntry(PartialModelForm):
         super().__init__(*args, **kwargs)
         # Set a specific form field for a model field
         self.fields["acquisition_year"] = forms.ChoiceField(
-            label=self.fields["acquisition_year"].label,
-            choices=get_dict_year_choices,
+            label=self.fields["acquisition_year"].label, choices=get_dict_year_choices,
         )
 
     class Meta:
@@ -127,9 +108,7 @@ class TranscribeOwnedBuildingsRowEntry(PartialModelForm):
 
 class TranscribeOwnedAutomobileTable(forms.Form):
     count = forms.IntegerField(
-        label="Câte rânduri completate există în tabelul {}?".format(
-            constants.DECLARATION_TABLES["automobiles"]
-        ),
+        label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES["automobiles"]),
         min_value=0,
     )
 
@@ -142,8 +121,7 @@ class TranscribeOwnedAutomobileRowEntry(PartialModelForm):
         # Set a specific form field for a model field
         # TODO: A fabrication_year can be much older than the current acquisition_year dropdown allows
         self.fields["fabrication_year"] = forms.ChoiceField(
-            label=self.fields["fabrication_year"].label,
-            choices=get_dict_year_choices,
+            label=self.fields["fabrication_year"].label, choices=get_dict_year_choices,
         )
 
     class Meta:
@@ -156,9 +134,7 @@ class TranscribeOwnedAutomobileRowEntry(PartialModelForm):
 
 class TranscribeOwnedJewelryTable(forms.Form):
     count = forms.IntegerField(
-        label="Câte rânduri completate există în tabelul {}?".format(
-            constants.DECLARATION_TABLES["jewelry"]
-        ),
+        label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES["jewelry"]),
         min_value=0,
     )
 
@@ -170,8 +146,7 @@ class TranscribeOwnedJewelryRowEntry(PartialModelForm):
         super().__init__(*args, **kwargs)
         # Set a specific form field for a model field
         self.fields["acquisition_year"] = forms.ChoiceField(
-            label=self.fields["acquisition_year"].label,
-            choices=get_dict_year_choices,
+            label=self.fields["acquisition_year"].label, choices=get_dict_year_choices,
         )
 
     class Meta:
@@ -184,23 +159,15 @@ class TranscribeOwnedJewelryRowEntry(PartialModelForm):
 
 class TranscribeExtraValuableTable(forms.Form):
     count = forms.IntegerField(
-        label="Câte rânduri completate există în tabelul {}?".format(
-            constants.DECLARATION_TABLES["extra_valuable"]
-        ),
+        label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES["extra_valuable"]),
         min_value=0,
     )
 
 
 class TranscribeExtraValuableRowEntry(PartialModelForm):
     # Custom form fields not found in the Model
-    owner_surname = forms.CharField(
-        label=_("Care este numele persoanei catre care s-a instrainat bunul?")
-    )
-    owner_name = forms.CharField(
-        label=_(
-            "Care este prenumele persoanei catre care s-a instrainat bunul?"
-        )
-    )
+    owner_surname = forms.CharField(label=_("Care este numele persoanei catre care s-a instrainat bunul?"))
+    owner_name = forms.CharField(label=_("Care este prenumele persoanei catre care s-a instrainat bunul?"))
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -208,9 +175,7 @@ class TranscribeExtraValuableRowEntry(PartialModelForm):
         # Customise some field widgets
         self.fields["estrangement_date"] = forms.DateField(
             label=self.fields["estrangement_date"].label,
-            widget=forms.SelectDateWidget(
-                years=calculate_year_choices()
-            ),  # cannot use a callable for 'years'
+            widget=forms.SelectDateWidget(years=calculate_year_choices()),  # cannot use a callable for 'years'
             input_formats=["%Y-%m-%d"],
         )
 
@@ -224,9 +189,7 @@ class TranscribeExtraValuableRowEntry(PartialModelForm):
 
 class TranscribeOwnedBankAccountsTable(forms.Form):
     count = forms.IntegerField(
-        label="Câte rânduri completate există în tabelul {}?".format(
-            constants.DECLARATION_TABLES["bank_accounts"]
-        ),
+        label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES["bank_accounts"]),
         min_value=0,
     )
 
@@ -244,28 +207,21 @@ class TranscribeOwnedBankAccountsRowEntry(PartialModelForm):
         super().__init__(*args, **kwargs)
         # Customise a Model form field widget
         self.fields["opening_year"] = forms.ChoiceField(
-            label=self.fields["opening_year"].label,
-            choices=get_dict_year_choices,
+            label=self.fields["opening_year"].label, choices=get_dict_year_choices,
         )
 
 
 class TranscribeOwnedInvestmentsOver5KTable(forms.Form):
     count = forms.IntegerField(
-        label="Câte rânduri completate există în tabelul {}?".format(
-            constants.DECLARATION_TABLES["investments"]
-        ),
+        label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES["investments"]),
         min_value=0,
     )
 
 
 class TranscribeOwnedInvestmentsOver5KRowEntry(PartialModelForm):
     # Custom form fields not found in the Model
-    beneficiary_surname = forms.CharField(
-        label=_("Care este numele beneficiarului?")
-    )
-    beneficiary_name = forms.CharField(
-        label=_("Care este prenumele beneficiarului?")
-    )
+    beneficiary_surname = forms.CharField(label=_("Care este numele beneficiarului?"))
+    beneficiary_name = forms.CharField(label=_("Care este prenumele beneficiarului?"))
 
     class Meta:
         model = models.OwnedInvestmentsOver5KTableEntry
@@ -275,21 +231,15 @@ class TranscribeOwnedInvestmentsOver5KRowEntry(PartialModelForm):
 
 class TranscribeOwnedDebtsTable(forms.Form):
     count = forms.IntegerField(
-        label="Câte rânduri completate există în tabelul {}?".format(
-            constants.DECLARATION_TABLES["debts"]
-        ),
+        label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES["debts"]),
         min_value=0,
     )
 
 
 class TranscribeOwnedDebtsRowEntry(PartialModelForm):
     # Custom form fields not found in the Model
-    loaner_surname = forms.CharField(
-        label="Care este numele creditorului?", required=False
-    )
-    loaner_name = forms.CharField(
-        label="Care este prenumele creditorului?", required=False
-    )
+    loaner_surname = forms.CharField(label="Care este numele creditorului?", required=False)
+    loaner_name = forms.CharField(label="Care este prenumele creditorului?", required=False)
 
     class Meta:
         model = models.OwnedDebtsTableEntry
@@ -301,20 +251,15 @@ class TranscribeOwnedDebtsRowEntry(PartialModelForm):
 
         # Customise some Model form field widgets
         self.fields["acquirement_year"] = forms.ChoiceField(
-            label=self.fields["acquirement_year"].label,
-            choices=get_dict_year_choices,
+            label=self.fields["acquirement_year"].label, choices=get_dict_year_choices,
         )
         # TODO: due_date can also be in the future
-        self.fields["due_date"] = forms.ChoiceField(
-            label=self.fields["due_date"].label, choices=get_dict_year_choices
-        )
+        self.fields["due_date"] = forms.ChoiceField(label=self.fields["due_date"].label, choices=get_dict_year_choices)
 
 
 class TranscribeOwnedGoodsOrServicesTable(forms.Form):
     count = forms.IntegerField(
-        label="Câte rânduri completate există în tabelul {}?".format(
-            constants.DECLARATION_TABLES["goods"]
-        ),
+        label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES["goods"]),
         min_value=0,
     )
 
@@ -331,9 +276,7 @@ class TranscribeOwnedGoodsOrServicesRowEntry(PartialModelForm):
 
 class TranscribeOwnedIncomeFromSalariesTable(forms.Form):
     count = forms.IntegerField(
-        label="Câte rânduri completate există în tabelul {}?".format(
-            constants.DECLARATION_TABLES["salaries"]
-        ),
+        label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES["salaries"]),
         min_value=0,
     )
 
@@ -358,12 +301,8 @@ class TranscribeIndependentActivitiesTable(forms.Form):
 
 
 class TranscribeIndependentActivitiesRowEntry(PartialModelForm):
-    surname = forms.CharField(
-        label=_("Care e numele persoanei care a realizat venitul?")
-    )
-    name = forms.CharField(
-        label=_("Care e prenumele persoanei care a realizat venitul?")
-    )
+    surname = forms.CharField(label=_("Care e numele persoanei care a realizat venitul?"))
+    name = forms.CharField(label=_("Care e prenumele persoanei care a realizat venitul?"))
 
     class Meta:
         model = models.OwnedIncomeFromIndependentActivitiesTableEntry
@@ -373,20 +312,14 @@ class TranscribeIndependentActivitiesRowEntry(PartialModelForm):
 
 class TranscribeOwnedIncomeFromDeferredUseOfGoodsTable(forms.Form):
     count = forms.IntegerField(
-        label="Câte rânduri completate există în tabelul {}?".format(
-            constants.DECLARATION_TABLES["deferred_use"]
-        ),
+        label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES["deferred_use"]),
         min_value=0,
     )
 
 
 class TranscribeOwnedIncomeFromDeferredUseOfGoodsRowEntry(PartialModelForm):
-    surname = forms.CharField(
-        label=_("Care e numele persoanei care a realizat venitul?")
-    )
-    name = forms.CharField(
-        label=_("Care e prenumele persoanei care a realizat venitul?")
-    )
+    surname = forms.CharField(label=_("Care e numele persoanei care a realizat venitul?"))
+    name = forms.CharField(label=_("Care e prenumele persoanei care a realizat venitul?"))
 
     class Meta:
         model = models.OwnedIncomeFromDeferredUseOfGoodsTableEntry
@@ -404,12 +337,8 @@ class TranscribeOwnedIncomeFromInvestmentsTable(forms.Form):
 
 
 class TranscribeOwnedIncomeFromInvestmentsRowEntry(PartialModelForm):
-    surname = forms.CharField(
-        label=_("Care e numele persoanei care a realizat venitul?")
-    )
-    name = forms.CharField(
-        label=_("Care e prenumele persoanei care a realizat venitul?")
-    )
+    surname = forms.CharField(label=_("Care e numele persoanei care a realizat venitul?"))
+    name = forms.CharField(label=_("Care e prenumele persoanei care a realizat venitul?"))
 
     class Meta:
         model = models.OwnedIncomeFromInvestmentsTableEntry
@@ -419,20 +348,14 @@ class TranscribeOwnedIncomeFromInvestmentsRowEntry(PartialModelForm):
 
 class TranscribeOwnedIncomeFromPensionsTable(forms.Form):
     count = forms.IntegerField(
-        label="Câte rânduri completate există în tabelul {}?".format(
-            constants.DECLARATION_TABLES["pensions"]
-        ),
+        label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES["pensions"]),
         min_value=0,
     )
 
 
 class TranscribeOwnedIncomeFromPensionsRowEntry(PartialModelForm):
-    beneficiary_surname = forms.CharField(
-        label=_("Care este numele beneficiarului?")
-    )
-    beneficiary_name = forms.CharField(
-        label=_("Care este prenumele beneficiarului?")
-    )
+    beneficiary_surname = forms.CharField(label=_("Care este numele beneficiarului?"))
+    beneficiary_name = forms.CharField(label=_("Care este prenumele beneficiarului?"))
 
     class Meta:
         model = models.OwnedIncomeFromPensionsTableEntry
@@ -442,9 +365,7 @@ class TranscribeOwnedIncomeFromPensionsRowEntry(PartialModelForm):
 
 class TranscribeOwnedIncomeFromAgriculturalActivitiesTable(forms.Form):
     count = forms.IntegerField(
-        label="Câte rânduri completate există în tabelul {}?".format(
-            constants.DECLARATION_TABLES["agriculture"]
-        ),
+        label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES["agriculture"]),
         min_value=0,
     )
 
@@ -461,20 +382,14 @@ class TranscribeOwnedIncomeFromAgriculturalActivitiesRowEntry(PartialModelForm):
 
 class TranscribeOwnedIncomeFromGamblingTable(forms.Form):
     count = forms.IntegerField(
-        label="Câte rânduri completate există în tabelul {}?".format(
-            constants.DECLARATION_TABLES["gambling"]
-        ),
+        label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES["gambling"]),
         min_value=0,
     )
 
 
 class TranscribeOwnedIncomeFromGamblingRowEntry(PartialModelForm):
-    surname = forms.CharField(
-        label=_("Care e numele persoanei care a realizat venitul?")
-    )
-    name = forms.CharField(
-        label=_("Care e prenumele persoanei care a realizat venitul?")
-    )
+    surname = forms.CharField(label=_("Care e numele persoanei care a realizat venitul?"))
+    name = forms.CharField(label=_("Care e prenumele persoanei care a realizat venitul?"))
 
     class Meta:
         model = models.OwnedIncomeFromGamblingTableEntry
@@ -484,20 +399,14 @@ class TranscribeOwnedIncomeFromGamblingRowEntry(PartialModelForm):
 
 class TranscribeOwnedIncomeFromOtherSourcesTable(forms.Form):
     count = forms.IntegerField(
-        label="Câte rânduri completate există în tabelul {}?".format(
-            constants.DECLARATION_TABLES["other_sources"]
-        ),
+        label="Câte rânduri completate există în tabelul {}?".format(constants.DECLARATION_TABLES["other_sources"]),
         min_value=0,
     )
 
 
 class TranscribeOwnedIncomeFromOtherSourcesRowEntry(PartialModelForm):
-    surname = forms.CharField(
-        label=_("Care e numele persoanei care a realizat venitul?")
-    )
-    name = forms.CharField(
-        label=_("Care e prenumele persoanei care a realizat venitul?")
-    )
+    surname = forms.CharField(label=_("Care e numele persoanei care a realizat venitul?"))
+    name = forms.CharField(label=_("Care e prenumele persoanei care a realizat venitul?"))
 
     class Meta:
         model = models.OwnedIncomeFromOtherSourcesTableEntry

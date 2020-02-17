@@ -23,16 +23,10 @@ env = environ.Env(
 environ.Env.read_env(f"{root}/.env")  # reading .env file
 
 
-MOONSHEEP.update(
-    {
-        "APP": "project_template"  # TODO list from document models instead of defining here
-    }
-)
+MOONSHEEP.update({"APP": "project_template"})  # TODO list from document models instead of defining here
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 ALLOWED_HOSTS = []
 
@@ -83,16 +77,10 @@ TEMPLATES = [
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
 ]
 
 
@@ -115,10 +103,7 @@ DATABASES = {
     # read os.environ['DATABASE_URL'] and raises ImproperlyConfigured exception if not found
     "default": env.db("DATABASE_URL"),
     # read os.environ['SQLITE_URL']
-    "extra": env.db(
-        "SQLITE_URL",
-        default=f"sqlite:///{os.path.join(BASE_DIR, 'db.sqlite3'),}",
-    ),
+    "extra": env.db("SQLITE_URL", default=f"sqlite:///{os.path.join(BASE_DIR, 'db.sqlite3'),}",),
 }
 
 # Static files (CSS, JavaScript, Images)
@@ -127,6 +112,4 @@ DATABASES = {
 STATIC_URL = "/static/"
 
 # Path to csv file with counties information
-COUNTIES_CSV_PATH = os.path.join(
-    BASE_DIR, "project_template/config/counties.csv"
-)
+COUNTIES_CSV_PATH = os.path.join(BASE_DIR, "project_template/config/counties.csv")
