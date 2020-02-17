@@ -128,12 +128,7 @@ class Person(models.Model):
 
 
 class CommonInfo(AutoCleanModelMixin, XORModelMixin, models.Model):
-    XOR_FIELDS = [
-        {
-            "commune": _("commune"),
-            "city": _("city"),
-        }
-    ]
+    XOR_FIELDS = [{"commune": _("commune"), "city": _("city"),}]
 
     county = models.CharField(
         "Judet", max_length=32, choices=Counties.return_counties()
@@ -441,12 +436,7 @@ class OwnedDebtsTable(models.Model):
 
 # Tabel Datorii - actual row information
 class OwnedDebtsTableEntry(models.Model):
-    XOR_FIELDS = [
-        {
-            "person": _("person"),
-            "lender": _("lender"),
-        }
-    ]
+    XOR_FIELDS = [{"person": _("person"), "lender": _("lender"),}]
 
     table = models.ForeignKey(
         OwnedDebtsTable, on_delete=models.CASCADE, null=True

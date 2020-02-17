@@ -7,8 +7,12 @@ class AutoCleanModelMixin:
     def _init_states(self):
         self.initial_state = self.current_state
 
-        self.cleaned_state = {} if not getattr(self, 'pk', None) else self.initial_state.copy()
-        self.saved_state = {} if not getattr(self, 'pk', None) else self.initial_state.copy()
+        self.cleaned_state = (
+            {} if not getattr(self, "pk", None) else self.initial_state.copy()
+        )
+        self.saved_state = (
+            {} if not getattr(self, "pk", None) else self.initial_state.copy()
+        )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -18,13 +22,17 @@ class AutoCleanModelMixin:
     def current_state(self):
         return {
             field.name: self.__dict__[field.attname]
-            for field in (self._meta.fields if hasattr(self, '_meta') else [])
+            for field in (self._meta.fields if hasattr(self, "_meta") else [])
             if field.attname in self.__dict__
         }
 
     @staticmethod
     def _states_diff(state, other_state):
-        return {key: value for key, value in other_state.items() if value != state[key]}
+        return {
+            key: value
+            for key, value in other_state.items()
+            if value != state[key]
+        }
 
     def get_dirty_fields(self):
         return self._states_diff(self.current_state, self.cleaned_state)
@@ -32,7 +40,9 @@ class AutoCleanModelMixin:
     def get_unsaved_fields(self):
         if not self.saved_state:
             return list(self.current_state.keys())
-        return list(self._states_diff(self.current_state, self.saved_state).keys())
+        return list(
+            self._states_diff(self.current_state, self.saved_state).keys()
+        )
 
     @property
     def is_cleaned(self):
@@ -114,8 +124,12 @@ class XORModelMixin:
             if not dirty or len(dirty) != 1:
                 # https://docs.djangoproject.com/en/2.0/topics/i18n/translation/#formatting-strings-format-lazy
                 # Combine i18n fields with the error message: {error_msg} {commune} {city}
-                error_fmt = format_lazy("{error_msg}" + ', '.join(["{" + field + "}" for field in group]),
-                                        error_msg=error_msg, **group)
+                error_fmt = format_lazy(
+                    "{error_msg}"
+                    + ", ".join(["{" + field + "}" for field in group]),
+                    error_msg=error_msg,
+                    **group,
+                )
                 errors.append(error_fmt)
 
         if errors:
