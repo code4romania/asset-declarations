@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-12 21:19+0000\n"
+"POT-Creation-Date: 2020-02-17 19:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -150,11 +150,11 @@ msgstr ""
 msgid "Tip declaratie"
 msgstr ""
 
-#: project_template/models.py:109
+#: project_template/models.py:109 project_template/tests/test_xor.py:16
 msgid "commune"
 msgstr "comuna"
 
-#: project_template/models.py:110
+#: project_template/models.py:110 project_template/tests/test_xor.py:17
 msgid "city"
 msgstr "oras"
 
@@ -188,16 +188,20 @@ msgstr "Catalog Politic"
 msgid "GiveMeATask"
 msgstr "Dă-mi un task!"
 
-#: project_template/templates/task.html:50
+#: project_template/templates/task.html:48
 msgid "SendTheData"
 msgstr "Salvează"
 
-#: project_template/utils.py:88
+#: project_template/tests/test_xor.py:18
+msgid "village"
+msgstr "sat"
+
+#: project_template/utils.py:98
 msgid "Use only one of the following fields: "
 msgstr "Foloseste doar unul din urmatoarele campuri: "
 
-#: project_template/utils.py:97
+#: project_template/utils.py:107
 #, python-brace-format
 msgid "Invalid field name {field}"
-msgstr ""
+msgstr "Campul {field} este invalid"
 

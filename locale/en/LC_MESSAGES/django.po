@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-12 20:37+0000\n"
+"POT-Creation-Date: 2020-02-17 19:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -145,11 +145,11 @@ msgstr ""
 msgid "Tip declaratie"
 msgstr ""
 
-#: project_template/models.py:109
+#: project_template/models.py:109 project_template/tests/test_xor.py:16
 msgid "commune"
 msgstr "comuna"
 
-#: project_template/models.py:110
+#: project_template/models.py:110 project_template/tests/test_xor.py:17
 msgid "city"
 msgstr ""
 
@@ -187,12 +187,16 @@ msgstr "Give me a task!"
 msgid "SendTheData"
 msgstr "Send the data"
 
-#: project_template/utils.py:99
-#, python-brace-format
-msgid "Invalid field name {field}"
+#: project_template/tests/test_xor.py:18
+msgid "village"
 msgstr ""
 
-#: project_template/utils.py:106
+#: project_template/utils.py:98
 msgid "Use only one of the following fields: "
+msgstr ""
+
+#: project_template/utils.py:107
+#, python-brace-format
+msgid "Invalid field name {field}"
 msgstr ""
 

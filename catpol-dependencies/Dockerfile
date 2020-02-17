@@ -5,7 +5,7 @@ RUN apk update && \
     gcc python-dev musl-dev \
     postgresql-dev git \
     build-base python3-dev openblas-dev \
-    freetype-dev pkgconfig gfortran \
+    freetype-dev pkgconfig gfortran gettext \
     bash
 
 RUN pip3 install --upgrade pip setuptools
