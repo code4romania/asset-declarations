@@ -22,12 +22,16 @@
             {% csrf_token %}
             <div class="row-fluid">
                 {# Provide additional context for non-native speakers #}
+
                 {% if "en" in request.LANGUAGE_CODE %}
                     {% block explanation %}{% endblock %}
                 {% endif %}
-                {# Forms incoming! #}
+
+                {{ form.non_field_errors }}
+
                 <div class="col">
                     {% for field in form %}
+
                     <div class="form-group">
                         <div class="col">
                             {{ field.label }}

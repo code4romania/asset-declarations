@@ -244,6 +244,7 @@ class TaskOwnedIncomeFromOtherSourcesRowEntry(DigitalizationTask):
             **verified_data
         )
 
+
 @register_task()
 class TaskOwnedIncomeFromOtherSourcesTable(CountTableRowsTask):
     task_form = forms.TranscribeOwnedIncomeFromOtherSourcesTable
