@@ -60,7 +60,7 @@ Before submiting a PR, you can run
 ```bash
 black --line-length 80 --target-version py37 .
 ```
-and you're code will be automatically formatted.
+and your code will be automatically formatted.
 
 ### Platforms
 
@@ -76,12 +76,11 @@ Political Catalogue - Asset Declaration is a web application.
 
 ### Database technology & provider
 
-This remains currently undecided.
+[PostgreSQL](https://www.postgresql.org/)
 
 ## Repos and projects
 
 [Moonsheep on GitHub](https://github.com/themoonsheep)
-[PyBossa on GitHub](https://github.com/Scifabric/pybossa)
 
 ## Deployment
 
