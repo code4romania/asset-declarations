@@ -7,8 +7,8 @@ class AutoCleanModelMixin:
     def _init_states(self):
         self.initial_state = self.current_state
 
-        self.cleaned_state = {} if not getattr(self, 'pk', None) else self.initial_state.copy()
-        self.saved_state = {} if not getattr(self, 'pk', None) else self.initial_state.copy()
+        self.cleaned_state = {} if not getattr(self, "pk", None) else self.initial_state.copy()
+        self.saved_state = {} if not getattr(self, "pk", None) else self.initial_state.copy()
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -18,7 +18,7 @@ class AutoCleanModelMixin:
     def current_state(self):
         return {
             field.name: self.__dict__[field.attname]
-            for field in (self._meta.fields if hasattr(self, '_meta') else [])
+            for field in (self._meta.fields if hasattr(self, "_meta") else [])
             if field.attname in self.__dict__
         }
 
@@ -111,11 +111,12 @@ class XORModelMixin:
                 if field_value in ["", None]:
                     dirty.append(field)
 
-            if not dirty or len(dirty) != 1:
+            if not dirty or len(group) - len(dirty) != 1:
                 # https://docs.djangoproject.com/en/2.0/topics/i18n/translation/#formatting-strings-format-lazy
                 # Combine i18n fields with the error message: {error_msg} {commune} {city}
-                error_fmt = format_lazy("{error_msg}" + ', '.join(["{" + field + "}" for field in group]),
-                                        error_msg=error_msg, **group)
+                error_fmt = format_lazy(
+                    "{error_msg}" + ", ".join(["{" + field + "}" for field in group]), error_msg=error_msg, **group,
+                )
                 errors.append(error_fmt)
 
         if errors:

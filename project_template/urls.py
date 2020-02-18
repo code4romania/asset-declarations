@@ -20,19 +20,18 @@ from .views import *
 from .tasks import *  # Keep it to make Moonsheep aware of defined tasks in DEVELOPMENT_MODE
 
 urlpatterns = [
-    path('admin/', site.urls),
-    path('moonsheep/', include('moonsheep.urls')),
-
+    path("admin/", site.urls),
+    path("moonsheep/", include("moonsheep.urls")),
     # Create new home view here if you want a welcome page
-    path('task', TranscriptionView.as_view(), name='task'),
-    path('', HomeView.as_view(), name='home'),
-    path('i18n/', include('django.conf.urls.i18n')),
+    path("task", TranscriptionView.as_view(), name="task"),
+    path("", HomeView.as_view(), name="home"),
+    path("i18n/", include("django.conf.urls.i18n")),
 ]
 
 # DEV-DEBUG
 from django.conf import settings
+
 if settings.DEBUG:
     import debug_toolbar
-    urlpatterns = [
-        path('__debug__/', include(debug_toolbar.urls)),
-    ] + urlpatterns
+
+    urlpatterns = [path("__debug__/", include(debug_toolbar.urls)),] + urlpatterns

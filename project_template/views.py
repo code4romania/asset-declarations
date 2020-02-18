@@ -7,7 +7,8 @@ from django.views.generic import TemplateView
 
 
 class HomeView(TemplateView):
-    template_name = 'home.html'
+    template_name = "home.html"
+
 
 class TranscriptionView(TaskView):
     def get_success_url(self):
@@ -17,4 +18,4 @@ class TranscriptionView(TaskView):
         """
 
         # Serve next task!
-        return reverse('task')
+        return reverse("task")

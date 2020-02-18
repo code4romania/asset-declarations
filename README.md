@@ -20,7 +20,7 @@
 
 <!-- Please don't remove this: Grab your social icons from https://github.com/carlsednaoui/gitsocial -->
 
-* MAKING PUBLIC INFORMATION TRULY PUBLIC 
+* MAKING PUBLIC INFORMATION TRULY PUBLIC
 * data from asset declarations, including a net worth estimation
 
 **Important!** This project is currently out of sync with the latest version of [Moonsheep](https://github.com/themoonsheep/moonsheep), a library that it is dependent on. In order for development to continue, we must first fix [this critical issue](https://github.com/code4romania/catpol-declaratii/issues/191).
@@ -45,15 +45,22 @@ Catalog Politic - Declaratii de avere - aims to automate the process of parsing 
 
 [Built with](#built-with) | [Repos and projects](#repos-and-projects) | [Deployment](#deployment) | [Contributing](#contributing) | [Feedback](#feedback) | [License](#license) | [About Code4Ro](#about-code4ro)
 
-## Built With 
+## Built With
 
-[Django](https://www.djangoproject.com)   
-[Moonsheep](http://moonsheep.org/)    
+[Django](https://www.djangoproject.com)
+[Moonsheep](http://moonsheep.org/)
 
 ### Programming languages
 
-Python 3.5+    
+Python 3.5+
 Please follow [the Python style guide](python_style_guide.md).
+
+In order to solve the formatting debates, [black](https://github.com/psf/black) is enforced.
+Before submiting a PR, you can run
+```bash
+black --line-length 80 --target-version py37 .
+```
+and your code will be automatically formatted.
 
 ### Platforms
 
@@ -69,14 +76,13 @@ Political Catalogue - Asset Declaration is a web application.
 
 ### Database technology & provider
 
-This remains currently undecided.   
+[PostgreSQL](https://www.postgresql.org/)
 
 ## Repos and projects
 
-[Moonsheep on GitHub](https://github.com/themoonsheep)    
-[PyBossa on GitHub](https://github.com/Scifabric/pybossa)
+[Moonsheep on GitHub](https://github.com/themoonsheep)
 
-## Deployment 
+## Deployment
 
 Installation process
 * Fork this repo
