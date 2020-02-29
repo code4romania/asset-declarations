@@ -1,3 +1,5 @@
+# Workflow
+
 Whether you're trying to give back to the open source community or collaborating on your own projects, knowing how to properly fork and generate pull requests is essential. Unfortunately, it's quite easy to make mistakes or not know what you should do when you're initially learning the process. I know that I certainly had considerable initial trouble with it, and I found a lot of the information on GitHub and around the internet to be rather piecemeal and incomplete - part of the process described here, another there, common hangups in a different place, and so on.
 
 In an attempt to coallate this information for myself and others, this short tutorial is what I've found to be fairly standard procedure for creating a fork, doing your work, issuing a pull request, and merging that pull request back into the original project.
@@ -48,6 +50,7 @@ Now, your local master branch is up-to-date with everything modified upstream.
 ## Doing Your Work
 
 ### Create a Branch
+
 Whenever you begin work on a new feature or bugfix, it's important that you create a new branch. Not only is it proper git workflow, but it also keeps your changes organized and separated from the master branch so that you can easily submit and manage multiple pull requests for every task you complete.
 
 To create a new branch and start working on it:
@@ -88,7 +91,7 @@ Now, it may be desirable to squash some of your smaller commits down into a smal
 
 ```shell
 # Rebase all commits on your development branch
-git checkout 
+git checkout
 git rebase -i master
 ```
 
@@ -103,9 +106,10 @@ Once you've committed and pushed all of your changes to GitHub, go to the page f
 Take note that unlike the previous sections which were written from the perspective of someone that created a fork and generated a pull request, this section is written from the perspective of the original repository owner who is handling an incoming pull request. Thus, where the "forker" was referring to the original repository as `upstream`, we're now looking at it as the owner of that original repository and the standard `origin` remote.
 
 ### Checking Out and Testing Pull Requests
+
 Open up the `.git/config` file and add a new line under `[remote "origin"]`:
 
-```
+```config
 fetch = +refs/pull/*/head:refs/pull/origin/*
 ```
 
@@ -122,9 +126,11 @@ git checkout -b 999 pull/origin/999
 Keep in mind that these branches will be read only and you won't be able to push any changes.
 
 ### Automatically Merging a Pull Request
+
 In cases where the merge would be a simple fast-forward, you can automatically do the merge by just clicking the button on the pull request page on GitHub.
 
 ### Manually Merging a Pull Request
+
 To do the merge manually, you'll need to checkout the target branch in the source repo, pull directly from the fork, and then merge and push.
 
 ```shell
@@ -147,18 +153,18 @@ Now that you're done with the development branch, you're free to delete it.
 git branch -d newfeature
 ```
 
-
-
-**Copyright**
+## Copyright
 
 Copyright 2017, Chase Pettit
 
-MIT License, http://www.opensource.org/licenses/mit-license.php
- 
-**Additional Reading**
+MIT License, <http://www.opensource.org/licenses/mit-license.php>
+
+## Additional Reading
+
 * [Atlassian - Merging vs. Rebasing](https://www.atlassian.com/git/tutorials/merging-vs-rebasing)
 
-**Sources**
+## Sources
+
 * [GitHub - Fork a Repo](https://help.github.com/articles/fork-a-repo)
 * [GitHub - Syncing a Fork](https://help.github.com/articles/syncing-a-fork)
 * [GitHub - Checking Out a Pull Request](https://help.github.com/articles/checking-out-pull-requests-locally)
