@@ -35,3 +35,6 @@ wheels/
 MANIFEST
 
 .DS_STORE
+
+# Terraform
+.terraform
