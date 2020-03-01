@@ -9,11 +9,15 @@ data "aws_availability_zones" "available" {
 }
 
 resource "aws_vpc" "app" {
-  cidr_block = "10.0.0.0/28"
+  cidr_block = "10.0.0.0/16"
 
   tags = {
     Name = local.prefix
   }
+}
+
+output "VPC CIDR" {
+  value = aws_vpc.app.cidr_block
 }
 
 #################################################
@@ -23,7 +27,7 @@ resource "aws_vpc" "app" {
 resource "aws_subnet" "public" {
   count             = local.subnet_count_public
   vpc_id            = aws_vpc.app.id
-  cidr_block        = cidrsubnet(aws_vpc.app.cidr_block, 3, count.index)
+  cidr_block        = cidrsubnet(aws_vpc.app.cidr_block, 8, count.index)
   availability_zone = data.aws_availability_zones.available.names[count.index]
 
   tags = {
@@ -31,10 +35,14 @@ resource "aws_subnet" "public" {
   }
 }
 
+output "Subnet Public CIDR" {
+  value = aws_subnet.public.*.cidr_block
+}
+
 resource "aws_subnet" "private-app" {
   count             = local.subnet_count_app
   vpc_id            = aws_vpc.app.id
-  cidr_block        = cidrsubnet(aws_vpc.app.cidr_block, 3, local.subnet_count_public + count.index)
+  cidr_block        = cidrsubnet(aws_vpc.app.cidr_block, 8, local.subnet_count_public + count.index)
   availability_zone = data.aws_availability_zones.available.names[count.index]
 
   tags = {
@@ -42,15 +50,23 @@ resource "aws_subnet" "private-app" {
   }
 }
 
+output "Subnet Private App CIDR" {
+  value = aws_subnet.private-app.*.cidr_block
+}
+
 resource "aws_subnet" "private-db" {
   count             = local.subnet_count_db
   vpc_id            = aws_vpc.app.id
-  cidr_block        = cidrsubnet(aws_vpc.app.cidr_block, 3, local.subnet_count_public + local.subnet_count_app + count.index)
+  cidr_block        = cidrsubnet(aws_vpc.app.cidr_block, 8, local.subnet_count_public + local.subnet_count_app + count.index)
   availability_zone = data.aws_availability_zones.available.names[count.index]
 
   tags = {
     Name = "${local.prefix}-private-db"
   }
+}
+
+output "Subnet Private DB CIDR" {
+  value = aws_subnet.private-db.*.cidr_block
 }
 
 #################################################
@@ -66,11 +82,15 @@ resource "aws_internet_gateway" "public" {
 }
 
 resource "aws_eip" "private" {
-  vpc = aws_vpc.app.id
+  vpc = true
 
   tags = {
     Name = "${local.prefix}-private-app"
   }
+}
+
+output "NAT Egress Elastic IP" {
+  value = aws_eip.private.private_ip
 }
 
 resource "aws_nat_gateway" "private" {

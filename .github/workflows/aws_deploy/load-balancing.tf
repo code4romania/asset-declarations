@@ -1,14 +1,18 @@
 resource "aws_alb" "main" {
   load_balancer_type = "application"
   name               = local.prefix
-  subnets            = [aws_subnet.public]
+  subnets            = aws_subnet.public.*.id
   tags = {
     Name = local.prefix
   }
 }
 
+output "Load-Balancer DNS" {
+  value = aws_alb.main.dns_name
+}
+
 resource "aws_alb_listener" "main" {
-  load_balancer_arn = aws_alb.main
+  load_balancer_arn = aws_alb.main.arn
   port              = 80
 
   default_action {

@@ -38,3 +38,5 @@ MANIFEST
 
 # Terraform
 .terraform
+*terraform.tfstate*
+*.tfvars

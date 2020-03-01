@@ -1,22 +1,22 @@
 [
   {
-    "Name": "${container_name}",
-    "Image": "${container_image}",
-    "PortMappings": [
+    "name": "${container_name}",
+    "image": "${container_image}",
+    "portMappings": [
       {
-        "Protocol": "tcp",
-        "ContainerPort": "${container_port}"
+        "protocol": "tcp",
+        "containerPort": ${container_port}
       }
     ],
-    "Essential": true,
-    "Secrets": [
+    "essential": true,
+    "secrets": [
       {
-        "Name": "db_username",
-        "ValueFrom": "${db_username}"
+        "name": "db_username",
+        "valueFrom": "${db_username}"
       },
       {
-        "Name": "db_password",
-        "ValueFrom": "${db_password}"
+        "name": "db_password",
+        "valueFrom": "${db_password}"
       }
     ]
   }
