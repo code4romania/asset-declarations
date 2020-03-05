@@ -33,6 +33,12 @@
                                 {{ field.label }}
                             </div>
 
+                            {% for error in field.errors %}
+                                <div class="col alert alert-danger">
+                                    <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+
                             <div class="col">
                                 {{ field }}
                             </div>
