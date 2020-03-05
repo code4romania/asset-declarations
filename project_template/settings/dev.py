@@ -12,25 +12,14 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 from .base import *
 
-"""
-If set Moonsheep won't communicate with PyBossa and will:
-1. serve random mocked tasks
-2. send form submissions straight to the verification
-   won't test cross-checking as there is going to be only one entry, but will allow to test the whole flow
-"""
+# TODO: describe crosscheck min entries
+MOONSHEEP["MIN_ENTRIES_TO_CROSSCHECK"] = 1
 
 DEBUG = TEMPLATE_DEBUG = True
-
-MOONSHEEP["DEV_ROTATE_TASKS"] = True
 
 INTERNAL_IPS = ["127.0.0.1", "localhost"]
 
 AUTH_PASSWORD_VALIDATORS = []
-
-MOONSHEEP_BASE_TASKS = [
-    "project-template.tasks.TaskWithForm",
-    "project-template.tasks.TaskWithTemplate",
-]
 
 # Add debug toolbar
 if DEBUG:
