@@ -2,7 +2,7 @@ version: '3'
 services:
   web:
       build: .
-      command: dockerize --wait tcp://db:5432
+      command: dockerize -wait tcp://db:5432 -timeout 90s
       ports:
         - "8000:8000"
       volumes:
