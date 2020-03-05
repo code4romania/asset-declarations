@@ -2,7 +2,7 @@ version: '3'
 services:
   web:
       build: .
-      command: ls -la /opt/catpol && dockerize --wait tcp://db:3306
+      command: dockerize --wait tcp://db:5432
       ports:
         - "8000:8000"
       volumes:
