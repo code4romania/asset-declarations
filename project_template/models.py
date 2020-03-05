@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
 from moonsheep.models import DocumentModel
+from moonsheep.registry import document
 
 from project_template.datamodels.account_type import AccountType
 from project_template.datamodels.attainment_type import AttainmentType
@@ -23,6 +24,7 @@ from project_template.datamodels.counties import Counties
 
 from .constants import DECLARATION_TABLES
 from .utils import AutoCleanModelMixin, XORModelMixin
+
 
 FIRST_2_TYPES = 2
 
@@ -80,13 +82,17 @@ class Politician(models.Model):
         return "{} {}".format(self.name, self.surname)
 
 
+@document(on_import_create=["project_template.tasks.TaskGetInitialInformation"])
 class Declaration(DocumentModel):
     url = models.URLField(max_length=500)
+
     politician = models.ForeignKey(Politician, on_delete=models.CASCADE, null=True)
-    position = models.CharField(_("Functie"), max_length=128, choices=Position.return_as_iterable())
-    date = models.DateField(_("Data completare"))
-    institution = models.CharField(_("Institutie"), max_length=128, choices=Institution.return_as_iterable(),)
-    declaration_type = models.CharField(_("Tip declaratie"), max_length=128, choices=Institution.return_as_iterable(),)
+    position = models.CharField(_("Functie"), max_length=128, choices=Position.return_as_iterable(), null=True)
+    date = models.DateField(_("Data completare"), null=True)
+    institution = models.CharField(_("Institutie"), max_length=128, choices=Institution.return_as_iterable(), null=True)
+    declaration_type = models.CharField(
+        _("Tip declaratie"), max_length=128, choices=Institution.return_as_iterable(), null=True
+    )
 
     def __str__(self):
         return "Income declaration, url: {}\ndate: {}\nfor politician:\n{}".format(
@@ -113,6 +119,13 @@ class CommonInfo(AutoCleanModelMixin, XORModelMixin, models.Model):
         abstract = True
 
 
+class RowEntry(models.Model):
+    row_number = models.IntegerField(_("Table row number"))
+
+    class Meta:
+        abstract = True
+
+
 class CommonIncomeFields(CommonInfo):
     holder_relationship = models.CharField(
         "Cine a realizat venitul", max_length=128, choices=HolderRelationship.return_as_iterable(),
@@ -134,7 +147,7 @@ class OwnedLandTable(models.Model):
 
 
 # Tabel Terenuri - actual row information
-class OwnedLandTableEntry(CommonInfo):
+class OwnedLandTableEntry(CommonInfo, RowEntry):
     table = models.ForeignKey(OwnedLandTable, on_delete=models.CASCADE, null=True)
     coowner = models.ForeignKey(Person, on_delete=models.CASCADE, null=True)
     category = models.CharField("Categorie", max_length=32, choices=RealEstateType.return_as_iterable())
@@ -157,7 +170,7 @@ class OwnedBuildingsTable(models.Model):
 
 
 # Tabel Cladiri - actual row information
-class OwnedBuildingsTableEntry(CommonInfo):
+class OwnedBuildingsTableEntry(CommonInfo, RowEntry):
     table = models.ForeignKey(OwnedBuildingsTable, on_delete=models.CASCADE, null=True)
     coowner = models.ForeignKey(Person, on_delete=models.CASCADE, null=True)
     category = models.IntegerField("Categorie", choices=BuildingType.return_as_iterable())
@@ -182,7 +195,7 @@ class OwnedAutomobileTable(models.Model):
 
 
 # Tabel Bunuri Mobile - actual row information
-class OwnedAutomobileTableEntry(models.Model):
+class OwnedAutomobileTableEntry(RowEntry):
     table = models.ForeignKey(OwnedAutomobileTable, on_delete=models.CASCADE, null=True)
     goods_type = models.CharField("Tipul vehiculului", max_length=32, choices=MobileGoodsType.return_as_iterable(),)
     brand = models.CharField("Marca", max_length=128)
@@ -201,7 +214,7 @@ class OwnedJewelryTable(models.Model):
 
 
 # Tabel Bunuri Imobile - actual row information
-class OwnedJewelryTableEntry(models.Model):
+class OwnedJewelryTableEntry(RowEntry):
     table = models.ForeignKey(OwnedJewelryTable, on_delete=models.CASCADE, null=True)
     summary_description = models.CharField("Descriere sumara", max_length=256)
     acquisition_year = models.IntegerField("Anul dobandirii")
@@ -217,7 +230,7 @@ class OwnedExtraValuableTable(models.Model):
 
 
 # Tabel Bunuri Mobile Instrainate, Valoare peste 3000EUR - actual row information
-class OwnedExtraValuableTableEntry(CommonInfo):
+class OwnedExtraValuableTableEntry(CommonInfo, RowEntry):
     table = models.ForeignKey(OwnedExtraValuableTable, on_delete=models.CASCADE, null=True)
     receiver_of_goods = models.ForeignKey(Person, on_delete=models.CASCADE, null=True)
     estrangement_goods_type = models.CharField(
@@ -229,6 +242,7 @@ class OwnedExtraValuableTableEntry(CommonInfo):
     )
     value = models.IntegerField("Valoare")
     currency = models.CharField("Valuta", max_length=16, choices=Currency.return_as_iterable())
+    # row_number = models.
 
 
 # Tabel Conturi - row numbers
@@ -239,7 +253,7 @@ class OwnedBankAccountsTable(models.Model):
 
 
 # Tabel Conturi - actual row information
-class OwnedBankAccountsTableEntry(models.Model):
+class OwnedBankAccountsTableEntry(RowEntry):
     table = models.ForeignKey(OwnedBankAccountsTable, on_delete=models.CASCADE, null=True)
     institution = models.CharField("Instituția", max_length=128, choices=FinancialInstitution.return_as_iterable(),)
     account_type = models.IntegerField("Tipul", choices=AccountType.return_as_iterable())
@@ -256,7 +270,7 @@ class OwnedInvestmentsOver5KTable(models.Model):
 
 
 # Tabel Plasamente, Investitii - actual row information
-class OwnedInvestmentsOver5KTableEntry(models.Model):
+class OwnedInvestmentsOver5KTableEntry(RowEntry):
     table = models.ForeignKey(OwnedInvestmentsOver5KTable, on_delete=models.CASCADE, null=True)
     loan_beneficiary = models.ForeignKey(Person, on_delete=models.CASCADE, null=True)
     issue_title = models.CharField("Emitent titlu", max_length=128, null=True, blank=True)
@@ -280,7 +294,7 @@ class OtherActivesTable(models.Model):
 
 
 # Tabel Alte active - actual row information
-class OtherActivesTableEntry(models.Model):
+class OtherActivesTableEntry(RowEntry):
     table = models.ForeignKey(OtherActivesTable, on_delete=models.CASCADE, null=True)
     active_type = models.CharField("Tipul activului", max_length=128)
     active_value = models.FloatField("Valoarea activului")
@@ -295,7 +309,7 @@ class OwnedDebtsTable(models.Model):
 
 
 # Tabel Datorii - actual row information
-class OwnedDebtsTableEntry(models.Model):
+class OwnedDebtsTableEntry(RowEntry):
     XOR_FIELDS = [{"person": _("person"), "lender": _("lender"),}]
 
     table = models.ForeignKey(OwnedDebtsTable, on_delete=models.CASCADE, null=True)
@@ -318,7 +332,7 @@ class OwnedGoodsOrServicesTable(models.Model):
 
 
 # Tabel Cadouri Servicii - actual row information
-class OwnedGoodsOrServicesTableEntry(CommonIncomeFields):
+class OwnedGoodsOrServicesTableEntry(CommonIncomeFields, RowEntry):
     table = models.ForeignKey(OwnedGoodsOrServicesTable, on_delete=models.CASCADE, null=True)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)
 
@@ -331,7 +345,7 @@ class OwnedIncomeFromSalariesTable(models.Model):
 
 
 # Tabel Venituri salarii - actual row information
-class OwnedIncomeFromSalariesTableEntry(CommonIncomeFields):
+class OwnedIncomeFromSalariesTableEntry(CommonIncomeFields, RowEntry):
     table = models.ForeignKey(OwnedIncomeFromSalariesTable, on_delete=models.CASCADE, null=True)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)
 
@@ -344,7 +358,7 @@ class OwnedIncomeFromIndependentActivitiesTable(models.Model):
 
 
 # Tabel Venituri activitati independente - actual row information
-class OwnedIncomeFromIndependentActivitiesTableEntry(CommonIncomeFields):
+class OwnedIncomeFromIndependentActivitiesTableEntry(CommonIncomeFields, RowEntry):
     table = models.ForeignKey(OwnedIncomeFromIndependentActivitiesTable, on_delete=models.CASCADE, null=True,)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)
 
@@ -357,7 +371,7 @@ class OwnedIncomeFromDeferredUseOfGoodsTable(models.Model):
 
 
 # Tabel Venituri cedarea folosintei bunurilor - actual row information
-class OwnedIncomeFromDeferredUseOfGoodsTableEntry(CommonIncomeFields):
+class OwnedIncomeFromDeferredUseOfGoodsTableEntry(CommonIncomeFields, RowEntry):
     table = models.ForeignKey(OwnedIncomeFromDeferredUseOfGoodsTable, on_delete=models.CASCADE, null=True,)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)
 
@@ -370,7 +384,7 @@ class OwnedIncomeFromInvestmentsTable(models.Model):
 
 
 # Tabel Venituri investitii - actual row information
-class OwnedIncomeFromInvestmentsTableEntry(CommonIncomeFields):
+class OwnedIncomeFromInvestmentsTableEntry(CommonIncomeFields, RowEntry):
     table = models.ForeignKey(OwnedIncomeFromInvestmentsTable, on_delete=models.CASCADE, null=True)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)
 
@@ -383,7 +397,7 @@ class OwnedIncomeFromPensionsTable(models.Model):
 
 
 # Tabel Venituri pensii - actual row information
-class OwnedIncomeFromPensionsTableEntry(CommonIncomeFields):
+class OwnedIncomeFromPensionsTableEntry(CommonIncomeFields, RowEntry):
     table = models.ForeignKey(OwnedIncomeFromPensionsTable, on_delete=models.CASCADE, null=True)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)
     ex_position = models.CharField("Pozitia detinuta", max_length=128)
@@ -397,7 +411,7 @@ class OwnedIncomeFromAgriculturalActivitiesTable(models.Model):
 
 
 # Tabel Venituri activitati agricole - actual row information
-class OwnedIncomeFromAgriculturalActivitiesTableEntry(CommonIncomeFields):
+class OwnedIncomeFromAgriculturalActivitiesTableEntry(CommonIncomeFields, RowEntry):
     table = models.ForeignKey(OwnedIncomeFromAgriculturalActivitiesTable, on_delete=models.CASCADE, null=True,)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)
     holder_type = models.CharField("Tipul detinatorului", max_length=120, choices=HolderType.return_as_iterable(),)
@@ -411,7 +425,7 @@ class OwnedIncomeFromGamblingTable(models.Model):
 
 
 # Tabel Venituri premii jocuri noroc - actual row information
-class OwnedIncomeFromGamblingTableEntry(CommonIncomeFields):
+class OwnedIncomeFromGamblingTableEntry(CommonIncomeFields, RowEntry):
     table = models.ForeignKey(OwnedIncomeFromGamblingTable, on_delete=models.CASCADE, null=True)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)
 
@@ -424,6 +438,6 @@ class OwnedIncomeFromOtherSourcesTable(models.Model):
 
 
 # Tabel Venituri din alte surse - actual row information
-class OwnedIncomeFromOtherSourcesTableEntry(CommonIncomeFields):
-    table = models.ForeignKey(OwnedIncomeFromOtherSourcesTable, on_delete=models.CASCADE, null=True)
+class OwnedIncomeFromOtherSourcesTableEntry(CommonIncomeFields, RowEntry):
+    table = models.ForeignKey(OwnedIncomeFromOtherSourcesTable, on_delete=models.CASCADE, null=True, blank=True,)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)

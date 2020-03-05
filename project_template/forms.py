@@ -76,7 +76,7 @@ class TranscribeOwnedLandRowEntry(PartialModelForm):
     class Meta:
         model = models.OwnedLandTableEntry
         # Exclude the Model's table and coowner fields because they will be handled separately by the Task
-        exclude = ["table", "coowner"]
+        exclude = ["table", "row_number", "coowner"]
 
 
 class TranscribeOwnedBuildingsTable(forms.Form):
@@ -101,7 +101,7 @@ class TranscribeOwnedBuildingsRowEntry(PartialModelForm):
     class Meta:
         model = models.OwnedBuildingsTableEntry
         # Exclude the Model's table and coowner fields because they will be handled separately by the Task
-        exclude = ["table", "coowner"]
+        exclude = ["table", "row_number", "coowner"]
         # TODO: The 'address' model field doesn't seem to be used by the old form. Is it an overlook?
         exclude += ["address"]
 
@@ -129,6 +129,7 @@ class TranscribeOwnedAutomobileRowEntry(PartialModelForm):
         # Exclude the Model's table field because they will be handled separately by the Task
         exclude = [
             "table",
+            "row_number",
         ]
 
 
@@ -154,6 +155,7 @@ class TranscribeOwnedJewelryRowEntry(PartialModelForm):
         # Exclude the Model's table field because they will be handled separately by the Task
         exclude = [
             "table",
+            "row_number",
         ]
 
 
@@ -182,7 +184,7 @@ class TranscribeExtraValuableRowEntry(PartialModelForm):
     class Meta:
         model = models.OwnedExtraValuableTableEntry
         # Exclude the Model's table and receiver_of_goods fields because they will be handled separately by the Task
-        exclude = ["table", "receiver_of_goods"]
+        exclude = ["table", "row_number", "receiver_of_goods"]
         # TODO: The 'address' model field doesn't seem to be used by the old form. Is it an overlook?
         exclude += ["address"]
 
@@ -201,6 +203,7 @@ class TranscribeOwnedBankAccountsRowEntry(PartialModelForm):
         model = models.OwnedBankAccountsTableEntry
         exclude = [
             "table",
+            "row_number",
         ]
 
     def __init__(self, *args, **kwargs):
@@ -226,7 +229,7 @@ class TranscribeOwnedInvestmentsOver5KRowEntry(PartialModelForm):
     class Meta:
         model = models.OwnedInvestmentsOver5KTableEntry
         # Exclude the Model's table and loan_beneficiary fields because they will be handled separately by the Task
-        exclude = ["table", "loan_beneficiary"]
+        exclude = ["table", "row_number", "loan_beneficiary"]
 
 
 class TranscribeOwnedDebtsTable(forms.Form):
@@ -244,7 +247,7 @@ class TranscribeOwnedDebtsRowEntry(PartialModelForm):
     class Meta:
         model = models.OwnedDebtsTableEntry
         # Exclude the Model's table and person fields because they will be handled separately by the Task
-        exclude = ["table", "person"]
+        exclude = ["table", "row_number", "person"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -271,7 +274,7 @@ class TranscribeOwnedGoodsOrServicesRowEntry(PartialModelForm):
     class Meta:
         model = models.OwnedGoodsOrServicesTableEntry
         # Exclude the Model's table and person fields because they will be handled separately by the Task
-        exclude = ["table", "person"]
+        exclude = ["table", "row_number", "person"]
 
 
 class TranscribeOwnedIncomeFromSalariesTable(forms.Form):
@@ -288,7 +291,7 @@ class TranscribeOwnedIncomeFromSalariesRowEntry(PartialModelForm):
     class Meta:
         model = models.OwnedIncomeFromSalariesTableEntry
         # Exclude the Model's table and person fields because they will be handled separately by the Task
-        exclude = ["table", "person"]
+        exclude = ["table", "row_number", "person"]
 
 
 class TranscribeIndependentActivitiesTable(forms.Form):
@@ -307,7 +310,7 @@ class TranscribeIndependentActivitiesRowEntry(PartialModelForm):
     class Meta:
         model = models.OwnedIncomeFromIndependentActivitiesTableEntry
         # Exclude the Model's table and person fields because they will be handled separately by the Task
-        exclude = ["table", "person"]
+        exclude = ["table", "row_number", "person"]
 
 
 class TranscribeOwnedIncomeFromDeferredUseOfGoodsTable(forms.Form):
@@ -324,7 +327,7 @@ class TranscribeOwnedIncomeFromDeferredUseOfGoodsRowEntry(PartialModelForm):
     class Meta:
         model = models.OwnedIncomeFromDeferredUseOfGoodsTableEntry
         # Exclude the Model's table and person fields because they will be handled separately by the Task
-        exclude = ["table", "person"]
+        exclude = ["table", "row_number", "person"]
 
 
 class TranscribeOwnedIncomeFromInvestmentsTable(forms.Form):
@@ -343,7 +346,7 @@ class TranscribeOwnedIncomeFromInvestmentsRowEntry(PartialModelForm):
     class Meta:
         model = models.OwnedIncomeFromInvestmentsTableEntry
         # Exclude the Model's table and person fields because they will be handled separately by the Task
-        exclude = ["table", "person"]
+        exclude = ["table", "row_number", "person"]
 
 
 class TranscribeOwnedIncomeFromPensionsTable(forms.Form):
@@ -360,7 +363,7 @@ class TranscribeOwnedIncomeFromPensionsRowEntry(PartialModelForm):
     class Meta:
         model = models.OwnedIncomeFromPensionsTableEntry
         # Exclude the Model's table and person fields because they will be handled separately by the Task
-        exclude = ["table", "person"]
+        exclude = ["table", "row_number", "person"]
 
 
 class TranscribeOwnedIncomeFromAgriculturalActivitiesTable(forms.Form):
@@ -377,7 +380,7 @@ class TranscribeOwnedIncomeFromAgriculturalActivitiesRowEntry(PartialModelForm):
     class Meta:
         model = models.OwnedIncomeFromAgriculturalActivitiesTableEntry
         # Exclude the Model's table and person fields because they will be handled separately by the Task
-        exclude = ["table", "person"]
+        exclude = ["table", "row_number", "person"]
 
 
 class TranscribeOwnedIncomeFromGamblingTable(forms.Form):
@@ -394,7 +397,7 @@ class TranscribeOwnedIncomeFromGamblingRowEntry(PartialModelForm):
     class Meta:
         model = models.OwnedIncomeFromGamblingTableEntry
         # Exclude the Model's table and person fields because they will be handled separately by the Task
-        exclude = ["table", "person"]
+        exclude = ["table", "row_number", "person"]
 
 
 class TranscribeOwnedIncomeFromOtherSourcesTable(forms.Form):
@@ -411,4 +414,4 @@ class TranscribeOwnedIncomeFromOtherSourcesRowEntry(PartialModelForm):
     class Meta:
         model = models.OwnedIncomeFromOtherSourcesTableEntry
         # Exclude the Model's table and person fields because they will be handled separately by the Task
-        exclude = ["table", "person"]
+        exclude = ["table", "row_number", "person"]
