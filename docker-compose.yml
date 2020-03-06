@@ -2,7 +2,7 @@ version: '3'
 services:
   web:
       build: .
-      command: ls -la /opt/catpol && dockerize --wait tcp://db:3306
+      command: dockerize -wait tcp://db:5432 -timeout 90s
       ports:
         - "8000:8000"
       volumes:
@@ -12,6 +12,8 @@ services:
     image: "postgres:12"
     ports:
       - "5432:5432"
+    env_file:
+      - .env
     volumes:
       - database-data:/var/lib/postgresql/data/
 

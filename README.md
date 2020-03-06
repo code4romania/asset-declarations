@@ -1,4 +1,4 @@
-# Catalog politic  - Declaratii de avere [![Datree](https://s3.amazonaws.com/catalog.static.datree.io/datree-badge-20px.svg)](https://datree.io/?src=badge) [![GitHub contributors](https://img.shields.io/github/contributors/code4romania/catpol-declaratii.svg)](https://github.com/code4romania/catpol-declaratii/graphs/contributors) [![GitHub last commit](https://img.shields.io/github/last-commit/code4romania/catpol-declaratii.svg)](https://github.com/code4romania/catpol-declaratii/commits/master) [![License: MPL 2.0](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
+# Catalog politic  - Declaratii de avere [![Datree](https://s3.amazonaws.com/catalog.static.datree.io/datree-badge-20px.svg)](https://datree.io/?src=badge) [![GitHub contributors](https://img.shields.io/github/contributors/code4romania/asset-declarations.svg)](https://github.com/code4romania/asset-declarations/graphs/contributors) [![GitHub last commit](https://img.shields.io/github/last-commit/code4romania/asset-declarations.svg)](https://github.com/code4romania/asset-declarations/commits/master) [![License: MPL 2.0](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 
 <!-- Please don't remove this: Grab your social icons from https://github.com/carlsednaoui/gitsocial -->
 
@@ -23,7 +23,7 @@
 * MAKING PUBLIC INFORMATION TRULY PUBLIC
 * data from asset declarations, including a net worth estimation
 
-**Important!** This project is currently out of sync with the latest version of [Moonsheep](https://github.com/themoonsheep/moonsheep), a library that it is dependent on. In order for development to continue, we must first fix [this critical issue](https://github.com/code4romania/catpol-declaratii/issues/191).
+**Important!** This project is currently out of sync with the latest version of [Moonsheep](https://github.com/themoonsheep/moonsheep), a library that it is dependent on. In order for development to continue, we must first fix [this critical issue](https://github.com/code4romania/asset-declarations/issues/191).
 
 Currently, in Romania, public information on elected officials is spread on a multitude of media, in a multitude of formats and requires a
 priori knowledge of the sources where data resides, making it hard, if not impossible for a regular citizen to make sense of the data.
@@ -87,34 +87,21 @@ Political Catalogue - Asset Declaration is a web application.
 Installation process
 * Fork this repo
 * Clone your fork
-* Open the directory where you have cloned the repo (`cd catpol-declaratii`)
+* Open the directory where you have cloned the repo (`cd asset-declarations`)
 * Optionally, you can create a virtual environment named "venv": `python3 -m venv venv` and then activate it: `source venv/bin/activate`
 * `pip install -r requirements-dev.txt` 
 * `export DJANGO_SETTINGS_MODULE=project_template.settings.dev`
 * `python manage.py migrate --run-syncdb`
+* `python manage.py seed`
 * `python manage.py runserver`
 
-Using Dockerfile:
-* Install docker
+Using docker-compose:
+* Install docker and cdocker-compose
 * Fork this repo
 * Clone your fork
-* Open the directory where you have cloned the repo (`cd catpol-declaratii`)
-* Run the following command to create a Docker image for the project `docker build -t catpol`
-* Run the following command to run the Docker image `docker run -p 8000 catpol`
-* Show the container id running the `catpol` image `docker ps`
-* Inspect the container to get the host port `docker inspect <container_id>`, you should see something like:
-```json
-            "Ports": {
-                "8000/tcp": [
-                    {
-                        "HostIp": "0.0.0.0",
-                        "HostPort": "32769"
-                    }
-                ]
-            },
- ```
- * Connect to specified port on localhost and enjoy the solution
-
+* Open the directory where you have cloned the repo (`cd asset-declarations`)
+* Run the following command to start the development server `docker-compose up`
+* You can interact with the container's environment using `docker-compose exec web bash`
 
 ## Contributing 
 

@@ -20,38 +20,42 @@
         <form id="taskForm" method="post">
             {% moonsheep_token task %}
             {% csrf_token %}
-            <div class="row-fluid">
-                {# Provide additional context for non-native speakers #}
 
-                {% if "en" in request.LANGUAGE_CODE %}
-                    {% block explanation %}{% endblock %}
-                {% endif %}
+            <div class="row-fluid">
+                {% block explanation %}{% endblock %}
 
                 {{ form.non_field_errors }}
 
                 <div class="col">
                     {% for field in form %}
+                        <div class="form-group">
+                            <div class="col">
+                                {{ field.label }}
+                            </div>
 
-                    <div class="form-group">
-                        <div class="col">
-                            {{ field.label }}
+                            {% for error in field.errors %}
+                                <div class="col alert alert-danger">
+                                    <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+
+                            <div class="col">
+                                {{ field }}
+                            </div>
                         </div>
-                        <div class="col">
-                            {{ field }}
-                        </div>
-                    </div>
                     {% endfor %}
                 </div>
             </div>
+
             <div class="row-fluid">
                 <div class="col">
                     &nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-success" type="submit">{% trans 'SendTheData' %}</button>
                 </div>
             </div>
+
         </form>
         {% endblock %}
     </div>
-
   </div>
 </div>
 
