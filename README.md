@@ -20,10 +20,7 @@
 
 <!-- Please don't remove this: Grab your social icons from https://github.com/carlsednaoui/gitsocial -->
 
-* MAKING PUBLIC INFORMATION TRULY PUBLIC
-* data from asset declarations, including a net worth estimation
-
-**Important!** This project is currently out of sync with the latest version of [Moonsheep](https://github.com/themoonsheep/moonsheep), a library that it is dependent on. In order for development to continue, we must first fix [this critical issue](https://github.com/code4romania/asset-declarations/issues/191).
+**Important!** This project is currently not accepting contributions. It would seem like there is a public-sector effort to solve the problem of opening up the data contained within asset declarations. We will not duplicate effort and we will either resume or archive this project according to what we learn about the digitalisation effort.
 
 Currently, in Romania, public information on elected officials is spread on a multitude of media, in a multitude of formats and requires a
 priori knowledge of the sources where data resides, making it hard, if not impossible for a regular citizen to make sense of the data.
