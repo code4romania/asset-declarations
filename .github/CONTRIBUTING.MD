@@ -4,7 +4,7 @@
 
 This project is built by amazing volunteers, just like you, from different timezones, backgrounds and skills levels. So to make sure we're all on the same page, it would be great if we all followed a few guidelines. :two_hearts:
 
-[Feedback](#feedback) | [How Can I Contribute?](#how-can-i-contribute) | [Best practices](#best-practices) | [About Code4Ro](#about-code4ro) | [Financial contributions](#financial-contributions) | [Code of conduct](#code-of-conduct)   
+[Feedback](#feedback) | [How Can I Contribute?](#how-can-i-contribute) | [Best practices](#best-practices) | [About Code4Ro](#about-code4ro) | [Financial contributions](#financial-contributions) | [Code of conduct](#code-of-conduct)
 
 ## Feedback
 
@@ -12,9 +12,9 @@ Just have a quick question? Please e-mail us at at contact@code4.ro
 
 ## How can I contribute
 
-### Report bugs 
+### Report bugs
 
-:bug: Think you found a bug? Please check [the list of open issues](https://github.com/code4romania/catpol-declaratii/issues) to see if your bug has already been reported. If it hasn't please [submit a new issue](https://github.com/code4romania/catpol-declaratii/issues/new). 
+:bug: Think you found a bug? Please check [the list of open issues](https://github.com/code4romania/catpol-declaratii/issues) to see if your bug has already been reported. If it hasn't please [submit a new issue](https://github.com/code4romania/catpol-declaratii/issues/new).
 
 :shield: If you find a **security vulnerability**, do not open an issue. Please email contact@code4.ro instead.
 
@@ -26,29 +26,29 @@ Please be as specific as possible when describing the issue. Explain the problem
 * Actual behavior
 * Reproduces how often
 
+### Suggest new features
 
-### Suggest new features 
-
-:bulb: Feature requests are welcome. We would love to hear your thoughts on how we can improve our project further. 
+:bulb: Feature requests are welcome. We would love to hear your thoughts on how we can improve our project further.
 
 To send us a suggestion, just [open an issue](https://github.com/code4romania/catpol-declaratii/issues/new) which describes the feature you would like to see. Give as much information as you can about what you would like to see:
 
 * Description
-* Step by step behaviour 
+* Step by step behaviour
 * Explain why this enhancement would be useful
 
-### Contribute to the codebase 
+### Contribute to the codebase
 
 :computer: We'd love for you to get your hands dirty and code for the project.
 
-If you are unsure where to begin contributing to the project, you can start by looking through these issues:  
+If you are unsure where to begin contributing to the project, you can start by looking through these issues:
+
 * [Good first issues](https://github.com/code4romania/catpol-declaratii/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
 
 Please make sure to check out the suggested coding [best practices](#best-practices) and tips with working with git below :wink:
 
 ## Best practices
 
-### Coding best practices :ok_hand:
+### Coding best practices 👌
 
 * **The language we code in is English.** Please name your variables, methods, classes and other structures using English words.
 * Use clean code conventions :heavy_check_mark: *tip: read [The book](https://www.goodreads.com/book/show/3735293-clean-code) if you haven't already. Or check out [a summary](https://gist.github.com/wojteklu/73c6914cc446146b8b533c0988cf8d29)*

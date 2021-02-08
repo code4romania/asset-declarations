@@ -35,3 +35,8 @@ wheels/
 MANIFEST
 
 .DS_STORE
+
+# Terraform
+.terraform
+*terraform.tfstate*
+*.tfvars
