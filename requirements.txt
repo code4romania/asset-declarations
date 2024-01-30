@@ -1,6 +1,5 @@
---index-url https://pypi.python.org/simple/
-
-django~=2.0
-psycopg2
-psycopg2-binary
-git+https://github.com/themoonsheep/moonsheep
+django==2.2.10
+psycopg2==2.8.4
+psycopg2-binary==2.8.4
+django-environ==0.4.5
+git+https://github.com/themoonsheep/moonsheep@8993d08259f54799cfff16efff041a51201c42d7

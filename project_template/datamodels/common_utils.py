@@ -5,6 +5,7 @@ class IterableEnum(Enum):
     """
     An Enum type which can return its members' values as an iterable
     """
+
     @classmethod
     def return_as_iterable(cls):
         member_values = [v.value for k, v in cls.__members__.items()]

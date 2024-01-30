@@ -14,39 +14,28 @@ from .base import *
 
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
-SECRET_KEY = '${SECRET_KEY}'
+# TODO: read secret env form env, it should be added at deploy time
+SECRET_KEY = "${SECRET_KEY}"
 
 # To be double sure
 DEBUG = TEMPLATE_DEBUG = False
-MOONSHEEP_DEVELOPMENT_MODE = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 INTERNAL_IPS = []
 
-WSGI_APPLICATION = 'project_template.wsgi.application'
+WSGI_APPLICATION = "project_template.wsgi.application"
 
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'moonsheep',
-#         'USER': 'moonsheep',
-#         'PASSWORD': 'moonsheep',
-#         'HOST': 'postgres',
-#         'PORT': 5432,
-#     }
-# }
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'catpol',
-        'USER': 'catpol',
-        'PASSWORD': '',
-        'HOST': '3.122.174.116',
-        'PORT': '5432',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "catpol",
+        "USER": "catpol",
+        "PASSWORD": "",
+        "HOST": "3.122.174.116",
+        "PORT": "5432",
     }
 }

@@ -18,7 +18,7 @@ class CsvCountiesSingleton:
         CsvCountiesSingleton.__instance = self
         with open(self.__path) as csvfile:
             reader = csv.DictReader(csvfile)
-            headers = ['JUDET', 'NUME']
+            headers = ["JUDET", "NUME"]
             for row in reader:
                 self.__counties.append(row[headers[0]])
 
@@ -36,6 +36,3 @@ class CsvCountiesSingleton:
 
     def get_cities_in_county(self, county):
         return self.__cities[county]
-
-
-

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-26 15:15+0000\n"
+"POT-Creation-Date: 2020-02-17 19:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,56 +18,185 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: project_template/forms.py:8
-msgid "What is the name of the current politician?"
+#: project_template/forms.py:33
+msgid "Care este numele politicianului?"
 msgstr ""
 
-#: project_template/forms.py:9
-msgid "What is the surname of the current politician?"
+#: project_template/forms.py:34
+msgid ""
+"Care este numele anterior al politicianului? (in cazul in care se aplica)"
 msgstr ""
 
-#: project_template/forms.py:10
-msgid "What is the position of the current politician?"
+#: project_template/forms.py:35
+msgid "Care sunt initialele politicianului? (in cazul in care se aplica)"
 msgstr ""
 
-#: project_template/forms.py:11
-msgid "Date"
+#: project_template/forms.py:36
+msgid "Care este prenumele politicianului?"
 msgstr ""
 
-#: project_template/models.py:10
-msgid "The name"
+#: project_template/forms.py:38
+msgid "Care este pozitia politicianului?"
 msgstr ""
 
-#: project_template/models.py:11
-msgid "The surname"
+#: project_template/forms.py:39
+msgid "Care este data completării declarației de avere?"
 msgstr ""
 
-#: project_template/models.py:58 project_template/models.py:64
-#: project_template/models.py:70 project_template/models.py:76
-#: project_template/models.py:82 project_template/models.py:88
-#: project_template/models.py:94 project_template/models.py:100
-#: project_template/models.py:106 project_template/models.py:112
-#: project_template/models.py:118 project_template/models.py:124
-#: project_template/models.py:130 project_template/models.py:136
-#: project_template/models.py:142 project_template/models.py:148
-#: project_template/models.py:154 project_template/models.py:160
-#: project_template/models.py:166
+#: project_template/forms.py:40
+msgid ""
+"Care este institutia in cadrul careia lucra politicianul la data completarii "
+"declaratiei de avere?"
+msgstr ""
+
+#: project_template/forms.py:42
+msgid "Ce tip de declaratie este completata?"
+msgstr ""
+
+#: project_template/forms.py:51 project_template/forms.py:73
+msgid "Care este numele proprietarului?"
+msgstr ""
+
+#: project_template/forms.py:52 project_template/forms.py:74
+msgid "Care este prenumele proprietarului?"
+msgstr ""
+
+#: project_template/forms.py:138
+msgid "Care este numele persoanei catre care s-a instrainat bunul?"
+msgstr ""
+
+#: project_template/forms.py:139
+msgid "Care este prenumele persoanei catre care s-a instrainat bunul?"
+msgstr ""
+
+#: project_template/forms.py:183 project_template/forms.py:294
+msgid "Care este numele beneficiarului?"
+msgstr ""
+
+#: project_template/forms.py:184 project_template/forms.py:295
+msgid "Care este prenumele beneficiarului?"
+msgstr ""
+
+#: project_template/forms.py:224
+msgid "Care este numele titularului?"
+msgstr ""
+
+#: project_template/forms.py:225
+msgid "Care este prenumele titularului?"
+msgstr ""
+
+#: project_template/forms.py:238 project_template/forms.py:308
+msgid "Care e numele persoanei?"
+msgstr ""
+
+#: project_template/forms.py:239 project_template/forms.py:309
+msgid "Care e prenumele persoanei?"
+msgstr ""
+
+#: project_template/forms.py:252 project_template/forms.py:266
+#: project_template/forms.py:280 project_template/forms.py:322
+#: project_template/forms.py:336
+msgid "Care e numele persoanei care a realizat venitul?"
+msgstr ""
+
+#: project_template/forms.py:253 project_template/forms.py:267
+#: project_template/forms.py:281 project_template/forms.py:323
+#: project_template/forms.py:337
+msgid "Care e prenumele persoanei care a realizat venitul?"
+msgstr ""
+
+#: project_template/models.py:45
+msgid "%(value)s is greater than 100%"
+msgstr ""
+
+#: project_template/models.py:50
+msgid "%(value)s is lower than 0%"
+msgstr ""
+
+#: project_template/models.py:58
+msgid "Name"
+msgstr ""
+
+#: project_template/models.py:59
+msgid "Surname"
+msgstr ""
+
+#: project_template/models.py:60
+msgid "Initials"
+msgstr ""
+
+#: project_template/models.py:61
+msgid "Previous Name"
+msgstr ""
+
+#: project_template/models.py:88
+msgid "Functie"
+msgstr ""
+
+#: project_template/models.py:89
+msgid "Data completare"
+msgstr ""
+
+#: project_template/models.py:90
+msgid "Institutie"
+msgstr ""
+
+#: project_template/models.py:91
+msgid "Tip declaratie"
+msgstr ""
+
+#: project_template/models.py:109 project_template/tests/test_xor.py:16
+msgid "commune"
+msgstr "comuna"
+
+#: project_template/models.py:110 project_template/tests/test_xor.py:17
+msgid "city"
+msgstr ""
+
+#: project_template/models.py:138 project_template/models.py:180
+#: project_template/models.py:213 project_template/models.py:248
+#: project_template/models.py:268 project_template/models.py:322
+#: project_template/models.py:335 project_template/models.py:348
+#: project_template/models.py:361 project_template/models.py:374
+#: project_template/models.py:388
 msgid "The number of rows"
 msgstr ""
 
-#: project_template/templates/base.html:7
-#: project_template/templates/home.html:14
+#: project_template/models.py:290
+msgid "person"
+msgstr ""
+
+#: project_template/models.py:291
+msgid "lender"
+msgstr ""
+
+#: project_template/templates/base.html:8
+#: project_template/templates/home.html:10
 msgid "HomePageTitle"
 msgstr "Document Digitization"
 
-#: project_template/templates/base.html:34
+#: project_template/templates/base.html:31
 msgid "PoliticalCatalogue"
 msgstr "Political Catalogue"
 
-#: project_template/templates/home.html:21
+#: project_template/templates/home.html:17
 msgid "GiveMeATask"
 msgstr "Give me a task!"
 
-#: project_template/templates/task.html:42
+#: project_template/templates/task.html:48
 msgid "SendTheData"
 msgstr "Send the data"
+
+#: project_template/tests/test_xor.py:18
+msgid "village"
+msgstr ""
+
+#: project_template/utils.py:98
+msgid "Use only one of the following fields: "
+msgstr ""
+
+#: project_template/utils.py:107
+#, python-brace-format
+msgid "Invalid field name {field}"
+msgstr ""
+
